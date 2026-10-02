@@ -136,6 +136,25 @@
       "C:/Users/ryanc/Downloads/work evidence for portfolio/screenshots/novus agent docs/screencapture-novus-ai-2026-09-30-21_47_07.png"
     ]
   },
+  "novus-frame": {
+    "type": "image",
+    "width": 3610,
+    "height": 1184,
+    "widths": [
+      640,
+      1024,
+      1536,
+      2048
+    ],
+    "source": [
+      "C:/Users/ryanc/Downloads/work evidence for portfolio/screenshots/novus agent docs/screencapture-novus-marketing-website-3mnjnqtut-pendo-vercel-app-2026-09-30-21_48_39.png",
+      "C:/Users/ryanc/Downloads/work evidence for portfolio/screenshots/novus agent docs/screencapture-novus-marketing-website-3mnjnqtut-pendo-vercel-app-2026-09-30-21_48_39.png",
+      "C:/Users/ryanc/Downloads/work evidence for portfolio/screenshots/novus agent docs/screencapture-novus-marketing-website-3mnjnqtut-pendo-vercel-app-2026-09-30-21_48_39.png",
+      "C:/Users/ryanc/Downloads/work evidence for portfolio/screenshots/novus agent docs/screencapture-novus-marketing-website-3mnjnqtut-pendo-vercel-app-2026-09-30-21_48_39.png",
+      "C:/Users/ryanc/Downloads/work evidence for portfolio/screenshots/novus agent docs/screencapture-novus-marketing-website-3mnjnqtut-pendo-vercel-app-2026-09-30-21_48_39.png",
+      "C:/Users/ryanc/Downloads/work evidence for portfolio/screenshots/novus agent docs/screencapture-novus-marketing-website-3mnjnqtut-pendo-vercel-app-2026-09-30-21_48_39.png"
+    ]
+  },
   "novus-hero": {
     "type": "video",
     "width": 1280,
@@ -174,6 +193,20 @@
     ],
     "source": [
       "C:/Users/ryanc/Downloads/work evidence for portfolio/screenshots/novus agent docs/screencapture-novus-ai-2026-09-30-21_47_07.png"
+    ]
+  },
+  "pfa-first-output": {
+    "type": "image",
+    "width": 1680,
+    "height": 1046,
+    "widths": [
+      640,
+      1024,
+      1536
+    ],
+    "source": [
+      "C:/Users/ryanc/Downloads/work evidence for portfolio/screenshots/PFA docs/screencapture-pendo-website-next-5sfyvns4j-pendo-vercel-app-product-page-template-agent-analytics-2026-09-30-22_58_55.png",
+      "C:/Users/ryanc/Downloads/work evidence for portfolio/screenshots/PFA docs/screencapture-pendo-io-product-agent-analytics-2026-09-30-21_42_09.png"
     ]
   },
   "pfa-gradient": {

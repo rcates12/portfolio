@@ -21,7 +21,7 @@ Updated 2026-10-02.
 - All four case studies, copy verbatim
 - Composite pipeline: `node scripts/compose.mjs --out=<slot> --cols=N "<file>|x,y,w,h" …`
   combines crops into one image, top-aligned per row, no burned-in labels
-- 26 asset slots filled: 8 single stills, 10 composites, 8 clips
+- 28 asset slots filled: 8 single stills, 12 composites, 8 clips
 
 Build: 5 routes, 0 kB JS, 15 kB HTML on the heaviest page.
 
@@ -31,19 +31,24 @@ figures. The rail variant and the `/compare` route have been removed.
 ## Not built
 
 All four case studies are built, copy verbatim.
-- 9 of 35 asset slots. The rest render as labeled placeholders
+- 7 of 35 asset slots. The rest render as labeled placeholders
 - About page, contact, domain, metadata, sitemap
 - Any motion. GSAP is not installed yet
 - Self-hosted fonts
 
 ## Next
 
-1. The 9 remaining slots. The easy composites are done; what's left needs
-   section-level crop coordinates found by slicing the tall captures
-   (`pfa-panels`, `pfa-first-output`, `pfa-subnav`, `pfa-gradient`,
-   `novus-receipt`, `novus-concept-vs-shipped`, `homepage-four-shapes`), plus
-   the mobile captures and the Pendo for Agents drawer clip, which have no
-   source in the library
+1. Everything that could be cut from the existing library has been cut. All 7
+   remaining slots need Ryan to capture something new:
+   - `novus-mobile`, `pfa-process` — mobile captures. Every capture in the
+     library is 3456px desktop
+   - `pfa-process` also needs a clip of the drawer opening
+   - `pfa-drawer-borderless` — a drawer from before the borderless pass. All
+     four drawer screenshots are the shipped version, and the drawer is an
+     overlay so it never appears in a full-page capture
+   - `novus-fluid-grid`, `novus-last-pixel` — the agency's Figma frames
+   - `homepage-quote-tabs`, `homepage-modal` — live-page recordings. See the
+     note below on why the existing recordings do not cover them
 2. Self-host fonts, add metadata and Open Graph, run an accessibility and Lighthouse pass
 
 ### Section offsets found so far
@@ -78,6 +83,14 @@ More offsets, found with `scripts/sheet.mjs --slice=<file>`:
 | `claude-ai-design` (concept) | "Novus listens" | 5420, 1580 |
 | | "Signals show you" | 7020, 1850 |
 | | closing marquee | 9080, 1350 |
+| PFA preview `5sfyvns4j` | observability gap, dark chat window | 1440, 1000 |
+| `pendo-io-product-agent-analytics` (live) | the same section in line art | 1620, 1000 |
+| Novus launch `3mnjnqtut` 21_48_39 | hero | 0 |
+| | keyboard photo and opening claim | 3700 |
+| | "Your analytics tool was never designed for this." | 5700 |
+| | "How Novus works with you" | 9850 |
+| | "Stop babysitting your analytics, trust them." | 12480 |
+| | FAQ panel | 16800 |
 
 Two traps found the hard way. There are two `h5dpw8a34` captures; the
 **22_41_34** one caught the bento mid-animation, faded and still loading, so
@@ -86,7 +99,27 @@ marquee are closer together than they look, so a careless crop of one clips
 the other.
 
 Off limits: the Slack sections on both Novus pages name people and customer
-workspaces, so no crop may include them.
+workspaces, so no crop may include them. On the Novus launch capture, stay
+above y18400: the footer credits the agency by name and carries a Product Hunt
+badge.
+
+Only the `5sfyvns4j` preview build has the observability gap section. The other
+two PFA previews (`2aq8itt5v`, `dw3uc9pft`) go straight from the hero to the
+pink "See the full agent experience" section, so there is no second "before".
+
+The two homepage recordings have now been watched frame by frame, and neither
+holds the quote-tab or modal interactions:
+
+- **10.45.05** (64s) is a single scroll-through of a sandbox homepage concept
+  while someone flips switches in the "Homepage variants" review panel, which
+  sits over the right third of the frame the whole time. The quote-tab section
+  is on screen from about 53s to 55s but only scrolls past: no tab switches and
+  no logo tooltip. No modal is opened at any point.
+- **10.47.43** (26s) is entirely the Headless Pendo section, already used for
+  `homepage-headless`.
+
+So `homepage-quote-tabs` and `homepage-modal` both need a fresh capture of the
+live page, which is what `asset-manifest.md` said in the first place.
 
 ### Known gaps in the sources
 
