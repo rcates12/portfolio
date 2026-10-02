@@ -14,7 +14,7 @@
 // assets/incoming/ (gitignored) and run this.
 
 import { readFile, writeFile, mkdir, readdir, stat, rm } from 'node:fs/promises';
-import { existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import path from 'node:path';
@@ -27,6 +27,8 @@ const OUT_DIR = path.join(ROOT, 'public', 'img');
 const MANIFEST = path.join(ROOT, 'src', 'data', 'assets.json');
 const CONTENT_DIR = path.join(ROOT, 'src', 'content', 'work');
 const WIDTHS = [640, 1024, 1536, 2048];
+// Every capture should come from here. See docs/STATE.md.
+const EVIDENCE = 'Downloads/work evidence for portfolio';
 
 function parseArgs(argv) {
   const positional = [];
@@ -59,6 +61,14 @@ function parseArgs(argv) {
 async function loadManifest() {
   if (!existsSync(MANIFEST)) return {};
   return JSON.parse(await readFile(MANIFEST, 'utf8'));
+}
+
+/** Where a slot's pixels came from. A composite leaves a .sources.json
+ *  sidecar naming its parts; everything else is the file itself. */
+function provenance(source) {
+  const sidecar = `${source}.sources.json`;
+  if (existsSync(sidecar)) return JSON.parse(readFileSync(sidecar, 'utf8'));
+  return [path.resolve(source).replace(/\\/g, '/')];
 }
 
 async function saveManifest(manifest) {
@@ -101,6 +111,17 @@ async function status() {
 
   const orphans = Object.keys(manifest).filter((slot) => !slots.has(slot));
   if (orphans.length) console.log(`Unused manifest entries: ${orphans.join(', ')}`);
+
+  // Everything should trace back to the evidence folder. Anything that does
+  // not is worth a second look before it ships.
+  const strays = Object.entries(manifest).flatMap(([slot, entry]) =>
+    (entry.source ?? []).filter((file) => !file.includes(EVIDENCE)).map((file) => `${slot}: ${file}`),
+  );
+  console.log(
+    strays.length
+      ? `\nSources outside the evidence folder:\n  ${strays.join('\n  ')}`
+      : '\nEvery source is inside the evidence folder.',
+  );
 }
 
 async function probe(file) {
@@ -181,6 +202,7 @@ async function processVideo(slot, source, flags, manifest) {
     mp4: `/img/${slot}.mp4`,
     webm: `/img/${slot}.webm`,
     poster: `/img/${slot}-poster.webp`,
+    source: provenance(source),
   };
 
   const kb = async (file) => Math.round((await stat(file)).size / 1024);
@@ -226,6 +248,7 @@ async function processImage(slot, source, flags, manifest) {
     width: base.width,
     height: base.height,
     widths,
+    source: provenance(source),
   };
 
   const sizes = await Promise.all(

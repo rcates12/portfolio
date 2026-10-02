@@ -12,7 +12,7 @@
 // Each part is "path" or "path|x,y,w,h". No labels are burned in: the
 // which-side-is-which caption belongs in the figcaption, not the image.
 
-import { mkdir } from 'node:fs/promises';
+import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import sharp from 'sharp';
 
@@ -43,8 +43,10 @@ const pad = Number(flags.pad ?? 40);
 const bg = String(flags.bg ?? '#eceae5');
 
 const tiles = [];
+const sources = [];
 for (const part of parts) {
   const [file, crop] = part.split('|');
+  sources.push(path.resolve(ROOT, file).replace(/\\/g, '/'));
   let image = sharp(path.resolve(ROOT, file));
   if (crop) {
     const [left, top, width, height] = crop.split(',').map(Number);
@@ -86,6 +88,9 @@ await sharp({ create: { width, height, channels: 3, background: bg } })
   .composite(composite)
   .png()
   .toFile(out);
+
+// Leave a trail so the manifest can say which captures a composite came from.
+await writeFile(`${out}.sources.json`, `${JSON.stringify(sources, null, 2)}\n`);
 
 console.log(`${flags.out}: ${width}x${height} from ${tiles.length} parts`);
 console.log(`  node scripts/assets.mjs ${flags.out} ${path.relative(ROOT, out).replace(/\\/g, '/')}`);

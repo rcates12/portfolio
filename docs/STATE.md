@@ -56,6 +56,23 @@ All four case studies are built, copy verbatim.
 - The **Same craft prototype** needs `the-new-way.html` rendered from
   `claude-files.zip` at matching sizes.
 
+## Where assets come from
+
+Every shipped asset is cut from `Downloads/work evidence for portfolio/`, and
+`src/data/assets.json` now records the exact source file for each slot.
+`npm run assets:status` prints anything sourced from outside that folder.
+
+One exception, deliberate: the left half of `pfa-old-vs-new` is the old dark
+Agent Analytics page, which the evidence folder does not contain. Its preview
+builds (2aq8itt5v, dw3uc9pft, 5sfyvns4j) are all the new template. The old page
+comes from a separate local render in `Downloads/`. The filename says localhost
+but the capture is a full-page export with no browser chrome, so it is clean.
+
+Entries marked `sourceTraced` were matched after the fact with
+`scripts/trace.mjs`, which fingerprints frames to find which capture an asset
+came from. All matched decisively except `novus-hero`, where two takes of the
+same opening scored close together; it is attributed to the 10.06.59 recording.
+
 ## Recordings
 
 The source recordings are at `Downloads/work evidence for portfolio/screenshots/`.
