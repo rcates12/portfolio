@@ -27,8 +27,8 @@ const OUT_DIR = path.join(ROOT, 'public', 'img');
 const MANIFEST = path.join(ROOT, 'src', 'data', 'assets.json');
 const CONTENT_DIR = path.join(ROOT, 'src', 'content', 'work');
 const WIDTHS = [640, 1024, 1536, 2048];
-// Every capture should come from here. See docs/STATE.md.
-const EVIDENCE = 'Downloads/work evidence for portfolio';
+// Captures should come from one of Ryan's source folders. See docs/STATE.md.
+const EVIDENCE = ['Downloads/work evidence for portfolio', 'Downloads/scnf2'];
 
 function parseArgs(argv) {
   const positional = [];
@@ -112,15 +112,17 @@ async function status() {
   const orphans = Object.keys(manifest).filter((slot) => !slots.has(slot));
   if (orphans.length) console.log(`Unused manifest entries: ${orphans.join(', ')}`);
 
-  // Everything should trace back to the evidence folder. Anything that does
+  // Everything should trace back to a known source folder. Anything that does
   // not is worth a second look before it ships.
   const strays = Object.entries(manifest).flatMap(([slot, entry]) =>
-    (entry.source ?? []).filter((file) => !file.includes(EVIDENCE)).map((file) => `${slot}: ${file}`),
+    (entry.source ?? [])
+      .filter((file) => !EVIDENCE.some((root) => file.includes(root)))
+      .map((file) => `${slot}: ${file}`),
   );
   console.log(
     strays.length
-      ? `\nSources outside the evidence folder:\n  ${strays.join('\n  ')}`
-      : '\nEvery source is inside the evidence folder.',
+      ? `\nSources outside the known capture folders:\n  ${strays.join('\n  ')}`
+      : '\nEvery source is inside a known capture folder.',
   );
 }
 

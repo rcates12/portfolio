@@ -21,7 +21,7 @@ Updated 2026-10-02.
 - All four case studies, copy verbatim
 - Composite pipeline: `node scripts/compose.mjs --out=<slot> --cols=N "<file>|x,y,w,h" …`
   combines crops into one image, top-aligned per row, no burned-in labels
-- 18 asset slots filled: 5 single stills, 6 composites, 7 clips
+- 19 asset slots filled: 5 single stills, 7 composites, 7 clips
 
 Build: 5 routes, 0 kB JS, 15 kB HTML on the heaviest page.
 
@@ -31,14 +31,14 @@ figures. The rail variant and the `/compare` route have been removed.
 ## Not built
 
 All four case studies are built, copy verbatim.
-- 17 of 35 asset slots. The rest render as labeled placeholders
+- 16 of 35 asset slots. The rest render as labeled placeholders
 - About page, contact, domain, metadata, sitemap
 - Any motion. GSAP is not installed yet
 - Self-hosted fonts
 
 ## Next
 
-1. The 17 remaining slots. The easy composites are done; what's left needs
+1. The 16 remaining slots. The easy composites are done; what's left needs
    section-level crop coordinates found by slicing the tall captures
    (`pfa-panels`, `pfa-first-output`, `pfa-subnav`, `pfa-gradient`,
    `novus-receipt`, `novus-concept-vs-shipped`, `homepage-four-shapes`), plus
@@ -53,14 +53,18 @@ All four case studies are built, copy verbatim.
   those are composites, not crops. The drawer clip needs a new recording.
 - **Mobile captures** for every study need capturing; none exist.
 - **Figma frames** for Novus chapter 1 are not in the library.
-- The **Same craft prototype** needs `the-new-way.html` rendered from
-  `claude-files.zip` at matching sizes.
+- The **Same craft prototype** is filled. Ryan supplied eight full-size
+  captures of Claude's original output in `Downloads/scnf2/`, so rendering
+  `the-new-way.html` from `claude-files.zip` is no longer needed. A 34s
+  recording of the prototype scrolling is in the same folder and is unused.
 
 ## Where assets come from
 
-Every shipped asset is cut from `Downloads/work evidence for portfolio/`, and
-`src/data/assets.json` now records the exact source file for each slot.
-`npm run assets:status` prints anything sourced from outside that folder.
+Shipped assets are cut from `Downloads/work evidence for portfolio/`, plus
+`Downloads/scnf2/`, which holds the Same craft prototype captures. Both roots
+are listed in `scripts/assets.mjs`. `src/data/assets.json` records the exact
+source file for each slot, and `npm run assets:status` prints anything sourced
+from outside those folders.
 
 One exception, deliberate: the left half of `pfa-old-vs-new` is the old dark
 Agent Analytics page, which the evidence folder does not contain. Its preview

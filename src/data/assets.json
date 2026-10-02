@@ -247,6 +247,25 @@
     ],
     "sourceTraced": true
   },
+  "same-craft-prototype": {
+    "type": "image",
+    "width": 2920,
+    "height": 2359,
+    "widths": [
+      640,
+      1024,
+      1536,
+      2048
+    ],
+    "source": [
+      "C:/Users/ryanc/Downloads/scnf2/scnf2/Screenshot 2026-10-02 at 4.10.12ΓÇ»PM.png",
+      "C:/Users/ryanc/Downloads/work evidence for portfolio/screenshots/same craft new floor/Screenshot 2026-09-30 at 10.32.16ΓÇ»PM.png",
+      "C:/Users/ryanc/Downloads/scnf2/scnf2/Screenshot 2026-10-02 at 4.11.01ΓÇ»PM.png",
+      "C:/Users/ryanc/Downloads/work evidence for portfolio/screenshots/same craft new floor/Screenshot 2026-09-30 at 10.33.24ΓÇ»PM.png",
+      "C:/Users/ryanc/Downloads/scnf2/scnf2/Screenshot 2026-10-02 at 4.11.56ΓÇ»PM.png",
+      "C:/Users/ryanc/Downloads/work evidence for portfolio/screenshots/same craft new floor/Screenshot 2026-09-30 at 10.35.11ΓÇ»PM.png"
+    ]
+  },
   "same-craft-type": {
     "type": "image",
     "width": 3456,
