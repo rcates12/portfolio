@@ -126,6 +126,20 @@
     ],
     "sourceTraced": true
   },
+  "novus-receipt": {
+    "type": "image",
+    "width": 3456,
+    "height": 1450,
+    "widths": [
+      640,
+      1024,
+      1536,
+      2048
+    ],
+    "source": [
+      "C:/Users/ryanc/Downloads/work evidence for portfolio/screenshots/novus agent docs/screencapture-novus-ai-2026-09-30-21_47_07.png"
+    ]
+  },
   "pfa-gradient": {
     "type": "image",
     "width": 3456,
