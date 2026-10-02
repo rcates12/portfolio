@@ -1,4 +1,33 @@
 {
+  "homepage-headless": {
+    "type": "video",
+    "width": 1280,
+    "height": 666,
+    "duration": 10,
+    "mp4": "/img/homepage-headless.mp4",
+    "webm": "/img/homepage-headless.webm",
+    "poster": "/img/homepage-headless-poster.webp"
+  },
+  "homepage-hero": {
+    "type": "image",
+    "width": 3456,
+    "height": 1560,
+    "widths": [
+      640,
+      1024,
+      1536,
+      2048
+    ]
+  },
+  "homepage-toolbar": {
+    "type": "video",
+    "width": 1280,
+    "height": 680,
+    "duration": 9,
+    "mp4": "/img/homepage-toolbar.mp4",
+    "webm": "/img/homepage-toolbar.webm",
+    "poster": "/img/homepage-toolbar-poster.webp"
+  },
   "novus-clips": {
     "type": "video",
     "width": 1280,
@@ -25,5 +54,67 @@
     "mp4": "/img/novus-install.mp4",
     "webm": "/img/novus-install.webm",
     "poster": "/img/novus-install-poster.webp"
+  },
+  "pfa-hero": {
+    "type": "image",
+    "width": 3456,
+    "height": 1150,
+    "widths": [
+      640,
+      1024,
+      1536,
+      2048
+    ]
+  },
+  "same-craft-close": {
+    "type": "image",
+    "width": 3452,
+    "height": 1830,
+    "widths": [
+      640,
+      1024,
+      1536,
+      2048
+    ]
+  },
+  "same-craft-hero": {
+    "type": "image",
+    "width": 3456,
+    "height": 1830,
+    "widths": [
+      640,
+      1024,
+      1536,
+      2048
+    ]
+  },
+  "same-craft-pacing": {
+    "type": "video",
+    "width": 1280,
+    "height": 680,
+    "duration": 8,
+    "mp4": "/img/same-craft-pacing.mp4",
+    "webm": "/img/same-craft-pacing.webm",
+    "poster": "/img/same-craft-pacing-poster.webp"
+  },
+  "same-craft-proof": {
+    "type": "video",
+    "width": 1280,
+    "height": 680,
+    "duration": 6,
+    "mp4": "/img/same-craft-proof.mp4",
+    "webm": "/img/same-craft-proof.webm",
+    "poster": "/img/same-craft-proof-poster.webp"
+  },
+  "same-craft-type": {
+    "type": "image",
+    "width": 3456,
+    "height": 1834,
+    "widths": [
+      640,
+      1024,
+      1536,
+      2048
+    ]
   }
 }

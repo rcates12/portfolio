@@ -18,7 +18,8 @@ Updated 2026-10-02.
 - **Novus built end to end**, including the `Chapter` divider for its two-chapter structure
 - Asset pipeline: `npm run assets:status`, `node scripts/assets.mjs <slot> <file>`
 - Clip pipeline: trims a recording to a short muted loop in MP4 and WebM with a poster, autoplays in view, pauses out of view, respects `prefers-reduced-motion`, and always offers a play/pause control
-- Three Novus clips cut from the 10.03.34 recording: hero, install, Signals
+- All four case studies, copy verbatim
+- 12 asset slots filled: 5 stills and 7 clips
 
 Build: 5 routes, 0 kB JS, 15 kB HTML on the heaviest page.
 
@@ -27,17 +28,28 @@ figures. The rail variant and the `/compare` route have been removed.
 
 ## Not built
 
-- Case studies 02 (pendo.io homepage) and 04 (Same craft) — frontmatter only, `draft: true`
-- Images. 3 of 21 slots filled (all clips); the rest render as labeled placeholders
+All four case studies are built, copy verbatim.
+- 23 of 35 asset slots. The rest render as labeled placeholders
 - About page, contact, domain, metadata, sitemap
 - Any motion. GSAP is not installed yet
 - Self-hosted fonts
 
 ## Next
 
-1. Case study 02, then 04
-2. Fill asset slots, starting with the Pendo for Agents "Have" crops in the manifest
-3. Self-host fonts, add metadata and Open Graph, run an accessibility and Lighthouse pass
+1. The 23 remaining slots. Most are composites (old vs. new, concept vs. shipped,
+   Figma vs. build) that need two crops combined, plus the mobile captures and
+   the Pendo for Agents drawer clip, which have no source in the library
+2. Self-host fonts, add metadata and Open Graph, run an accessibility and Lighthouse pass
+
+### Known gaps in the sources
+
+- **Pendo for Agents** has the fewest filled slots. Its "before" states live in
+  preview builds (2aq8itt5v, dw3uc9pft, 5sfyvns4j) and an old-version capture;
+  those are composites, not crops. The drawer clip needs a new recording.
+- **Mobile captures** for every study need capturing; none exist.
+- **Figma frames** for Novus chapter 1 are not in the library.
+- The **Same craft prototype** needs `the-new-way.html` rendered from
+  `claude-files.zip` at matching sizes.
 
 ## Recordings
 
