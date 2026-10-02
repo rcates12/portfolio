@@ -6,17 +6,35 @@ interface Props {
   describe: string;
   caption?: string;
   credit?: string;
+  /** Describes what the clip shows. Required before ship, like image alt. */
   alt?: string;
   ratio?: string;
+  /** Hero clips fetch their poster eagerly; the rest wait. */
+  priority?: boolean;
 }
 
-const { asset, describe, caption, credit, alt, ratio = '16 / 9' } = Astro.props;
+const {
+  asset,
+  describe,
+  caption,
+  credit,
+  alt,
+  ratio = '16 / 9',
+  priority = false,
+} = Astro.props;
 
-type Entry = { type: string; src: string; poster?: string };
+type Entry = {
+  type: string;
+  width: number;
+  height: number;
+  duration: number;
+  mp4: string;
+  webm: string;
+  poster: string;
+};
+
 const entry = (assets as Record<string, Entry>)[asset];
 const pending = !entry;
-const src = entry?.src;
-const poster = entry?.poster;
 ---
 
 <figure class="figure-block" data-asset={asset}>
@@ -27,16 +45,26 @@ const poster = entry?.poster;
       <p class="caption key">{asset}</p>
     </div>
   ) : (
-    <video
-      data-clip
-      src={src}
-      poster={poster}
-      muted
-      loop
-      playsinline
-      preload="none"
-      aria-label={alt}
-    ></video>
+    <div class="player" data-player>
+      <video
+        data-clip
+        poster={entry.poster}
+        width={entry.width}
+        height={entry.height}
+        muted
+        loop
+        playsinline
+        preload={priority ? 'metadata' : 'none'}
+        aria-label={alt}
+      >
+        <source src={entry.webm} type="video/webm" />
+        <source src={entry.mp4} type="video/mp4" />
+      </video>
+
+      <button type="button" data-toggle aria-label="Play clip">
+        <span data-toggle-label>Play</span>
+      </button>
+    </div>
   )}
 
   {(caption || credit) && (
@@ -47,26 +75,53 @@ const poster = entry?.poster;
   )}
 </figure>
 
-{!pending && (
-  <script>
-    // Autoplay is opt-in rather than an attribute, so reduced-motion users
-    // keep the poster frame instead of a looping clip.
-    const motionOk = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (motionOk) {
-      for (const video of document.querySelectorAll('video[data-clip]')) {
-        const el = video as HTMLVideoElement;
-        el.preload = 'metadata';
-        new IntersectionObserver((entries, observer) => {
-          for (const entry of entries) {
-            if (!entry.isIntersecting) continue;
-            el.play().catch(() => {});
-            observer.unobserve(entry.target);
-          }
-        }).observe(el);
+<script>
+  // Clips are decorative loops, so they autoplay in view — but only when the
+  // reader hasn't asked for reduced motion, and always with a way to stop.
+  const motionOk = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  for (const node of document.querySelectorAll<HTMLElement>('[data-player]')) {
+    const video = node.querySelector<HTMLVideoElement>('[data-clip]');
+    const button = node.querySelector<HTMLButtonElement>('[data-toggle]');
+    const label = node.querySelector<HTMLElement>('[data-toggle-label]');
+    if (!video || !button || !label) continue;
+
+    const sync = () => {
+      const playing = !video.paused;
+      node.dataset.playing = String(playing);
+      label.textContent = playing ? 'Pause' : 'Play';
+      button.setAttribute('aria-label', playing ? 'Pause clip' : 'Play clip');
+    };
+
+    button.addEventListener('click', () => {
+      if (video.paused) {
+        video.preload = 'auto';
+        video.play().catch(() => {});
+      } else {
+        video.pause();
       }
-    }
-  </script>
-)}
+    });
+
+    video.addEventListener('play', sync);
+    video.addEventListener('pause', sync);
+
+    if (!motionOk) continue;
+
+    new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            video.preload = 'auto';
+            video.play().catch(() => {});
+          } else {
+            video.pause();
+          }
+        }
+      },
+      { threshold: 0.25 },
+    ).observe(video);
+  }
+</script>
 
 <style>
   .figure-block {
@@ -99,5 +154,40 @@ const poster = entry?.poster;
   .describe { color: #b6babd; max-width: 48ch; }
   .key { color: #6d7276; }
 
-  video { border-radius: var(--radius-sm); width: 100%; display: block; }
+  .player { position: relative; }
+
+  video {
+    border-radius: var(--radius-sm);
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  button {
+    position: absolute;
+    left: var(--space-3);
+    bottom: var(--space-3);
+    font: inherit;
+    font-size: var(--size-label);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    font-weight: var(--weight-semibold);
+    color: var(--ink);
+    background: rgb(250 249 247 / 0.9);
+    border: var(--hairline) solid var(--rule-strong);
+    border-radius: var(--radius-sm);
+    padding: var(--space-2) var(--space-3);
+    cursor: pointer;
+    backdrop-filter: blur(6px);
+    transition: opacity var(--dur-2) var(--ease-out);
+  }
+
+  /* Out of the way while running, back on hover or keyboard focus. */
+  .player[data-playing='true'] button { opacity: 0; }
+  .player:hover button,
+  button:focus-visible { opacity: 1; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .player[data-playing='true'] button { opacity: 1; }
+  }
 </style>

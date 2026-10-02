@@ -2,6 +2,8 @@
 import BaseLayout from './BaseLayout.astro';
 import SnapshotTable from '../components/SnapshotTable.astro';
 import Figure from '../components/Figure.astro';
+import Clip from '../components/Clip.astro';
+import assets from '../data/assets.json';
 
 interface Props {
   title: string;
@@ -24,6 +26,10 @@ const {
   snapshot,
   links = [],
 } = Astro.props;
+
+// Novus leads with a clip rather than a still, so the hero follows the asset.
+const entry = (assets as Record<string, { type: string }>)[hero.asset];
+const HeroMedia = entry?.type === 'video' ? Clip : Figure;
 ---
 
 <BaseLayout title={`${title} · Ryan Cates`} description={subtitle}>
@@ -37,7 +43,7 @@ const {
 
     <div class="editorial-grid hero-row">
       <div class="wide">
-        <Figure asset={hero.asset} describe={heroDescribe} alt={hero.alt} ratio="16 / 10" />
+        <HeroMedia asset={hero.asset} describe={heroDescribe} alt={hero.alt} ratio="16 / 10" priority />
       </div>
     </div>
 

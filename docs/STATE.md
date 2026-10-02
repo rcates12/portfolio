@@ -17,6 +17,8 @@ Updated 2026-10-02.
 - **Pendo for Agents built end to end**, copy verbatim, every image slot a labeled placeholder
 - **Novus built end to end**, including the `Chapter` divider for its two-chapter structure
 - Asset pipeline: `npm run assets:status`, `node scripts/assets.mjs <slot> <file>`
+- Clip pipeline: trims a recording to a short muted loop in MP4 and WebM with a poster, autoplays in view, pauses out of view, respects `prefers-reduced-motion`, and always offers a play/pause control
+- Three Novus clips cut from the 10.03.34 recording: hero, install, Signals
 
 Build: 5 routes, 0 kB JS, 15 kB HTML on the heaviest page.
 
@@ -26,7 +28,7 @@ figures. The rail variant and the `/compare` route have been removed.
 ## Not built
 
 - Case studies 02 (pendo.io homepage) and 04 (Same craft) — frontmatter only, `draft: true`
-- Every image and clip. 0 of 21 slots filled; all render as labeled placeholders
+- Images. 3 of 21 slots filled (all clips); the rest render as labeled placeholders
 - About page, contact, domain, metadata, sitemap
 - Any motion. GSAP is not installed yet
 - Self-hosted fonts
@@ -36,6 +38,23 @@ figures. The rail variant and the `/compare` route have been removed.
 1. Case study 02, then 04
 2. Fill asset slots, starting with the Pendo for Agents "Have" crops in the manifest
 3. Self-host fonts, add metadata and Open Graph, run an accessibility and Lighthouse pass
+
+## Recordings
+
+The source recordings are at `Downloads/work evidence for portfolio/screenshots/`.
+All eight are short (10–65s) and clean full-bleed captures with no browser chrome.
+Contact sheets for picking in and out points are in `assets/incoming/contact/`
+(gitignored).
+
+Two findings that make `docs/portfolio/asset-manifest.md` out of date:
+
+- The two homepage recordings it lists as "not reviewed yet" cover the use-case
+  modal opening, the Headless Pendo section, the quote tabs and the logo bar —
+  several slots it marks "Capture" are already in hand.
+- The 388 MB Same craft recording covers the whole page: the setup flip, the
+  1:1 panels, the 35 trillion counter, the photo opening to full bleed, and the
+  close. The Predict panel appears here and still needs its customer quote
+  blurred before any clip from it ships.
 
 ## Assets
 

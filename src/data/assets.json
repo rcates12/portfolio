@@ -1,1 +1,29 @@
-{}
+{
+  "novus-clips": {
+    "type": "video",
+    "width": 1280,
+    "height": 700,
+    "duration": 8.77,
+    "mp4": "/img/novus-clips.mp4",
+    "webm": "/img/novus-clips.webm",
+    "poster": "/img/novus-clips-poster.webp"
+  },
+  "novus-hero": {
+    "type": "video",
+    "width": 1280,
+    "height": 700,
+    "duration": 6,
+    "mp4": "/img/novus-hero.mp4",
+    "webm": "/img/novus-hero.webm",
+    "poster": "/img/novus-hero-poster.webp"
+  },
+  "novus-install": {
+    "type": "video",
+    "width": 1280,
+    "height": 700,
+    "duration": 8,
+    "mp4": "/img/novus-install.mp4",
+    "webm": "/img/novus-install.webm",
+    "poster": "/img/novus-install-poster.webp"
+  }
+}

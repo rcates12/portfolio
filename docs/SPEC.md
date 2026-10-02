@@ -88,7 +88,21 @@ node scripts/assets.mjs <slot> <file> --crop=x,y,w,h   # process one
 
 It writes AVIF and WebP at 640/1024/1536/2048 into `public/img/`, records dimensions in `src/data/assets.json`, and the matching `Figure` stops rendering its placeholder on the next build. Width and height come from the manifest, so filling a slot cannot shift layout.
 
-Use `--crop=x,y,w,h` rather than a space, since PowerShell splits bare comma lists. Videos are copied through with an optional `--poster`; there's no transcoding step yet.
+Use `--crop=x,y,w,h` rather than a space, since PowerShell splits bare comma lists.
+
+Screen recordings go through the same command and get trimmed, scaled, stripped of audio, and encoded to MP4 and WebM with a poster frame:
+
+```
+node scripts/assets.mjs novus-install rec.mov --start=1.5 --duration=8 --poster-at=0.5
+```
+
+Flags: `--start`, `--duration`, `--crop`, `--max` (1280), `--fps` (30), `--crf` (26), `--poster-at`. Requires ffmpeg. Clips run roughly 200–550 kB for 6–9 seconds at 1280px. `CaseStudyLayout` picks `Clip` over `Figure` for the hero automatically when the manifest entry is a video, which is how Novus leads with a clip.
+
+To find in and out points without scrubbing, build a contact sheet:
+
+```
+ffmpeg -i rec.mov -vf "fps=0.6,scale=420:-1,tile=4x6" -frames:v 1 sheet.jpg
+```
 
 ## 5. Design tokens
 

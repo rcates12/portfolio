@@ -4,16 +4,23 @@
 //
 //   node scripts/assets.mjs --status
 //   node scripts/assets.mjs novus-receipt assets/incoming/capture.png
-//   node scripts/assets.mjs novus-receipt capture.png --crop 0,120,3456,1944
-//   node scripts/assets.mjs novus-install clip.mp4 --poster poster.png
+//   node scripts/assets.mjs novus-receipt capture.png --crop=0,120,3456,1944
+//   node scripts/assets.mjs novus-install rec.mov --start=00:01:12 --duration=6
+//
+// Video flags: --start, --duration, --crop, --max (default 1280),
+// --fps (30), --crf (26), --poster-at (seconds into the trimmed clip).
 //
 // Source captures run to 36 MB and must never be committed. Drop them in
 // assets/incoming/ (gitignored) and run this.
 
-import { readFile, writeFile, mkdir, readdir, stat } from 'node:fs/promises';
+import { readFile, writeFile, mkdir, readdir, stat, rm } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
+import { execFile } from 'node:child_process';
+import { promisify } from 'node:util';
 import path from 'node:path';
 import sharp from 'sharp';
+
+const run = promisify(execFile);
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 const OUT_DIR = path.join(ROOT, 'public', 'img');
@@ -96,28 +103,96 @@ async function status() {
   if (orphans.length) console.log(`Unused manifest entries: ${orphans.join(', ')}`);
 }
 
+async function probe(file) {
+  const { stdout } = await run('ffprobe', [
+    '-v', 'error',
+    '-select_streams', 'v:0',
+    '-show_entries', 'stream=width,height:format=duration',
+    '-of', 'json',
+    file,
+  ]);
+  const data = JSON.parse(stdout);
+  return {
+    width: data.streams[0].width,
+    height: data.streams[0].height,
+    duration: Number(data.format.duration),
+  };
+}
+
+/** Trim a long screen recording into a short muted loop, in two formats,
+ *  with a poster frame for reduced-motion and first paint. */
 async function processVideo(slot, source, flags, manifest) {
-  const name = `${slot}${path.extname(source)}`;
   await mkdir(OUT_DIR, { recursive: true });
-  await writeFile(path.join(OUT_DIR, name), await readFile(source));
 
-  let poster;
-  if (typeof flags.poster === 'string') {
-    const image = sharp(flags.poster);
-    const meta = await image.metadata();
-    poster = `${slot}-poster.webp`;
-    await image.resize({ width: Math.min(1536, meta.width) }).webp({ quality: 78 })
-      .toFile(path.join(OUT_DIR, poster));
+  const maxWidth = Number(flags.max ?? 1280);
+  const fps = Number(flags.fps ?? 30);
+  const filters = [];
+  if (typeof flags.crop === 'string') {
+    const [left, top, width, height] = flags.crop.split(',').map(Number);
+    if ([left, top, width, height].some(Number.isNaN)) {
+      throw new Error('--crop expects x,y,w,h in source pixels');
+    }
+    filters.push(`crop=${width}:${height}:${left}:${top}`);
   }
+  filters.push(`scale=${maxWidth}:-2:flags=lanczos`, `fps=${fps}`);
+  const filter = filters.join(',');
 
+  // -ss before -i seeks by keyframe, which is fast on a multi-hundred-MB source.
+  const trim = [];
+  if (flags.start) trim.push('-ss', String(flags.start));
+  trim.push('-i', source);
+  if (flags.duration) trim.push('-t', String(flags.duration));
+
+  const mp4 = path.join(OUT_DIR, `${slot}.mp4`);
+  const webm = path.join(OUT_DIR, `${slot}.webm`);
+  const poster = path.join(OUT_DIR, `${slot}-poster.webp`);
+
+  console.log(`${slot}: encoding mp4…`);
+  await run('ffmpeg', [
+    '-y', ...trim,
+    '-vf', filter,
+    '-an',
+    '-c:v', 'libx264', '-crf', String(flags.crf ?? 26), '-preset', 'slow',
+    '-pix_fmt', 'yuv420p', '-movflags', '+faststart',
+    mp4,
+  ]);
+
+  console.log(`${slot}: encoding webm…`);
+  await run('ffmpeg', [
+    '-y', '-i', mp4,
+    '-an',
+    '-c:v', 'libvpx-vp9', '-crf', String(flags.crf ? Number(flags.crf) + 8 : 34), '-b:v', '0',
+    '-row-mt', '1',
+    webm,
+  ]);
+
+  const posterAt = String(flags['poster-at'] ?? 0);
+  const framePng = path.join(OUT_DIR, `${slot}-frame.png`);
+  await run('ffmpeg', ['-y', '-ss', posterAt, '-i', mp4, '-frames:v', '1', framePng]);
+  await sharp(framePng).webp({ quality: 78 }).toFile(poster);
+  await rm(framePng, { force: true });
+
+  const meta = await probe(mp4);
   manifest[slot] = {
     type: 'video',
-    src: `/img/${name}`,
-    ...(poster ? { poster: `/img/${poster}` } : {}),
+    width: meta.width,
+    height: meta.height,
+    duration: Number(meta.duration.toFixed(2)),
+    mp4: `/img/${slot}.mp4`,
+    webm: `/img/${slot}.webm`,
+    poster: `/img/${slot}-poster.webp`,
   };
 
-  console.log(`${slot}: video copied.`);
-  if (!poster) console.log('  No poster. Reduced-motion users will see a blank frame; pass --poster.');
+  const kb = async (file) => Math.round((await stat(file)).size / 1024);
+  const sourceMb = ((await stat(source)).size / 1024 / 1024).toFixed(1);
+  console.log(
+    `${slot}: ${meta.width}x${meta.height}, ${meta.duration.toFixed(1)}s, ` +
+    `mp4 ${await kb(mp4)} kB, webm ${await kb(webm)} kB, poster ${await kb(poster)} kB.`,
+  );
+  console.log(`  Source was ${sourceMb} MB. Do not commit it.`);
+  if (meta.duration > 12) {
+    console.log('  Over 12s. Loops read better short; consider --duration.');
+  }
 }
 
 async function processImage(slot, source, flags, manifest) {
