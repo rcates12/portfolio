@@ -126,6 +126,20 @@
     ],
     "sourceTraced": true
   },
+  "pfa-gradient": {
+    "type": "image",
+    "width": 3456,
+    "height": 1600,
+    "widths": [
+      640,
+      1024,
+      1536,
+      2048
+    ],
+    "source": [
+      "C:/Users/ryanc/Downloads/work evidence for portfolio/screenshots/PFA docs/screencapture-pendo-io-product-agent-analytics-2026-09-30-21_42_09.png"
+    ]
+  },
   "pfa-hero": {
     "type": "image",
     "width": 3456,
@@ -160,6 +174,21 @@
     "type": "image",
     "width": 3320,
     "height": 927,
+    "widths": [
+      640,
+      1024,
+      1536,
+      2048
+    ],
+    "source": [
+      "C:/Users/ryanc/Downloads/screencapture-localhost-3000-product-agent-analytics-2026-10-02-11_03_44.png(1)/screencapture-localhost-3000-product-agent-analytics-2026-10-02-11_03_44_old-version.png",
+      "C:/Users/ryanc/Downloads/work evidence for portfolio/screenshots/PFA docs/screencapture-pendo-io-product-agent-analytics-2026-09-30-21_42_09.png"
+    ]
+  },
+  "pfa-panels": {
+    "type": "image",
+    "width": 2920,
+    "height": 850,
     "widths": [
       640,
       1024,

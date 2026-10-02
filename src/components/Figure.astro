@@ -40,20 +40,24 @@ const sizes = '(max-width: 60rem) 100vw, 960px';
       <p class="caption key">{asset}</p>
     </div>
   ) : (
-    <picture>
-      <source type="image/avif" srcset={srcset('avif')} sizes={sizes} />
-      <img
-        src={`/img/${asset}-${entry.widths.at(-1)}.webp`}
-        srcset={srcset('webp')}
-        sizes={sizes}
-        width={entry.width}
-        height={entry.height}
-        alt={alt}
-        loading={priority ? 'eager' : 'lazy'}
-        decoding="async"
-        fetchpriority={priority ? 'high' : undefined}
-      />
-    </picture>
+    <button type="button" class="zoom" data-zoom>
+      <picture>
+        <source type="image/avif" srcset={srcset('avif')} sizes={sizes} />
+        <img
+          src={`/img/${asset}-${entry.widths.at(-1)}.webp`}
+          srcset={srcset('webp')}
+          sizes={sizes}
+          width={entry.width}
+          height={entry.height}
+          alt={alt}
+          loading={priority ? 'eager' : 'lazy'}
+          decoding="async"
+          fetchpriority={priority ? 'high' : undefined}
+        />
+      </picture>
+      {/* Keeps the alt text as the button's name and adds the action to it. */}
+      <span class="visually-hidden">Enlarge image</span>
+    </button>
   )}
 
   {(caption || credit) && (
@@ -96,4 +100,19 @@ const sizes = '(max-width: 60rem) 100vw, 960px';
   .key { color: #6d7276; }
 
   img { border-radius: var(--radius-sm); width: 100%; }
+
+  .zoom {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: zoom-in;
+    border-radius: var(--radius-sm);
+  }
+
+  .zoom:focus-visible {
+    outline: var(--focus-ring);
+    outline-offset: 3px;
+  }
 </style>

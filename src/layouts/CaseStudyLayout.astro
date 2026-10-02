@@ -3,6 +3,7 @@ import BaseLayout from './BaseLayout.astro';
 import SnapshotTable from '../components/SnapshotTable.astro';
 import Figure from '../components/Figure.astro';
 import Clip from '../components/Clip.astro';
+import Lightbox from '../components/Lightbox.astro';
 import assets from '../data/assets.json';
 
 interface Props {
@@ -57,6 +58,8 @@ const HeroMedia = entry?.type === 'video' ? Clip : Figure;
       <slot />
     </div>
   </article>
+
+  <Lightbox />
 </BaseLayout>
 
 <style>

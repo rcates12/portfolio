@@ -4,6 +4,10 @@
 
 html { -webkit-text-size-adjust: 100%; }
 
+/* Set while the lightbox is open: a modal dialog does not stop the page
+   behind it from scrolling. */
+html.is-locked { overflow: hidden; }
+
 body {
   margin: 0;
   background: var(--paper);

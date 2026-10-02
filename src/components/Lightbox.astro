@@ -1,0 +1,188 @@
+---
+// One dialog per page, shared by every zoomable figure. The trigger markup
+// lives in Figure.astro; this clones the picture it already rendered, so the
+// enlarged view reuses the same AVIF and WebP sources.
+---
+
+<dialog class="lightbox" aria-label="Enlarged image">
+  <figure class="stage" data-stage></figure>
+  <button type="button" class="close" data-close aria-label="Close enlarged image">
+    <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+      <path d="M3 3 13 13M13 3 3 13" />
+    </svg>
+  </button>
+</dialog>
+
+<script>
+  const dialog = document.querySelector<HTMLDialogElement>('dialog.lightbox');
+  const stage = dialog?.querySelector<HTMLElement>('[data-stage]');
+  const triggers = document.querySelectorAll<HTMLButtonElement>('[data-zoom]');
+
+  if (dialog && stage && triggers.length) {
+    const open = (trigger: HTMLButtonElement) => {
+      const picture = trigger.querySelector('picture');
+      if (!picture) return;
+
+      const clone = picture.cloneNode(true) as HTMLElement;
+      // The page asks for a 960px column; the dialog wants the whole viewport.
+      clone.querySelectorAll('source, img').forEach((node) => {
+        node.setAttribute('sizes', '100vw');
+      });
+
+      const img = clone.querySelector('img');
+      if (img) {
+        img.loading = 'eager';
+        img.removeAttribute('fetchpriority');
+        // Never upscale past the widest file we generated.
+        const width = img.getAttribute('width');
+        if (width) dialog.style.setProperty('--natural-width', `${width}px`);
+      }
+
+      stage.replaceChildren(clone);
+
+      const caption = trigger.closest('figure')?.querySelector('figcaption');
+      if (caption) stage.append(caption.cloneNode(true));
+
+      dialog.showModal();
+      // showModal does not stop the page behind it from scrolling.
+      document.documentElement.classList.add('is-locked');
+
+      // Fitting a tall image to the viewport can leave it barely bigger than
+      // it was on the page. Those get the full width and scroll instead.
+      const natural = Number(img?.getAttribute('width')) / Number(img?.getAttribute('height'));
+      const box = stage.getBoundingClientRect();
+      dialog.classList.toggle('is-tall', natural < box.width / box.height);
+    };
+
+    triggers.forEach((trigger) => {
+      trigger.addEventListener('click', () => open(trigger));
+    });
+
+    dialog.addEventListener('click', (event) => {
+      const target = event.target;
+      if (!(target instanceof Element)) return;
+      // Anything that is not the image itself dismisses: the backdrop area of
+      // the dialog box, or the close button.
+      if (target === dialog || target.closest('[data-close]')) dialog.close();
+    });
+
+    // Escape and focus return are handled by the dialog element.
+    dialog.addEventListener('close', () => {
+      document.documentElement.classList.remove('is-locked');
+      dialog.classList.remove('is-tall');
+      dialog.scrollTop = 0;
+      stage.replaceChildren();
+    });
+  }
+</script>
+
+<style>
+  .lightbox {
+    width: 100vw;
+    max-width: 100vw;
+    height: 100dvh;
+    max-height: 100dvh;
+    margin: 0;
+    padding: clamp(var(--space-3), 3vw, var(--space-6));
+    border: 0;
+    background: transparent;
+    overscroll-behavior: contain;
+  }
+
+  .lightbox::backdrop {
+    background: rgb(23 25 27 / 0.94);
+  }
+
+  .stage {
+    margin: 0;
+    height: 100%;
+    display: grid;
+    /* A definite row for the image, so object-fit has a box to fit inside. */
+    grid-template-rows: minmax(0, 1fr) auto;
+    align-content: center;
+    gap: var(--space-4);
+  }
+
+  /* Cloned at runtime, so it sits outside this component's scoped styles. */
+  .lightbox :global(picture) {
+    display: block;
+    height: 100%;
+    min-height: 0;
+  }
+
+  .lightbox :global(picture img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    /* Fill the box, letterboxed, and never upscale past the widest file. */
+    object-fit: contain;
+    max-width: var(--natural-width, none);
+    margin-inline: auto;
+    border-radius: 0;
+  }
+
+  /* Taller than the viewport allows: show it at full width and scroll. */
+  .lightbox.is-tall { overflow-y: auto; }
+
+  .lightbox.is-tall .stage {
+    height: auto;
+    grid-template-rows: auto auto;
+    align-content: start;
+  }
+
+  .lightbox.is-tall :global(picture) { height: auto; }
+
+  .lightbox.is-tall :global(picture img) {
+    height: auto;
+    object-fit: fill;
+  }
+
+  .lightbox :global(figcaption) {
+    max-width: var(--measure);
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  .lightbox :global(figcaption p) {
+    color: #c9ccce;
+  }
+
+  .lightbox :global(figcaption p + p) {
+    margin-top: var(--space-2);
+    color: #8a8f94;
+  }
+
+  .close {
+    position: fixed;
+    inset-block-start: var(--space-3);
+    inset-inline-end: var(--space-3);
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    padding: 0;
+    color: #c9ccce;
+    background: rgb(23 25 27 / 0.6);
+    border: var(--hairline) solid rgb(201 204 206 / 0.3);
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  .close:hover {
+    color: var(--paper);
+    border-color: rgb(201 204 206 / 0.6);
+  }
+
+  .close svg {
+    width: 1rem;
+    height: 1rem;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    fill: none;
+  }
+
+  .close:focus-visible {
+    outline: var(--focus-ring);
+    outline-offset: 2px;
+  }
+</style>

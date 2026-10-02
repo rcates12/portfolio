@@ -21,7 +21,7 @@ Updated 2026-10-02.
 - All four case studies, copy verbatim
 - Composite pipeline: `node scripts/compose.mjs --out=<slot> --cols=N "<file>|x,y,w,h" …`
   combines crops into one image, top-aligned per row, no burned-in labels
-- 20 asset slots filled: 5 single stills, 7 composites, 8 clips
+- 22 asset slots filled: 6 single stills, 8 composites, 8 clips
 
 Build: 5 routes, 0 kB JS, 15 kB HTML on the heaviest page.
 
@@ -31,20 +31,37 @@ figures. The rail variant and the `/compare` route have been removed.
 ## Not built
 
 All four case studies are built, copy verbatim.
-- 15 of 35 asset slots. The rest render as labeled placeholders
+- 13 of 35 asset slots. The rest render as labeled placeholders
 - About page, contact, domain, metadata, sitemap
 - Any motion. GSAP is not installed yet
 - Self-hosted fonts
 
 ## Next
 
-1. The 15 remaining slots. The easy composites are done; what's left needs
+1. The 13 remaining slots. The easy composites are done; what's left needs
    section-level crop coordinates found by slicing the tall captures
    (`pfa-panels`, `pfa-first-output`, `pfa-subnav`, `pfa-gradient`,
    `novus-receipt`, `novus-concept-vs-shipped`, `homepage-four-shapes`), plus
    the mobile captures and the Pendo for Agents drawer clip, which have no
    source in the library
 2. Self-host fonts, add metadata and Open Graph, run an accessibility and Lighthouse pass
+
+### Section offsets found so far
+
+Crop coordinates into the tall captures, so these do not have to be hunted again.
+
+| Capture | Section | y |
+| --- | --- | --- |
+| `pendo-io-product-agent-analytics` (live, 28800 tall) | hero | 0 |
+| | observability gap, line-art version | 1800–3800 |
+| | capability panels | 7100–9000 |
+| | the two Grainient cards | 21250–22850 |
+| `..._old-version.png` (27974 tall) | hero | 0 |
+| | the pink bento of UI cards | 6900–8800 |
+
+The four `Screenshot 9.44–9.45` files in `PFA docs/` are the shipped drawer:
+Pendo in action, Proof, Schedule a demo, and the logo wall. **The Proof one
+names a customer and a person and must be blurred before it ships.**
 
 ### Known gaps in the sources
 
