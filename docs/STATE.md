@@ -21,7 +21,7 @@ Updated 2026-10-02.
 - All four case studies, copy verbatim
 - Composite pipeline: `node scripts/compose.mjs --out=<slot> --cols=N "<file>|x,y,w,h" …`
   combines crops into one image, top-aligned per row, no burned-in labels
-- 22 asset slots filled: 6 single stills, 8 composites, 8 clips
+- 26 asset slots filled: 8 single stills, 10 composites, 8 clips
 
 Build: 5 routes, 0 kB JS, 15 kB HTML on the heaviest page.
 
@@ -31,14 +31,14 @@ figures. The rail variant and the `/compare` route have been removed.
 ## Not built
 
 All four case studies are built, copy verbatim.
-- 13 of 35 asset slots. The rest render as labeled placeholders
+- 9 of 35 asset slots. The rest render as labeled placeholders
 - About page, contact, domain, metadata, sitemap
 - Any motion. GSAP is not installed yet
 - Self-hosted fonts
 
 ## Next
 
-1. The 13 remaining slots. The easy composites are done; what's left needs
+1. The 9 remaining slots. The easy composites are done; what's left needs
    section-level crop coordinates found by slicing the tall captures
    (`pfa-panels`, `pfa-first-output`, `pfa-subnav`, `pfa-gradient`,
    `novus-receipt`, `novus-concept-vs-shipped`, `homepage-four-shapes`), plus
@@ -62,6 +62,31 @@ Crop coordinates into the tall captures, so these do not have to be hunted again
 The four `Screenshot 9.44–9.45` files in `PFA docs/` are the shipped drawer:
 Pendo in action, Proof, Schedule a demo, and the logo wall. **The Proof one
 names a customer and a person and must be blurred before it ships.**
+
+More offsets, found with `scripts/sheet.mjs --slice=<file>`:
+
+| Capture | Section | y, height |
+| --- | --- | --- |
+| homepage `kxvbvc12d` | use cases, card grid | 1680, 4300 |
+| homepage `6qfu78147` | use cases, full-width rows | 4100, 4300 |
+| homepage `h5dpw8a34` **22_41_00** | use cases, bento | 4620, 4300 |
+| homepage `pendo-io` (live) | use cases, lifecycle rows | 6640, 4300 |
+| `novus-ai` (live) | the receipt card | 16850, 1450 |
+| | "Novus listens" | 3920, 1580 |
+| | "Signals show you" | 6620, 1850 |
+| | closing marquee | 18260, 1350 |
+| `claude-ai-design` (concept) | "Novus listens" | 5420, 1580 |
+| | "Signals show you" | 7020, 1850 |
+| | closing marquee | 9080, 1350 |
+
+Two traps found the hard way. There are two `h5dpw8a34` captures; the
+**22_41_34** one caught the bento mid-animation, faded and still loading, so
+use **22_41_00**. And on the Novus live page the receipt card and the closing
+marquee are closer together than they look, so a careless crop of one clips
+the other.
+
+Off limits: the Slack sections on both Novus pages name people and customer
+workspaces, so no crop may include them.
 
 ### Known gaps in the sources
 
