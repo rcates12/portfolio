@@ -1,0 +1,40 @@
+---
+description: Non-negotiable content, credit, privacy, and metrics rules for Ryan Cates's portfolio site
+alwaysApply: true
+---
+
+# Portfolio rules (always apply)
+
+Context: `docs/portfolio/BRIEF.md`. Case study copy: `docs/portfolio/content/`. Images: `docs/portfolio/asset-manifest.md`.
+
+## Content is final; do not rewrite it
+- The text in `content/` is approved copy. Move it into the site verbatim. Do not paraphrase, "improve," shorten, or add sentences unless Ryan asks for that specific change.
+- Never invent facts, dates, metrics, quotes, names, clients, or results. If something seems missing, leave a visible `TODO` and ask.
+- New UI text (nav, buttons, captions, alt text) follows the voice: first person, plain, specific, short, no buzzwords.
+
+## Credit lines (never overclaim)
+| Project | Ryan owned | Others owned |
+| --- | --- | --- |
+| Pendo for Agents | All visual design, the design language (extended from the homepage), interactions, WebGL, art-directed AI-generated UI motifs, the build | Narrative and page structure: Content and PMM. No designer involved. The drawer started as a colleague's rough concept, handed to Ryan to design |
+| pendo.io homepage | Design, layout, motion, interactive elements (Headless Pendo), the review toolbar, concept-car explorations, build, post-launch polish | Structure and story: Content and PMM. Headless Pendo scripts: PMM. Leadership asked for the toolbar; the director of brand design asked for the bento; a designer supplied the waves asset only |
+| Novus, chapter 1 | Pixel-perfect implementation through a structured AI workflow | Site design and brand: an agency |
+| Novus, chapter 2 | Shaping the story with Novus's head of product, his own design ideas, the build | Starting concept and most of the copy: Novus's head of product, made in Claude Design |
+| Same craft, new floor | Idea, concept, design, motion, build | Claude wrote the campaign copy. Never launched; say so plainly |
+
+Anything visual by someone else (agency Figma frames, the Claude Design concept) gets a caption crediting them.
+
+## People and customers
+- Anonymize every person except Ryan. Use roles: "my manager," "the head of product," "a designer," "the director of brand design." Use they/them for anyone whose pronouns aren't stated.
+- Do not name customers in prose. Blur customer names and companies in screenshots where `asset-manifest.md` says to (the Pendo for Agents Proof drawer, the Same craft Predict panel quote). Homepage customer logos and headshots may stay as they are.
+- Do not name the Novus agency unless Ryan says to (still undecided).
+
+## Metrics
+- Use only the figures already in `content/`, with the attribution they already carry (for example, the ~40% demo lift is campaign-level). Do not add numbers, round differently, or turn a percentage into a raw count.
+
+## Images and video
+- No Vercel preview URLs, localhost bars, or internal tool chrome in any shipped image; crop them out.
+- Every image needs real alt text describing what it shows. Comparison images (before/after, first output vs. shipped) need captions that say which side is which.
+- Source captures are huge (up to 36 MB). Ship cropped, resized, compressed images (AVIF/WebP via `next/image` or equivalent) and short, muted, looping MP4/WebM clips with posters. Respect `prefers-reduced-motion`.
+
+## AI
+- Be open about AI use. The "first output vs. what shipped" section is the signature device; keep it in every case study.
