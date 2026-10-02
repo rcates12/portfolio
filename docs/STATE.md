@@ -19,7 +19,9 @@ Updated 2026-10-02.
 - Asset pipeline: `npm run assets:status`, `node scripts/assets.mjs <slot> <file>`
 - Clip pipeline: trims a recording to a short muted loop in MP4 and WebM with a poster, autoplays in view, pauses out of view, respects `prefers-reduced-motion`, and always offers a play/pause control
 - All four case studies, copy verbatim
-- 12 asset slots filled: 5 stills and 7 clips
+- Composite pipeline: `node scripts/compose.mjs --out=<slot> --cols=N "<file>|x,y,w,h" …`
+  combines crops into one image, top-aligned per row, no burned-in labels
+- 18 asset slots filled: 5 single stills, 6 composites, 7 clips
 
 Build: 5 routes, 0 kB JS, 15 kB HTML on the heaviest page.
 
@@ -29,16 +31,19 @@ figures. The rail variant and the `/compare` route have been removed.
 ## Not built
 
 All four case studies are built, copy verbatim.
-- 23 of 35 asset slots. The rest render as labeled placeholders
+- 17 of 35 asset slots. The rest render as labeled placeholders
 - About page, contact, domain, metadata, sitemap
 - Any motion. GSAP is not installed yet
 - Self-hosted fonts
 
 ## Next
 
-1. The 23 remaining slots. Most are composites (old vs. new, concept vs. shipped,
-   Figma vs. build) that need two crops combined, plus the mobile captures and
-   the Pendo for Agents drawer clip, which have no source in the library
+1. The 17 remaining slots. The easy composites are done; what's left needs
+   section-level crop coordinates found by slicing the tall captures
+   (`pfa-panels`, `pfa-first-output`, `pfa-subnav`, `pfa-gradient`,
+   `novus-receipt`, `novus-concept-vs-shipped`, `homepage-four-shapes`), plus
+   the mobile captures and the Pendo for Agents drawer clip, which have no
+   source in the library
 2. Self-host fonts, add metadata and Open Graph, run an accessibility and Lighthouse pass
 
 ### Known gaps in the sources

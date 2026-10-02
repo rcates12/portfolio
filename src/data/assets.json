@@ -1,4 +1,15 @@
 {
+  "homepage-concept-car": {
+    "type": "image",
+    "width": 3120,
+    "height": 1422,
+    "widths": [
+      640,
+      1024,
+      1536,
+      2048
+    ]
+  },
   "homepage-headless": {
     "type": "video",
     "width": 1280,
@@ -28,6 +39,17 @@
     "webm": "/img/homepage-toolbar.webm",
     "poster": "/img/homepage-toolbar-poster.webp"
   },
+  "homepage-waves": {
+    "type": "image",
+    "width": 3320,
+    "height": 802,
+    "widths": [
+      640,
+      1024,
+      1536,
+      2048
+    ]
+  },
   "novus-clips": {
     "type": "video",
     "width": 1280,
@@ -36,6 +58,17 @@
     "mp4": "/img/novus-clips.mp4",
     "webm": "/img/novus-clips.webm",
     "poster": "/img/novus-clips-poster.webp"
+  },
+  "novus-concept-hero": {
+    "type": "image",
+    "width": 3320,
+    "height": 927,
+    "widths": [
+      640,
+      1024,
+      1536,
+      2048
+    ]
   },
   "novus-hero": {
     "type": "video",
@@ -59,6 +92,39 @@
     "type": "image",
     "width": 3456,
     "height": 1150,
+    "widths": [
+      640,
+      1024,
+      1536,
+      2048
+    ]
+  },
+  "pfa-homepage-system": {
+    "type": "image",
+    "width": 3320,
+    "height": 802,
+    "widths": [
+      640,
+      1024,
+      1536,
+      2048
+    ]
+  },
+  "pfa-old-vs-new": {
+    "type": "image",
+    "width": 3320,
+    "height": 927,
+    "widths": [
+      640,
+      1024,
+      1536,
+      2048
+    ]
+  },
+  "same-craft-beats": {
+    "type": "image",
+    "width": 4532,
+    "height": 377,
     "widths": [
       640,
       1024,
