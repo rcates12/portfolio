@@ -1,0 +1,162 @@
+@import "./tokens.css";
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: var(--size-body);
+  line-height: var(--leading-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+img, video { max-width: 100%; height: auto; display: block; }
+
+a { color: inherit; }
+
+:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+.skip-link {
+  position: absolute;
+  left: var(--space-4);
+  top: var(--space-4);
+  padding: var(--space-2) var(--space-3);
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: var(--radius-sm);
+  transform: translateY(-200%);
+}
+
+.skip-link:focus-visible { transform: none; }
+
+/* ---- Type roles ------------------------------------------------------ */
+
+.display-1, .display-2, .display-3, .heading {
+  font-family: var(--font-display);
+  font-weight: var(--weight-display);
+  margin: 0;
+}
+
+.display-1 {
+  font-size: var(--size-display-1);
+  font-variation-settings: var(--fraunces-display);
+  line-height: var(--leading-display);
+  letter-spacing: var(--tracking-display);
+}
+
+.display-2 {
+  font-size: var(--size-display-2);
+  font-variation-settings: var(--fraunces-display);
+  line-height: var(--leading-display);
+  letter-spacing: var(--tracking-display);
+}
+
+.display-3 {
+  font-size: var(--size-display-3);
+  font-variation-settings: var(--fraunces-heading);
+  line-height: var(--leading-heading);
+  letter-spacing: var(--tracking-heading);
+}
+
+.heading {
+  font-size: var(--size-heading);
+  font-variation-settings: var(--fraunces-heading);
+  line-height: var(--leading-heading);
+  letter-spacing: var(--tracking-heading);
+}
+
+.lead {
+  font-size: var(--size-lead);
+  line-height: var(--leading-tight);
+  color: var(--ink-2);
+  margin: 0;
+}
+
+.label {
+  font-size: var(--size-label);
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--ink-3);
+  font-weight: var(--weight-semibold);
+  line-height: var(--leading-tight);
+  margin: 0;
+}
+
+.caption {
+  font-size: var(--size-caption);
+  line-height: var(--leading-tight);
+  color: var(--ink-3);
+  margin: 0;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ---- Grid placement -------------------------------------------------- */
+
+.editorial-grid > .rail { align-self: start; }
+
+/* ---- Prose ----------------------------------------------------------- */
+/* Applied to rendered MDX. Headings are Fraunces, body is the reading
+   measure; block-level components opt out via their own grid placement. */
+
+.prose > * { margin-block: 0 var(--space-4); }
+.prose > *:last-child { margin-bottom: 0; }
+
+.prose h2 {
+  font-family: var(--font-display);
+  font-weight: var(--weight-display);
+  font-size: var(--size-display-3);
+  font-variation-settings: var(--fraunces-heading);
+  line-height: var(--leading-heading);
+  letter-spacing: var(--tracking-heading);
+  margin-block: var(--space-9) var(--space-5);
+}
+
+.prose h3 {
+  font-family: var(--font-display);
+  font-weight: var(--weight-display);
+  font-size: var(--size-heading);
+  font-variation-settings: var(--fraunces-heading);
+  line-height: var(--leading-heading);
+  letter-spacing: var(--tracking-heading);
+  margin-block: var(--space-7) var(--space-4);
+}
+
+.prose h2:first-child, .prose h3:first-child { margin-top: 0; }
+
+.prose a {
+  color: var(--ink);
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+  text-decoration-color: var(--rule-strong);
+  transition: text-decoration-color var(--dur-2) var(--ease-out);
+}
+
+.prose a:hover { text-decoration-color: var(--ink); }
+
+.prose em { font-style: italic; }
+
+.prose code {
+  font-size: 0.92em;
+  background: var(--paper-sunk);
+  border: var(--hairline) solid var(--rule);
+  border-radius: var(--radius-sm);
+  padding: 0.1em 0.3em;
+}

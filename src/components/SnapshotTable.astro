@@ -1,0 +1,79 @@
+---
+interface Props {
+  rows: { label: string; value: string }[];
+  links?: { label: string; href: string }[];
+}
+
+const { rows, links = [] } = Astro.props;
+---
+
+<table class="snapshot">
+  <caption class="visually-hidden">Project snapshot</caption>
+  <tbody>
+    {rows.map((row) => (
+      <tr>
+        <th scope="row">{row.label}</th>
+        <td>{row.value}</td>
+      </tr>
+    ))}
+    {links.length > 0 && (
+      <tr>
+        <th scope="row">Live</th>
+        <td>
+          <ul class="links">
+            {links.map((link) => (
+              <li><a href={link.href}>{link.label}</a></li>
+            ))}
+          </ul>
+        </td>
+      </tr>
+    )}
+  </tbody>
+</table>
+
+<style>
+  .snapshot {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--size-small);
+    text-align: left;
+  }
+
+  th, td {
+    text-align: left;
+    vertical-align: top;
+    padding: var(--space-3) var(--space-4) var(--space-3) 0;
+    border-bottom: var(--hairline) solid var(--rule);
+  }
+
+  tr:first-child th, tr:first-child td { border-top: var(--hairline) solid var(--rule-strong); }
+
+  th {
+    font-size: var(--size-label);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--ink-3);
+    font-weight: var(--weight-semibold);
+    width: 10rem;
+  }
+
+  td { color: var(--ink-2); }
+
+  .links { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-4); }
+
+  a {
+    color: var(--ink);
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.18em;
+    text-decoration-color: var(--rule-strong);
+    transition: text-decoration-color var(--dur-2) var(--ease-out);
+  }
+
+  a:hover { text-decoration-color: var(--ink); }
+
+  @media (max-width: 36rem) {
+    th { width: auto; display: block; border-bottom: 0; padding-bottom: 0; }
+    td { display: block; padding-top: var(--space-1); }
+  }
+</style>

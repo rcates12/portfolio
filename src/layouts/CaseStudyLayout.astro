@@ -1,0 +1,101 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import SnapshotTable from '../components/SnapshotTable.astro';
+import Figure from '../components/Figure.astro';
+
+interface Props {
+  title: string;
+  subtitle: string;
+  mode: string;
+  lead: string;
+  hero: { asset: string; alt?: string };
+  heroDescribe: string;
+  snapshot: { label: string; value: string }[];
+  links?: { label: string; href: string }[];
+}
+
+const {
+  title,
+  subtitle,
+  mode,
+  lead,
+  hero,
+  heroDescribe,
+  snapshot,
+  links = [],
+} = Astro.props;
+---
+
+<BaseLayout title={`${title} · Ryan Cates`} description={subtitle}>
+  <article>
+    <header class="editorial-grid case-header">
+      <p class="rail label">{mode}</p>
+      <h1 class="display-1">{title}</h1>
+      <p class="subtitle display-3">{subtitle}</p>
+      <p class="lead">{lead}</p>
+    </header>
+
+    <div class="editorial-grid hero-row">
+      <div class="wide">
+        <Figure asset={hero.asset} describe={heroDescribe} alt={hero.alt} ratio="16 / 10" />
+      </div>
+    </div>
+
+    <div class="editorial-grid snapshot-row">
+      <div class="wide">
+        <SnapshotTable rows={snapshot} links={links} />
+      </div>
+    </div>
+
+    <div class="editorial-grid prose body">
+      <slot />
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .case-header { padding-top: var(--space-9); row-gap: var(--space-5); }
+  .case-header .rail { grid-row: 1; }
+  .subtitle { color: var(--ink-2); }
+  .lead { max-width: var(--measure); }
+
+  .hero-row { margin-top: var(--space-7); }
+  .snapshot-row { margin-top: var(--space-7); }
+  .body { margin-top: var(--space-9); }
+
+  /* Block components opt out of the reading measure and span the rail. */
+  .body :global(.figure-block) {
+    grid-column: rail-start / text-end;
+    margin-block: var(--space-6);
+  }
+
+  .body :global(.comparison) {
+    grid-column: rail-start / text-end;
+    margin-block: var(--space-6);
+  }
+
+  .body :global(.first-output) { grid-column: full; }
+
+  .body :global(table:not(.snapshot)) {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--size-small);
+    margin-block: var(--space-5);
+  }
+
+  .body :global(th),
+  .body :global(td) {
+    text-align: left;
+    vertical-align: top;
+    padding: var(--space-3) var(--space-4) var(--space-3) 0;
+    border-bottom: var(--hairline) solid var(--rule);
+  }
+
+  .body :global(th) {
+    font-size: var(--size-label);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--ink-3);
+    font-weight: var(--weight-semibold);
+  }
+</style>

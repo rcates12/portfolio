@@ -1,0 +1,115 @@
+---
+interface Props {
+  asset: string;
+  describe: string;
+  caption?: string;
+  credit?: string;
+  src?: string;
+  poster?: string;
+  alt?: string;
+  ratio?: string;
+}
+
+const {
+  asset,
+  describe,
+  caption,
+  credit,
+  src,
+  poster,
+  alt,
+  ratio = '16 / 9',
+} = Astro.props;
+
+const pending = !src;
+---
+
+<div class="figure-block">
+  <div class="rail-side">
+    {caption && <p class="caption">{caption}</p>}
+    {credit && <p class="caption credit">{credit}</p>}
+  </div>
+
+  <figure class="figure" data-asset={asset}>
+    {pending ? (
+      <div class="placeholder" style={`aspect-ratio: ${ratio}`}>
+        <p class="label">Clip slot</p>
+        <p class="caption describe">{describe}</p>
+        <p class="caption key">{asset}</p>
+      </div>
+    ) : (
+      <video
+        data-clip
+        src={src}
+        poster={poster}
+        muted
+        loop
+        playsinline
+        preload="none"
+        aria-label={alt}
+      ></video>
+    )}
+  </figure>
+</div>
+
+{!pending && (
+  <script>
+    // Autoplay is opt-in rather than an attribute, so reduced-motion users
+    // keep the poster frame instead of a looping clip.
+    const motionOk = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (motionOk) {
+      for (const video of document.querySelectorAll('video[data-clip]')) {
+        const el = video as HTMLVideoElement;
+        el.preload = 'metadata';
+        new IntersectionObserver((entries, observer) => {
+          for (const entry of entries) {
+            if (!entry.isIntersecting) continue;
+            el.play().catch(() => {});
+            observer.unobserve(entry.target);
+          }
+        }).observe(el);
+      }
+    }
+  </script>
+)}
+
+<style>
+  .figure-block {
+    display: grid;
+    grid-template-columns: var(--rail) minmax(0, 1fr);
+    column-gap: var(--rail-gap);
+    align-items: start;
+  }
+
+  .rail-side > * + * { margin-top: var(--space-2); }
+  .credit { color: var(--ink-4); }
+
+  .figure {
+    margin: 0;
+    background: var(--figure-surface);
+    border: var(--hairline) solid var(--figure-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-3);
+  }
+
+  .placeholder {
+    display: grid;
+    place-content: center;
+    gap: var(--space-2);
+    padding: var(--space-5);
+    text-align: center;
+    background: #1b1d20;
+    border-radius: var(--radius-sm);
+  }
+
+  .placeholder .label { color: #8a8f94; }
+  .describe { color: #b6babd; max-width: 48ch; }
+  .key { color: #6d7276; }
+
+  video { border-radius: var(--radius-sm); width: 100%; display: block; }
+
+  @media (max-width: 60rem) {
+    .figure-block { grid-template-columns: minmax(0, 1fr); row-gap: var(--space-3); }
+    .rail-side { order: 2; }
+  }
+</style>

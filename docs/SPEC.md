@@ -77,13 +77,13 @@ Figure slots can appear anywhere, including after Process (01) and after Reflect
 
 ## 5. Design tokens
 
-Settled and implemented in `design/tokens.css`; specimen at `design/specimen.html`. Light editorial, Fraunces display, Hanken Grotesk body, achromatic with `#46494c` as second ink. Asymmetric grid with a caption rail, collapsing to a centered 62ch measure below 60rem. Full reasoning in `docs/DECISIONS.md`.
+Settled and implemented in `src/styles/tokens.css`; specimen at `design/specimen.html`. Light editorial, Fraunces display, Hanken Grotesk body, achromatic with `#46494c` as second ink. Asymmetric grid with a caption rail, collapsing to a centered 62ch measure below 60rem. Full reasoning in `docs/DECISIONS.md`.
 
 Dark product captures sit on a sunk plate with a hairline, never raw on paper.
 
-## 6. Stack and budget — proposed, not decided
+## 6. Stack and budget
 
-Proposed default from the brief: Next.js App Router, MDX, GSAP, Vercel. Tokens are plain CSS custom properties, so the styling layer stays an open choice.
+**Astro + MDX, GSAP in islands, deployed to Vercel.** Chosen 2026-10-02 over the brief's Next.js default: the site is long-form reading with a few motion moments, so zero-JS-by-default with islands is the better shape. Styling is plain CSS with custom properties and Astro's scoped styles; no CSS framework.
 
 Budget, set against the Reflection in study 01, which calls out 950–984 kB first-load JS as the thing Ryan would fix first. Shipping a portfolio that repeats that mistake would undercut the case study:
 
@@ -91,6 +91,8 @@ Budget, set against the Reflection in study 01, which calls out 950–984 kB fir
 - LCP under 2.0s on a mid-tier mobile device
 - GSAP and any WebGL loaded per route, never in the shared bundle
 - Images as AVIF/WebP with explicit dimensions; no source PNG ever committed
+
+Current: 0 kB JS on all five routes.
 
 ## 7. Build order
 
@@ -104,7 +106,6 @@ Frame first, matching the Novus chapter-1 method described in the content.
 
 ## 8. Open questions
 
-- **Stack** — confirm or replace the proposed default
-- **Domain, About page, resume link, contact method**
-- **Whether Lintel ships in v1**
+- **Domain, About page, resume link, contact method** — deferred to after the case studies
+- **Whether Lintel ships in v1** — deferred until the four are built
 - **Novus agency naming** — the rule file says do not name them unless Ryan says to

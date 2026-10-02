@@ -1,0 +1,80 @@
+---
+interface Props {
+  href: string;
+  mode: string;
+  title: string;
+  line: string;
+  image: string;
+  asset: string;
+  src?: string;
+  alt?: string;
+  draft?: boolean;
+}
+
+const { href, mode, title, line, image, asset, src, alt, draft = false } = Astro.props;
+---
+
+<a class="card" href={href}>
+  <figure class="figure" data-asset={asset}>
+    {src ? (
+      <img src={src} alt={alt} loading="lazy" decoding="async" />
+    ) : (
+      <div class="placeholder">
+        <p class="label">Image slot</p>
+        <p class="caption describe">{image}</p>
+      </div>
+    )}
+  </figure>
+
+  <p class="label mode">{mode}</p>
+  <h3 class="heading">{title}</h3>
+  <p class="line">{line}</p>
+  {draft && <p class="caption draft">Page not built yet</p>}
+</a>
+
+<style>
+  .card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .figure {
+    margin: 0 0 var(--space-4);
+    background: var(--figure-surface);
+    border: var(--hairline) solid var(--figure-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-2);
+    transition: border-color var(--dur-2) var(--ease-out);
+  }
+
+  .placeholder {
+    aspect-ratio: 4 / 3;
+    display: grid;
+    place-content: center;
+    gap: var(--space-2);
+    padding: var(--space-4);
+    text-align: center;
+    background: #1b1d20;
+    border-radius: var(--radius-sm);
+  }
+
+  .placeholder .label { color: #8a8f94; }
+  .describe { color: #b6babd; max-width: 32ch; }
+
+  img { border-radius: var(--radius-sm); width: 100%; }
+
+  .mode { margin-bottom: var(--space-2); }
+
+  .heading {
+    margin: 0 0 var(--space-2);
+    transition: color var(--dur-2) var(--ease-out);
+  }
+
+  .line { margin: 0; color: var(--ink-2); max-width: 42ch; }
+
+  .draft { margin-top: var(--space-2); color: var(--ink-4); }
+
+  .card:hover .figure { border-color: var(--ink-3); }
+  .card:hover .heading { color: var(--accent); }
+</style>

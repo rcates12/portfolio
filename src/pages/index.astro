@@ -1,0 +1,50 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HomepageCard from '../components/HomepageCard.astro';
+import { getCollection } from 'astro:content';
+
+const work = (await getCollection('work')).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+---
+
+<BaseLayout
+  title="Ryan Cates · I design in the medium"
+  description="Portfolio of shipped marketing sites, designed and built in the browser."
+>
+  <section class="editorial-grid intro">
+    <p class="rail label">Portfolio</p>
+    <h1 class="display-1">I design in the medium.</h1>
+  </section>
+
+  <section class="editorial-grid work" id="work">
+    <p class="rail label">Selected work</p>
+    <div class="cards wide">
+      {work.map((entry) => (
+        <HomepageCard
+          href={`/work/${entry.id}`}
+          mode={entry.data.mode}
+          title={entry.data.title}
+          line={entry.data.card.line}
+          image={entry.data.card.image}
+          asset={`${entry.id}-card`}
+          draft={entry.data.draft}
+        />
+      ))}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .intro { padding-top: var(--space-9); row-gap: var(--space-5); }
+  .intro .rail { grid-row: 1; }
+
+  .work { margin-top: var(--section-gap); row-gap: var(--space-5); }
+  .work .rail { grid-row: 1; }
+
+  .cards {
+    display: grid;
+    gap: var(--space-8) var(--space-6);
+    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  }
+</style>

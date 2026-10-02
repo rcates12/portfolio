@@ -1,0 +1,70 @@
+---
+interface Side {
+  asset: string;
+  describe: string;
+  /** Rule: comparison captions must say which side is which. */
+  caption: string;
+  src?: string;
+  alt?: string;
+}
+
+interface Props {
+  left: Side;
+  right: Side;
+  ratio?: string;
+}
+
+const { left, right, ratio = '4 / 3' } = Astro.props;
+const sides = [left, right];
+---
+
+<div class="comparison">
+  {sides.map((side) => (
+    <figure class="figure" data-asset={side.asset}>
+      {side.src ? (
+        <img src={side.src} alt={side.alt} loading="lazy" decoding="async" />
+      ) : (
+        <div class="placeholder" style={`aspect-ratio: ${ratio}`}>
+          <p class="label">Image slot</p>
+          <p class="caption describe">{side.describe}</p>
+          <p class="caption key">{side.asset}</p>
+        </div>
+      )}
+      <figcaption class="caption">{side.caption}</figcaption>
+    </figure>
+  ))}
+</div>
+
+<style>
+  .comparison {
+    display: grid;
+    gap: var(--space-4);
+    grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+  }
+
+  .figure {
+    margin: 0;
+    background: var(--figure-surface);
+    border: var(--hairline) solid var(--figure-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-3);
+  }
+
+  figcaption { margin-top: var(--space-3); }
+
+  .placeholder {
+    display: grid;
+    place-content: center;
+    gap: var(--space-2);
+    padding: var(--space-5);
+    text-align: center;
+    background: #1b1d20;
+    border-radius: var(--radius-sm);
+  }
+
+  .placeholder .label { color: #8a8f94; }
+  .describe { color: #b6babd; max-width: 38ch; }
+  .key { color: #6d7276; }
+
+  img { border-radius: var(--radius-sm); width: 100%; }
+</style>
