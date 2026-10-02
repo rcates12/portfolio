@@ -13,12 +13,12 @@ const work = (await getCollection('work')).sort(
   description="Portfolio of shipped marketing sites, designed and built in the browser."
 >
   <section class="editorial-grid intro">
-    <p class="rail label">Portfolio</p>
+    <p class="label">Portfolio</p>
     <h1 class="display-1">I design in the medium.</h1>
   </section>
 
   <section class="editorial-grid work" id="work">
-    <p class="rail label">Selected work</p>
+    <p class="label">Selected work</p>
     <div class="cards wide">
       {work.map((entry) => (
         <HomepageCard
@@ -36,11 +36,9 @@ const work = (await getCollection('work')).sort(
 </BaseLayout>
 
 <style>
-  .intro { padding-top: var(--space-9); row-gap: var(--space-5); }
-  .intro .rail { grid-row: 1; }
+  .intro { padding-top: var(--space-9); row-gap: var(--space-4); }
 
   .work { margin-top: var(--section-gap); row-gap: var(--space-5); }
-  .work .rail { grid-row: 1; }
 
   .cards {
     display: grid;

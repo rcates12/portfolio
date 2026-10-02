@@ -82,7 +82,6 @@
     margin: 0;
   }
 
-  .editorial-grid > .rail { grid-row: 1; align-self: start; }
   .editorial-grid > p { margin-bottom: 0; }
 
   section { padding-block: var(--section-gap); row-gap: var(--space-5); }
@@ -189,13 +188,13 @@
 <main>
 
   <section class="editorial-grid">
-    <p class="rail label">Specimen</p>
+    <p class="label">Specimen</p>
     <h1 class="display-1">I design in the medium.</h1>
     <p class="lead">Fraunces for display, Hanken Grotesk for everything else, achromatic ink on paper. Every value here comes from <code>tokens.css</code>.</p>
   </section>
 
   <section class="editorial-grid">
-    <p class="rail label">Type scale</p>
+    <p class="label">Type scale</p>
     <div>
       <div class="scale-row"><span class="label">Display 1</span><span class="display-1">Same craft</span></div>
       <div class="scale-row"><span class="label">Display 2</span><span class="display-2">Pendo for Agents</span></div>
@@ -209,7 +208,7 @@
   </section>
 
   <section class="editorial-grid">
-    <div class="rail stack-tight">
+    <div class="stack-tight">
       <p class="label">Display in use</p>
       <p class="caption">Italic is a one-word device, not a paragraph style.</p>
     </div>
@@ -218,7 +217,7 @@
   </section>
 
   <section class="editorial-grid">
-    <p class="rail label">Color</p>
+    <p class="label">Color</p>
     <div class="swatches wide">
       <div><div class="swatch-chip" style="background:var(--paper)"></div><p class="caption">paper · #faf9f7</p></div>
       <div><div class="swatch-chip" style="background:var(--paper-sunk)"></div><p class="caption">paper-sunk · #f3f1ed</p></div>
@@ -230,7 +229,7 @@
   </section>
 
   <section class="editorial-grid">
-    <div class="rail stack-tight">
+    <div class="stack-tight">
       <p class="label">Figure</p>
       <p class="caption">Placeholder state. Slots stay labeled until the real capture is cropped and compressed.</p>
     </div>
@@ -243,7 +242,7 @@
   </section>
 
   <section class="editorial-grid">
-    <p class="rail label">First output vs. shipped</p>
+    <p class="label">First output vs. shipped</p>
     <div class="comparison wide">
       <figure class="figure">
         <div class="figure-placeholder"><p class="label">First output</p></div>
@@ -257,7 +256,7 @@
   </section>
 
   <section class="editorial-grid">
-    <p class="rail label">Snapshot</p>
+    <p class="label">Snapshot</p>
     <table class="snapshot">
       <tbody>
         <tr><th scope="row">Role</th><td>Sole designer and builder</td></tr>
@@ -270,7 +269,7 @@
   </section>
 
   <section class="editorial-grid">
-    <p class="rail label">Homepage cards</p>
+    <p class="label">Homepage cards</p>
     <div class="comparison wide">
       <a class="card stack-tight" href="#">
         <p class="label">Sole designer and builder</p>
@@ -296,11 +295,11 @@
   </section>
 
   <section class="editorial-grid grid-demo">
-    <p class="rail label">Grid</p>
+    <p class="label">Grid</p>
     <p class="caption">text — the 62ch reading measure</p>
-    <p class="caption wide">wide — rail start to text end, for figures and card rows</p>
+    <p class="caption wide">wide — breaks out symmetrically, for figures and card rows</p>
     <p class="caption bleed">bleed — full width</p>
-    <p>The rail collapses into the text column below 60rem, which is the fallback to a single centered measure.</p>
+    <p>The breakout narrows with the viewport and reaches zero on small screens, so everything stacks into the single measure.</p>
   </section>
 
 </main>

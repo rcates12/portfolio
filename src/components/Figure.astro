@@ -24,45 +24,41 @@ const {
 const pending = !src;
 ---
 
-<div class="figure-block">
-  <div class="rail-side">
-    {caption && <p class="caption">{caption}</p>}
-    {credit && <p class="caption credit">{credit}</p>}
-  </div>
+<figure class="figure-block" data-asset={asset}>
+  {pending ? (
+    <div class="placeholder" style={`aspect-ratio: ${ratio}`}>
+      <p class="label">Image slot</p>
+      <p class="caption describe">{describe}</p>
+      <p class="caption key">{asset}</p>
+    </div>
+  ) : (
+    <img src={src} alt={alt} loading="lazy" decoding="async" />
+  )}
 
-  <figure class="figure" data-asset={asset}>
-    {pending ? (
-      <div class="placeholder" style={`aspect-ratio: ${ratio}`}>
-        <p class="label">Image slot</p>
-        <p class="caption describe">{describe}</p>
-        <p class="caption key">{asset}</p>
-      </div>
-    ) : (
-      <img src={src} alt={alt} loading="lazy" decoding="async" />
-    )}
-  </figure>
-</div>
+  {(caption || credit) && (
+    <figcaption>
+      {caption && <p class="caption">{caption}</p>}
+      {credit && <p class="caption credit">{credit}</p>}
+    </figcaption>
+  )}
+</figure>
 
 <style>
-  /* Own two-column unit rather than relying on grid auto-placement, which
-     would drop the rail caption into the row above the figure. */
   .figure-block {
-    display: grid;
-    grid-template-columns: var(--rail) minmax(0, 1fr);
-    column-gap: var(--rail-gap);
-    align-items: start;
-  }
-
-  .rail-side > * + * { margin-top: var(--space-2); }
-  .credit { color: var(--ink-4); }
-
-  .figure {
     margin: 0;
     background: var(--figure-surface);
     border: var(--hairline) solid var(--figure-border);
     border-radius: var(--radius-md);
     padding: var(--space-3);
   }
+
+  figcaption {
+    padding: var(--space-3) var(--space-1) var(--space-1);
+    max-width: var(--measure);
+  }
+
+  figcaption > * + * { margin-top: var(--space-2); }
+  .credit { color: var(--ink-4); }
 
   .placeholder {
     display: grid;
@@ -72,7 +68,6 @@ const pending = !src;
     text-align: center;
     background: #1b1d20;
     border-radius: var(--radius-sm);
-    color: #8a8f94;
   }
 
   .placeholder .label { color: #8a8f94; }
@@ -80,9 +75,4 @@ const pending = !src;
   .key { color: #6d7276; }
 
   img { border-radius: var(--radius-sm); width: 100%; }
-
-  @media (max-width: 60rem) {
-    .figure-block { grid-template-columns: minmax(0, 1fr); row-gap: var(--space-3); }
-    .rail-side { order: 2; }
-  }
 </style>

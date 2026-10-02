@@ -4,11 +4,11 @@ Dated log, newest on top. One entry per notable choice, with the reason.
 
 ## 2026-10-02
 
+**Grid: variant B wins. Centered measure, symmetric breakouts, captions under figures.** Reverses the earlier call for the asymmetric rail, after comparing both layouts side by side on the Pendo for Agents page. The rail was chosen to give credits and comparison captions a home, but seeing it built, it spent most of its width empty and pulled the reading column off centre for no return. Captions under their figure read fine and keep the credit next to the thing it credits. Measure is now 65ch with a breakout that collapses to zero on narrow screens. The rail primitive, the `layout` prop, `/alt/` and `/compare` are all deleted.
+
 **Stack: Astro with MDX, over Next.js.** The pages are long-form reading with a handful of motion moments, so a framework that ships zero JS by default and uses islands for the motion fits better than one that hydrates everything. It also directly serves the budget below. GSAP will load per-island, not globally. The first build ships 0 bytes of JS across all five routes.
 
-**Figure and Clip own their rail, rather than placing into the page grid.** Grid auto-placement with sparse packing pushes a definite-column item to the next row when its column start precedes the cursor, so a rail caption written before its figure landed a row above it instead of beside it. Both components are now self-contained two-column units that mirror the rail widths.
-
-**Grid: asymmetric, with a left caption rail.** Chosen over a centered 12-column measure. The rail gives the credit lines required by `.cursor/rules/portfolio.mdc` (agency Figma frames, the Novus Claude Design concept) and the which-side-is-which comparison captions a consistent home, instead of stacking them under figures and interrupting the read. Collapses to a centered 62ch measure below 60rem, which is the fallback direction.
+**Superseded: grid was first built as an asymmetric rail.** The rail was meant to house the credit lines required by `.cursor/rules/portfolio.mdc` and the which-side-is-which comparison captions. Replaced by variant B above on the same day, after seeing both built.
 
 **Color: light editorial, achromatic.** Paper `#faf9f7` rather than pure white, because Fraunces is a warm face. `#46494c` is the second ink, used for lead paragraphs, metadata, and interactive states; there is no chromatic accent. Reason: the four case study heroes are loud and all different temperatures (Pendo's pink gradient, Novus's dither, the charcoal-and-coral serif). A site accent would compete with all of them. Consequence to watch: nothing on the page signals interactivity through color alone, so type, rules, and motion have to carry it.
 

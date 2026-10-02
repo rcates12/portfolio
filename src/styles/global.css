@@ -107,10 +107,6 @@ a { color: inherit; }
   white-space: nowrap;
 }
 
-/* ---- Grid placement -------------------------------------------------- */
-
-.editorial-grid > .rail { align-self: start; }
-
 /* ---- Prose ----------------------------------------------------------- */
 /* Applied to rendered MDX. Headings are Fraunces, body is the reading
    measure; block-level components opt out via their own grid placement. */

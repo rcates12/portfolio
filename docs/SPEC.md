@@ -64,20 +64,20 @@ Figure slots can appear anywhere, including after Process (01) and after Reflect
 
 | Component | Responsibility |
 | --- | --- |
-| `CaseStudyLayout` | Grid, rail, section rhythm |
+| `CaseStudyLayout` | Grid, breakouts, section rhythm |
 | `SnapshotTable` | Ordered label/value pairs |
-| `Figure` | Labeled placeholder until a real capture exists; alt text required; caption goes in the rail |
+| `Figure` | Labeled placeholder until a real capture exists; alt text required; caption and credit in a `figcaption` |
 | `Comparison` | Two-up figures with which-side-is-which captions |
 | `ComparisonTable` | Variable columns and heading, shared treatment |
 | `Clip` | Muted looping video, poster, `prefers-reduced-motion` fallback to the poster |
-| `Credit` | Rail-anchored attribution for agency and Claude Design visuals |
+| `Credit` | Attribution for agency and Claude Design visuals, via the `credit` prop on `Figure`/`Clip` |
 | `HomepageCard` | Mode label, title, one line, image |
 
 `Figure` and `Clip` both read a slot key and surface a visible placeholder with the slot description when no asset is present. This is what makes the site reviewable before captures are done.
 
 ## 5. Design tokens
 
-Settled and implemented in `src/styles/tokens.css`; specimen at `design/specimen.html`. Light editorial, Fraunces display, Hanken Grotesk body, achromatic with `#46494c` as second ink. Asymmetric grid with a caption rail, collapsing to a centered 62ch measure below 60rem. Full reasoning in `docs/DECISIONS.md`.
+Settled and implemented in `src/styles/tokens.css`; specimen at `design/specimen.html`. Light editorial, Fraunces display, Hanken Grotesk body, achromatic with `#46494c` as second ink. Centered 65ch measure with symmetric breakouts for figures; captions sit under their figure. Full reasoning in `docs/DECISIONS.md`.
 
 Dark product captures sit on a sunk plate with a hairline, never raw on paper.
 

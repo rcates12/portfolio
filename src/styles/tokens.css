@@ -83,19 +83,12 @@
   --section-gap: clamp(var(--space-8), 6vw, var(--space-10));
 
   /* ---- Grid ---------------------------------------------------------- */
-  /* Asymmetric: a left rail carries captions, credits and metadata so they
-     never interrupt the read. --grid-fallback switches to a centered
-     12-column measure when the rail is too narrow to be useful. */
+  /* Centered reading measure with symmetric breakouts for figures.
+     Captions sit under their figure. */
 
   --gutter: clamp(1.25rem, 4vw, 3rem);
-  --measure: 62ch;
-  --rail: 13rem;
-  --rail-gap: clamp(1.5rem, 3vw, 3rem);
-  --rail-collapse: 60rem;
-
-  /* Variant B: centered measure with figure breakouts. */
-  --measure-b: 65ch;
-  --breakout-b: clamp(0rem, 8vw, 9rem);
+  --measure: 65ch;
+  --breakout: clamp(0rem, 8vw, 9rem);
 
   --radius-sm: 2px;
   --radius-md: 4px;
@@ -127,15 +120,17 @@
 }
 
 /* ---- Grid primitive -------------------------------------------------- */
+/* Centered reading measure with symmetric breakouts. Content places itself
+   with no class (text), .wide (breakout) or .bleed (full width). */
 
 .editorial-grid {
   display: grid;
   grid-template-columns:
-    [full-start] var(--gutter)
-    [rail-start] var(--rail)
-    [rail-end] var(--rail-gap)
-    [text-start] minmax(0, var(--measure))
-    [text-end] minmax(var(--gutter), 1fr)
+    [full-start] minmax(var(--gutter), 1fr)
+    [wide-start] var(--breakout)
+    [text-start] min(100% - (2 * var(--gutter)), var(--measure))
+    [text-end] var(--breakout)
+    [wide-end] minmax(var(--gutter), 1fr)
     [full-end];
 }
 
@@ -143,56 +138,10 @@
   grid-column: text;
 }
 
-.editorial-grid > .rail {
-  grid-column: rail;
-}
-
 .editorial-grid > .wide {
-  grid-column: rail-start / text-end;
+  grid-column: wide;
 }
 
 .editorial-grid > .bleed {
-  grid-column: full;
-}
-
-@media (max-width: 60rem) {
-  .editorial-grid {
-    grid-template-columns:
-      [full-start] var(--gutter)
-      [rail-start text-start] minmax(0, var(--measure))
-      [rail-end text-end] var(--gutter)
-      [full-end];
-  }
-}
-
-/* ---- Grid primitive, variant B --------------------------------------- */
-/* Centered reading measure, figures breaking out symmetrically. No rail:
-   captions sit under their figure. Same named lines so components and
-   content place identically under either layout. */
-
-.centered-grid {
-  display: grid;
-  grid-template-columns:
-    [full-start] minmax(var(--gutter), 1fr)
-    [rail-start] var(--breakout-b)
-    [text-start] min(100% - (2 * var(--gutter)), var(--measure-b))
-    [text-end] var(--breakout-b)
-    [rail-end] minmax(var(--gutter), 1fr)
-    [full-end];
-}
-
-.centered-grid > * {
-  grid-column: text;
-}
-
-.centered-grid > .rail {
-  grid-column: text;
-}
-
-.centered-grid > .wide {
-  grid-column: rail-start / rail-end;
-}
-
-.centered-grid > .bleed {
   grid-column: full;
 }
