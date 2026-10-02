@@ -3,7 +3,6 @@ title: pendo.io homepage
 subtitle: Designing a homepage from someone else's story
 mode: Design partner
 order: 2
-draft: true
 lead: >-
   Pendo's new homepage launched in August 2026. Content and PMM wrote the story
   and set the sections, and I designed and built everything on the page,
@@ -33,6 +32,93 @@ links:
     href: https://www.pendo.io/
 ---
 
-## Not built yet
+## Key decisions
 
-Copy for this case study is final and waiting in `docs/portfolio/content/02-pendo-homepage.md`. Build it one section at a time in its own chat, per `docs/SPEC.md`.
+### Move the decision into the page
+
+<Clip
+  asset="homepage-toolbar"
+  describe="A short clip of the review toolbar switching versions, sections, and heroes. The toolbar was hidden on July 30, so this needs an earlier preview build."
+  caption="The review toolbar switching versions, sections, and heroes."
+/>
+
+One day into the build, leadership asked for a way to flip through the copy variants themselves. I built a review toolbar into the working page, modeled on the Vercel toolbar, with switches for each version, each section, and the hero. Every choice was written to the URL, so a link opened that exact page for anyone. My manager's review said it "helped the team align earlier, and reduced the rework that often results when content decisions are made outside their design context."
+
+### Let the copy set the layout
+
+<Figure
+  asset="homepage-four-shapes"
+  describe="The use-case section in all four shapes, from preview builds kxvbvc12d (grid), 6qfu78147 (rows), h5dpw8a34 (bento), and the live page (lifecycle rows)."
+  caption="The same section in four shapes: card grid, full-width rows, bento, and the lifecycle rows that shipped."
+  ratio="16 / 10"
+/>
+
+The use-case section changed shape four times because the copy did. Short taglines got a card grid, and long copy got full-width rows. Our director of brand design asked for a bento grid. The day before launch the story settled on a four-stage lifecycle, so it went back to four rows. Every product shot frame got a fixed aspect ratio, so each crop lands on the same part of the UI at every width.
+
+### Give the motion a job
+
+<Figure
+  asset="homepage-waves"
+  describe="The scroll-linked waves from a July preview build next to the shipped static hero."
+  caption="Left: the scroll-linked waves from the July preview. Right: the static hero that shipped."
+/>
+
+A designer gave me a wide waves graphic with no direction, so I built a lateral loop, a parallax, and a scroll-linked version and compared them on the page. Scroll won, and then came out on launch day because leadership felt the hero had too much motion. The word-by-word headline entrance stayed, since it pulls the eye to the headline when you land.
+
+### Borrow the interaction, then make it ours
+
+<Clip
+  asset="homepage-quote-tabs"
+  describe="The quote tabs mid-switch, and one logo tooltip open."
+  caption="The quote tabs mid-switch, with one logo tooltip open."
+/>
+
+For customer quotes I borrowed Stripe's logo tabs, then tuned them until they felt like ours. I sized the logos by hand so they looked equal, evened out the type-in speeds so a two-line quote and a five-line quote felt the same, and fixed the section's height so it didn't jump between quotes.
+
+### End every use case in a demo form
+
+<Clip
+  asset="homepage-modal"
+  describe="A use-case modal opening from its card, with the form placeholder and then the loaded form."
+  caption="The modal opening from its card: the form holds its height, then loads in place."
+/>
+
+Each use case opens a large product modal with an embedded demo form next to the opening pitch. Forms are where pages usually look broken, so the form holds its exact final height while Marketo loads, tells sales which use case the visitor came from, and confirms in place.
+
+<FirstOutput eyebrow="First output vs. what shipped" heading="Headless Pendo">
+
+<Clip
+  asset="homepage-headless"
+  describe="The live section cycling through tools and use cases, including the Fin flow, next to the first gradient version from preview h5dpw8a34. The branded-bubble round and the original video still need captures."
+  caption="The shipped section cycling through tools and use cases."
+/>
+
+Headless Pendo means using Pendo's data from inside AI tools like Claude, ChatGPT, or Cursor. We started with a screen recording of one tool, and I proposed recreating each tool's interface in code with short animated conversations.
+
+| What we had | What shipped | Why it changed |
+| --- | --- | --- |
+| The agent's first build: one chat window re-skinned per tool, with branded bubbles | AI replies as free-flowing text, the way each tool shows them | The bubbles didn't resemble how these tools actually look |
+| Claude's "allow Pendo" panel copied into every tool | Each tool's real MCP connection step, matched from screenshots | It was wrong for ChatGPT and Cursor |
+| Fin as a support chat | Fin stepping in on a travel booking site as a visitor clicks around | Fin's value is acting proactively |
+| Each conversation ending on an answer | A follow-up action, like Cursor turning off a broken guide through the Pendo API | An action shows Pendo actually doing something |
+
+</FirstOutput>
+
+## Outcome
+
+The homepage launched on August 4, 2026, in six languages. Within a day, sales was asking for demo videos in the Headless Pendo style. Since launch, about 59% of the interactions tracked in the page's sections happened in Headless Pendo, more than the other sections combined. Traffic dipped after launch, but demo form submissions held steady on about 5% fewer visitors. A month later the same system carried the Pendo for Agents pages.
+
+## Process
+
+The page started as a sandbox route separate from the live homepage. I wrote more than 900 prompts across about 60 Cursor chats, and bigger changes started as a written plan I reviewed first. Trying an idea only took minutes, so I tried a lot of them and threw most away, including a shimmering text mask, decrypting stats, and a rotating wheel for the use-case tabs. The last two weeks went to production work: gradients moved into code, a code review, six languages, and memory fixes after launch.
+
+## Reflection
+
+I'd agree on the limits earlier. Next time I'd put the motion in front of decision makers early, at full strength, and set a memory and load budget on day one. The idea I most want to push further is one that didn't ship: a concept-car homepage that changes for returning visitors, customers, and Free users.
+
+<Figure
+  asset="homepage-concept-car"
+  describe="The four concept-car states side by side, with the Meet Leo panel called out."
+  caption="The four concept-car states: new visitor, cookied, logged in, and Pendo Free. The Meet Leo panel is called out."
+  ratio="16 / 10"
+/>
