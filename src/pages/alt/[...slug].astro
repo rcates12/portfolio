@@ -1,0 +1,36 @@
+---
+// Same content, variant B grid. Exists only while the two layouts are under
+// comparison at /compare; delete this route once one is chosen.
+import { getCollection, render } from 'astro:content';
+import CaseStudyLayout from '../../layouts/CaseStudyLayout.astro';
+import Figure from '../../components/Figure.astro';
+import Clip from '../../components/Clip.astro';
+import Comparison from '../../components/Comparison.astro';
+import FirstOutput from '../../components/FirstOutput.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('work');
+  return entries.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const data = entry.data;
+---
+
+<CaseStudyLayout
+  title={data.title}
+  subtitle={data.subtitle}
+  mode={data.mode}
+  lead={data.lead}
+  hero={{ asset: data.hero.asset, alt: data.hero.alt }}
+  heroDescribe={data.hero.describe}
+  snapshot={data.snapshot}
+  links={data.links}
+  layout="centered"
+>
+  <Content components={{ Figure, Clip, Comparison, FirstOutput }} />
+</CaseStudyLayout>

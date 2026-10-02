@@ -12,6 +12,8 @@ interface Props {
   heroDescribe: string;
   snapshot: { label: string; value: string }[];
   links?: { label: string; href: string }[];
+  /** 'rail' is the chosen direction; 'centered' is the fallback under review. */
+  layout?: 'rail' | 'centered';
 }
 
 const {
@@ -23,31 +25,34 @@ const {
   heroDescribe,
   snapshot,
   links = [],
+  layout = 'rail',
 } = Astro.props;
+
+const grid = layout === 'centered' ? 'centered-grid' : 'editorial-grid';
 ---
 
 <BaseLayout title={`${title} · Ryan Cates`} description={subtitle}>
-  <article>
-    <header class="editorial-grid case-header">
+  <article class:list={['case', `layout-${layout}`]}>
+    <header class:list={[grid, 'case-header']}>
       <p class="rail label">{mode}</p>
       <h1 class="display-1">{title}</h1>
       <p class="subtitle display-3">{subtitle}</p>
       <p class="lead">{lead}</p>
     </header>
 
-    <div class="editorial-grid hero-row">
+    <div class:list={[grid, 'hero-row']}>
       <div class="wide">
         <Figure asset={hero.asset} describe={heroDescribe} alt={hero.alt} ratio="16 / 10" />
       </div>
     </div>
 
-    <div class="editorial-grid snapshot-row">
+    <div class:list={[grid, 'snapshot-row']}>
       <div class="wide">
         <SnapshotTable rows={snapshot} links={links} />
       </div>
     </div>
 
-    <div class="editorial-grid prose body">
+    <div class:list={[grid, 'prose', 'body']}>
       <slot />
     </div>
   </article>
@@ -55,7 +60,7 @@ const {
 
 <style>
   .case-header { padding-top: var(--space-9); row-gap: var(--space-5); }
-  .case-header .rail { grid-row: 1; }
+  .layout-rail .case-header .rail { grid-row: 1; }
   .subtitle { color: var(--ink-2); }
   .lead { max-width: var(--measure); }
 
@@ -75,6 +80,33 @@ const {
   }
 
   .body :global(.first-output) { grid-column: full; }
+
+  /* Variant B: figures break out symmetrically and drop their rail, so the
+     caption sits under the image instead of beside it. */
+  .layout-centered .body :global(.figure-block),
+  .layout-centered .body :global(.comparison) {
+    grid-column: rail-start / rail-end;
+  }
+
+  .layout-centered :global(.figure-block) {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: var(--space-3);
+  }
+
+  .layout-centered :global(.figure-block > *:first-child) {
+    order: 2;
+    max-width: var(--measure-b);
+  }
+
+  .layout-centered .lead { max-width: none; }
+
+  .layout-centered :global(.first-output .inner) {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: var(--space-3);
+    max-width: calc(var(--measure-b) + (2 * var(--breakout-b)) + (2 * var(--gutter)));
+  }
+
+  .layout-centered :global(.first-output .inner > *) { grid-column: 1; }
 
   .body :global(table:not(.snapshot)) {
     width: 100%;

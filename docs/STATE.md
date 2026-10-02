@@ -16,7 +16,16 @@ Updated 2026-10-02.
 - Homepage with four cards, verbatim card copy
 - **Pendo for Agents built end to end**, copy verbatim, every image slot a labeled placeholder
 
-Build: 5 routes, 0 kB JS, 15 kB HTML on the heaviest page.
+Build: 10 routes, 0 kB JS on every case study page, 15 kB HTML on the heaviest.
+
+### Under review: two grid directions
+
+- `/work/<slug>` — variant A, the asymmetric rail (chosen direction)
+- `/alt/<slug>` — variant B, the centered 65ch measure (fallback)
+- `/compare` — both side by side at a chosen viewport width, synced scrolling
+
+`/alt/` and `/compare` are scratch routes. Delete both, and the `layout` prop on
+`CaseStudyLayout`, once one direction wins.
 
 ## Not built
 
