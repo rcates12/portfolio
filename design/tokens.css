@@ -1,0 +1,162 @@
+/* Portfolio design tokens
+   Light editorial. Fraunces display, Hanken Grotesk body, achromatic ink.
+   Stack-agnostic: consume directly, or map into a Tailwind theme. */
+
+:root {
+  /* ---- Color -------------------------------------------------------- */
+
+  --paper: #faf9f7;
+  --paper-sunk: #f3f1ed;
+
+  --ink: #17191b;
+  --ink-2: #46494c;
+  --ink-3: #74777a;
+  --ink-4: #9b9ea1;
+
+  --rule: #e2dfd9;
+  --rule-strong: #cbc7bf;
+
+  /* Dark product captures need containment on a light page, or they read as
+     holes. Figures sit on a sunk plate with a hairline, never raw on paper. */
+  --figure-surface: var(--paper-sunk);
+  --figure-border: var(--rule);
+
+  --accent: var(--ink-2);
+  --accent-hover: var(--ink);
+
+  --focus-ring: #1f6feb;
+
+  /* ---- Type families ------------------------------------------------- */
+
+  --font-display: "Fraunces", "Iowan Old Style", Georgia, serif;
+  --font-body: "Hanken Grotesk", ui-sans-serif, system-ui, sans-serif;
+
+  /* ---- Type scale ---------------------------------------------------- */
+  /* Fluid between 375px and 1440px viewports. */
+
+  --size-display-1: clamp(2.75rem, 1.2rem + 6.6vw, 6rem);
+  --size-display-2: clamp(2.25rem, 1.3rem + 4vw, 4rem);
+  --size-display-3: clamp(1.75rem, 1.25rem + 2.1vw, 2.75rem);
+  --size-heading: clamp(1.3125rem, 1.1rem + 0.9vw, 1.75rem);
+  --size-subhead: 1.1875rem;
+  --size-lead: clamp(1.1875rem, 1.1rem + 0.35vw, 1.375rem);
+  --size-body: 1.0625rem;
+  --size-small: 0.9375rem;
+  --size-caption: 0.8125rem;
+  --size-label: 0.75rem;
+
+  --leading-display: 0.97;
+  --leading-heading: 1.12;
+  --leading-body: 1.62;
+  --leading-tight: 1.35;
+
+  --tracking-display: -0.02em;
+  --tracking-heading: -0.01em;
+  --tracking-body: 0;
+  --tracking-label: 0.08em;
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-display: 500;
+
+  /* Fraunces axes. Wonk and low optical size are for display sizes only;
+     at body sizes they turn into noise. */
+  --fraunces-display: "opsz" 144, "SOFT" 20, "WONK" 1;
+  --fraunces-heading: "opsz" 72, "SOFT" 20, "WONK" 0;
+
+  /* ---- Space --------------------------------------------------------- */
+  /* 4px base. */
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+  --space-10: 8rem;
+  --space-11: 12rem;
+
+  --section-gap: clamp(var(--space-8), 6vw, var(--space-10));
+
+  /* ---- Grid ---------------------------------------------------------- */
+  /* Asymmetric: a left rail carries captions, credits and metadata so they
+     never interrupt the read. --grid-fallback switches to a centered
+     12-column measure when the rail is too narrow to be useful. */
+
+  --gutter: clamp(1.25rem, 4vw, 3rem);
+  --measure: 62ch;
+  --rail: 13rem;
+  --rail-gap: clamp(1.5rem, 3vw, 3rem);
+  --rail-collapse: 60rem;
+
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 8px;
+
+  --hairline: 1px;
+
+  /* ---- Motion -------------------------------------------------------- */
+
+  --dur-1: 120ms;
+  --dur-2: 200ms;
+  --dur-3: 320ms;
+  --dur-4: 560ms;
+  --dur-5: 900ms;
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-entrance: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-1: 0ms;
+    --dur-2: 0ms;
+    --dur-3: 0ms;
+    --dur-4: 0ms;
+    --dur-5: 0ms;
+  }
+}
+
+/* ---- Grid primitive -------------------------------------------------- */
+
+.editorial-grid {
+  display: grid;
+  grid-template-columns:
+    [full-start] var(--gutter)
+    [rail-start] var(--rail)
+    [rail-end] var(--rail-gap)
+    [text-start] minmax(0, var(--measure))
+    [text-end] minmax(var(--gutter), 1fr)
+    [full-end];
+}
+
+.editorial-grid > * {
+  grid-column: text;
+}
+
+.editorial-grid > .rail {
+  grid-column: rail;
+}
+
+.editorial-grid > .wide {
+  grid-column: rail-start / text-end;
+}
+
+.editorial-grid > .bleed {
+  grid-column: full;
+}
+
+@media (max-width: 60rem) {
+  .editorial-grid {
+    grid-template-columns:
+      [full-start] var(--gutter)
+      [rail-start text-start] minmax(0, var(--measure))
+      [rail-end text-end] var(--gutter)
+      [full-end];
+  }
+}

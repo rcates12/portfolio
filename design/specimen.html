@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Portfolio type and token specimen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,100..900,0..100,0..1;1,9..144,100..900,0..100,0..1&family=Hanken+Grotesk:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="./tokens.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: var(--size-body);
+    line-height: var(--leading-body);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .display-1, .display-2, .display-3, .heading {
+    font-family: var(--font-display);
+    font-weight: var(--weight-display);
+    margin: 0;
+  }
+
+  .display-1 {
+    font-size: var(--size-display-1);
+    font-variation-settings: var(--fraunces-display);
+    line-height: var(--leading-display);
+    letter-spacing: var(--tracking-display);
+  }
+
+  .display-2 {
+    font-size: var(--size-display-2);
+    font-variation-settings: var(--fraunces-display);
+    line-height: var(--leading-display);
+    letter-spacing: var(--tracking-display);
+  }
+
+  .display-3 {
+    font-size: var(--size-display-3);
+    font-variation-settings: var(--fraunces-heading);
+    line-height: var(--leading-heading);
+    letter-spacing: var(--tracking-heading);
+  }
+
+  .heading {
+    font-size: var(--size-heading);
+    font-variation-settings: var(--fraunces-heading);
+    line-height: var(--leading-heading);
+    letter-spacing: var(--tracking-heading);
+  }
+
+  .lead {
+    font-size: var(--size-lead);
+    line-height: var(--leading-tight);
+    color: var(--ink-2);
+    margin: 0;
+  }
+
+  p { margin: 0 0 var(--space-4); }
+  p:last-child { margin-bottom: 0; }
+
+  .label {
+    font-size: var(--size-label);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--ink-3);
+    font-weight: var(--weight-semibold);
+    line-height: var(--leading-tight);
+    margin: 0;
+  }
+
+  .caption {
+    font-size: var(--size-caption);
+    line-height: var(--leading-tight);
+    color: var(--ink-3);
+    margin: 0;
+  }
+
+  .editorial-grid > .rail { grid-row: 1; align-self: start; }
+  .editorial-grid > p { margin-bottom: 0; }
+
+  section { padding-block: var(--section-gap); row-gap: var(--space-5); }
+  section + section { border-top: var(--hairline) solid var(--rule); }
+
+  .stack-tight > * + * { margin-top: var(--space-3); }
+
+  /* Dark captures contained on a plate rather than floating on paper. */
+  .figure {
+    margin: 0;
+    background: var(--figure-surface);
+    border: var(--hairline) solid var(--figure-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-3);
+  }
+
+  .figure-placeholder {
+    aspect-ratio: 16 / 9;
+    display: grid;
+    place-content: center;
+    gap: var(--space-2);
+    text-align: center;
+    background: #1b1d20;
+    border-radius: var(--radius-sm);
+    color: #8a8f94;
+  }
+
+  .figure-placeholder .label { color: #8a8f94; }
+
+  .comparison {
+    display: grid;
+    gap: var(--space-4);
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  }
+
+  .swatches {
+    display: grid;
+    gap: var(--space-4);
+    grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+  }
+
+  .swatch-chip {
+    height: 4.5rem;
+    border-radius: var(--radius-md);
+    border: var(--hairline) solid var(--rule);
+    margin-bottom: var(--space-2);
+  }
+
+  .scale-row {
+    display: flex;
+    align-items: baseline;
+    gap: var(--space-4);
+    padding-block: var(--space-3);
+    border-bottom: var(--hairline) solid var(--rule);
+  }
+
+  .scale-row > .label { flex: 0 0 7rem; }
+
+  .card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    border-top: var(--hairline) solid var(--rule-strong);
+    padding-top: var(--space-4);
+    transition: border-color var(--dur-2) var(--ease-out);
+  }
+
+  .card:hover { border-color: var(--ink); }
+  .card .heading { transition: color var(--dur-2) var(--ease-out); }
+  .card:hover .heading { color: var(--accent); }
+
+  :focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 3px;
+  }
+
+  .snapshot {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--size-small);
+  }
+
+  .snapshot th, .snapshot td {
+    text-align: left;
+    vertical-align: top;
+    padding: var(--space-3) var(--space-4) var(--space-3) 0;
+    border-bottom: var(--hairline) solid var(--rule);
+  }
+
+  .snapshot th {
+    font-weight: var(--weight-semibold);
+    color: var(--ink-3);
+    font-size: var(--size-label);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    width: 9rem;
+  }
+
+  .grid-demo p { outline: 1px dashed var(--rule-strong); padding: var(--space-2); }
+</style>
+</head>
+<body>
+
+<main>
+
+  <section class="editorial-grid">
+    <p class="rail label">Specimen</p>
+    <h1 class="display-1">I design in the medium.</h1>
+    <p class="lead">Fraunces for display, Hanken Grotesk for everything else, achromatic ink on paper. Every value here comes from <code>tokens.css</code>.</p>
+  </section>
+
+  <section class="editorial-grid">
+    <p class="rail label">Type scale</p>
+    <div>
+      <div class="scale-row"><span class="label">Display 1</span><span class="display-1">Same craft</span></div>
+      <div class="scale-row"><span class="label">Display 2</span><span class="display-2">Pendo for Agents</span></div>
+      <div class="scale-row"><span class="label">Display 3</span><span class="display-3">Key decisions</span></div>
+      <div class="scale-row"><span class="label">Heading</span><span class="heading">Extend the homepage system</span></div>
+      <div class="scale-row"><span class="label">Lead</span><span class="lead">A short lead paragraph sets up the piece.</span></div>
+      <div class="scale-row"><span class="label">Body</span><span>Body copy at 17px on a 62ch measure.</span></div>
+      <div class="scale-row"><span class="label">Caption</span><span class="caption">Left: the first output. Right: what shipped.</span></div>
+      <div class="scale-row"><span class="label">Label</span><span class="label">Sole designer and builder</span></div>
+    </div>
+  </section>
+
+  <section class="editorial-grid">
+    <div class="rail stack-tight">
+      <p class="label">Display in use</p>
+      <p class="caption">Italic is a one-word device, not a paragraph style.</p>
+    </div>
+    <h2 class="display-2">Product last</h2>
+    <p>Fraunces carries the wonk and a low optical size at display sizes only. At heading sizes the wonk is off, so the serif stays readable rather than decorative. The italic is reserved for a single word, the way the <em>Same craft, new floor</em> hero uses it.</p>
+  </section>
+
+  <section class="editorial-grid">
+    <p class="rail label">Color</p>
+    <div class="swatches wide">
+      <div><div class="swatch-chip" style="background:var(--paper)"></div><p class="caption">paper · #faf9f7</p></div>
+      <div><div class="swatch-chip" style="background:var(--paper-sunk)"></div><p class="caption">paper-sunk · #f3f1ed</p></div>
+      <div><div class="swatch-chip" style="background:var(--ink)"></div><p class="caption">ink · #17191b</p></div>
+      <div><div class="swatch-chip" style="background:var(--ink-2)"></div><p class="caption">ink-2 / accent · #46494c</p></div>
+      <div><div class="swatch-chip" style="background:var(--ink-3)"></div><p class="caption">ink-3 · #74777a</p></div>
+      <div><div class="swatch-chip" style="background:var(--rule)"></div><p class="caption">rule · #e2dfd9</p></div>
+    </div>
+  </section>
+
+  <section class="editorial-grid">
+    <div class="rail stack-tight">
+      <p class="label">Figure</p>
+      <p class="caption">Placeholder state. Slots stay labeled until the real capture is cropped and compressed.</p>
+    </div>
+    <figure class="figure wide">
+      <div class="figure-placeholder">
+        <p class="label">Image slot</p>
+        <p class="caption">Hero: live Agent Analytics hero with folder-tab subnav</p>
+      </div>
+    </figure>
+  </section>
+
+  <section class="editorial-grid">
+    <p class="rail label">First output vs. shipped</p>
+    <div class="comparison wide">
+      <figure class="figure">
+        <div class="figure-placeholder"><p class="label">First output</p></div>
+        <figcaption class="caption" style="margin-top:var(--space-3)">Left: what the agent produced first.</figcaption>
+      </figure>
+      <figure class="figure">
+        <div class="figure-placeholder"><p class="label">Shipped</p></div>
+        <figcaption class="caption" style="margin-top:var(--space-3)">Right: what shipped, and why it changed.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="editorial-grid">
+    <p class="rail label">Snapshot</p>
+    <table class="snapshot">
+      <tbody>
+        <tr><th scope="row">Role</th><td>Sole designer and builder</td></tr>
+        <tr><th scope="row">Others</th><td>Narrative and page structure: Content and PMM. No designer involved.</td></tr>
+        <tr><th scope="row">Timeline</th><td>Placeholder</td></tr>
+        <tr><th scope="row">Tools</th><td>Placeholder</td></tr>
+        <tr><th scope="row">Status</th><td>Live</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="editorial-grid">
+    <p class="rail label">Homepage cards</p>
+    <div class="comparison wide">
+      <a class="card stack-tight" href="#">
+        <p class="label">Sole designer and builder</p>
+        <h3 class="heading">Pendo for Agents</h3>
+        <p>A product family I designed and built in the browser, with no other designer on it.</p>
+      </a>
+      <a class="card stack-tight" href="#">
+        <p class="label">Design partner</p>
+        <h3 class="heading">pendo.io homepage</h3>
+        <p>Pendo's homepage, designed and built around a story that kept changing until the day before launch.</p>
+      </a>
+      <a class="card stack-tight" href="#">
+        <p class="label">Precision implementer, then design partner</p>
+        <h3 class="heading">Novus</h3>
+        <p>novus.ai, built twice: once pixel-perfect from an agency design, then from an AI concept to the page that's live now.</p>
+      </a>
+      <a class="card stack-tight" href="#">
+        <p class="label">Self-initiator</p>
+        <h3 class="heading">Same craft, new floor</h3>
+        <p>A campaign nobody asked for, taken from idea to finished landing page in one evening.</p>
+      </a>
+    </div>
+  </section>
+
+  <section class="editorial-grid grid-demo">
+    <p class="rail label">Grid</p>
+    <p class="caption">text — the 62ch reading measure</p>
+    <p class="caption wide">wide — rail start to text end, for figures and card rows</p>
+    <p class="caption bleed">bleed — full width</p>
+    <p>The rail collapses into the text column below 60rem, which is the fallback to a single centered measure.</p>
+  </section>
+
+</main>
+
+</body>
+</html>
