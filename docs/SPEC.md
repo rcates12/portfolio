@@ -75,6 +75,21 @@ Figure slots can appear anywhere, including after Process (01) and after Reflect
 
 `Figure` and `Clip` both read a slot key and surface a visible placeholder with the slot description when no asset is present. This is what makes the site reviewable before captures are done.
 
+`Chapter` renders as a divider rather than a wrapper, so the decisions after it stay direct children of the page grid and keep their breakouts.
+
+## 4b. Asset pipeline
+
+Raw captures go in `assets/incoming/` (gitignored). One command crops, resizes, compresses and registers each one:
+
+```
+node scripts/assets.mjs --status                       # which slots are filled
+node scripts/assets.mjs <slot> <file> --crop=x,y,w,h   # process one
+```
+
+It writes AVIF and WebP at 640/1024/1536/2048 into `public/img/`, records dimensions in `src/data/assets.json`, and the matching `Figure` stops rendering its placeholder on the next build. Width and height come from the manifest, so filling a slot cannot shift layout.
+
+Use `--crop=x,y,w,h` rather than a space, since PowerShell splits bare comma lists. Videos are copied through with an optional `--poster`; there's no transcoding step yet.
+
 ## 5. Design tokens
 
 Settled and implemented in `src/styles/tokens.css`; specimen at `design/specimen.html`. Light editorial, Fraunces display, Hanken Grotesk body, achromatic with `#46494c` as second ink. Centered 65ch measure with symmetric breakouts for figures; captions sit under their figure. Full reasoning in `docs/DECISIONS.md`.

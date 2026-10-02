@@ -1,27 +1,22 @@
 ---
+import assets from '../data/assets.json';
+
 interface Props {
   asset: string;
   describe: string;
   caption?: string;
   credit?: string;
-  src?: string;
-  poster?: string;
   alt?: string;
   ratio?: string;
 }
 
-const {
-  asset,
-  describe,
-  caption,
-  credit,
-  src,
-  poster,
-  alt,
-  ratio = '16 / 9',
-} = Astro.props;
+const { asset, describe, caption, credit, alt, ratio = '16 / 9' } = Astro.props;
 
-const pending = !src;
+type Entry = { type: string; src: string; poster?: string };
+const entry = (assets as Record<string, Entry>)[asset];
+const pending = !entry;
+const src = entry?.src;
+const poster = entry?.poster;
 ---
 
 <figure class="figure-block" data-asset={asset}>

@@ -1,6 +1,10 @@
 node_modules/
 dist/
 .astro/
+
+# Raw captures: up to 36 MB each, never committed. Run scripts/assets.mjs
+# to produce the compressed versions in public/img/.
+assets/incoming/
 .env
 .env.production
 .DS_Store

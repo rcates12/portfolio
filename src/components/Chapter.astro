@@ -1,0 +1,32 @@
+---
+/** Novus runs in two chapters, each with its own intro before the key
+ *  decisions. Renders as a divider so the decisions after it stay direct
+ *  children of the page grid and keep their breakouts. */
+interface Props {
+  heading: string;
+  intro: string;
+}
+
+const { heading, intro } = Astro.props;
+---
+
+<div class="chapter wide">
+  <h2 class="display-2">{heading}</h2>
+  <p class="intro lead">{intro}</p>
+</div>
+
+<style>
+  .chapter {
+    border-top: 2px solid var(--ink);
+    padding-top: var(--space-5);
+    margin-top: var(--space-10);
+    margin-bottom: var(--space-7);
+  }
+
+  h2 { margin: 0; }
+
+  .intro {
+    margin: var(--space-4) 0 0;
+    max-width: var(--measure);
+  }
+</style>

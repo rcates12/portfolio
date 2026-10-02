@@ -1,27 +1,35 @@
 ---
+import assets from '../data/assets.json';
+
 interface Props {
   /** Key into docs/portfolio/asset-manifest.md. Not Astro's reserved `slot`. */
   asset: string;
   /** Slot description from the content, shown while the capture is missing. */
   describe: string;
   alt?: string;
-  src?: string;
   caption?: string;
   credit?: string;
   ratio?: string;
+  priority?: boolean;
 }
 
 const {
   asset,
   describe,
   alt,
-  src,
   caption,
   credit,
   ratio = '16 / 9',
+  priority = false,
 } = Astro.props;
 
-const pending = !src;
+type Entry = { type: string; width: number; height: number; widths: number[] };
+const entry = (assets as Record<string, Entry>)[asset];
+const pending = !entry;
+
+const srcset = (ext: string) =>
+  entry.widths.map((w) => `/img/${asset}-${w}.${ext} ${w}w`).join(', ');
+const sizes = '(max-width: 60rem) 100vw, 960px';
 ---
 
 <figure class="figure-block" data-asset={asset}>
@@ -32,7 +40,20 @@ const pending = !src;
       <p class="caption key">{asset}</p>
     </div>
   ) : (
-    <img src={src} alt={alt} loading="lazy" decoding="async" />
+    <picture>
+      <source type="image/avif" srcset={srcset('avif')} sizes={sizes} />
+      <img
+        src={`/img/${asset}-${entry.widths.at(-1)}.webp`}
+        srcset={srcset('webp')}
+        sizes={sizes}
+        width={entry.width}
+        height={entry.height}
+        alt={alt}
+        loading={priority ? 'eager' : 'lazy'}
+        decoding="async"
+        fetchpriority={priority ? 'high' : undefined}
+      />
+    </picture>
   )}
 
   {(caption || credit) && (

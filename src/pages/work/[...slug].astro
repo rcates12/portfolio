@@ -5,6 +5,7 @@ import Figure from '../../components/Figure.astro';
 import Clip from '../../components/Clip.astro';
 import Comparison from '../../components/Comparison.astro';
 import FirstOutput from '../../components/FirstOutput.astro';
+import Chapter from '../../components/Chapter.astro';
 
 export async function getStaticPaths() {
   const entries = await getCollection('work');
@@ -29,5 +30,5 @@ const data = entry.data;
   snapshot={data.snapshot}
   links={data.links}
 >
-  <Content components={{ Figure, Clip, Comparison, FirstOutput }} />
+  <Content components={{ Figure, Clip, Comparison, FirstOutput, Chapter }} />
 </CaseStudyLayout>

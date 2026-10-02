@@ -15,6 +15,8 @@ Updated 2026-10-02.
 - Layouts: `BaseLayout`, `CaseStudyLayout`
 - Homepage with four cards, verbatim card copy
 - **Pendo for Agents built end to end**, copy verbatim, every image slot a labeled placeholder
+- **Novus built end to end**, including the `Chapter` divider for its two-chapter structure
+- Asset pipeline: `npm run assets:status`, `node scripts/assets.mjs <slot> <file>`
 
 Build: 5 routes, 0 kB JS, 15 kB HTML on the heaviest page.
 
@@ -23,16 +25,17 @@ figures. The rail variant and the `/compare` route have been removed.
 
 ## Not built
 
-- Case studies 02, 03, 04 — frontmatter only, `draft: true`, body is a stub
-- Every image and clip. All slots render as labeled placeholders
+- Case studies 02 (pendo.io homepage) and 04 (Same craft) — frontmatter only, `draft: true`
+- Every image and clip. 0 of 21 slots filled; all render as labeled placeholders
 - About page, contact, domain, metadata, sitemap
 - Any motion. GSAP is not installed yet
+- Self-hosted fonts
 
 ## Next
 
-1. Review Pendo for Agents at 1440px and 375px, adjust the template
-2. Capture and place the Pendo for Agents assets per `docs/portfolio/asset-manifest.md`
-3. Case study 02 in its own chat, then 03 (needs the chapter grouping), then 04
+1. Case study 02, then 04
+2. Fill asset slots, starting with the Pendo for Agents "Have" crops in the manifest
+3. Self-host fonts, add metadata and Open Graph, run an accessibility and Lighthouse pass
 
 ## Assets
 

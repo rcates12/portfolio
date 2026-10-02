@@ -7,7 +7,9 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "check": "astro check"
+    "check": "astro check",
+    "asset": "node scripts/assets.mjs",
+    "assets:status": "node scripts/assets.mjs --status"
   },
   "dependencies": {
     "@astrojs/mdx": "^8.0.2",
