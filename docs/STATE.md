@@ -21,7 +21,7 @@ Updated 2026-10-02.
 - All four case studies, copy verbatim
 - Composite pipeline: `node scripts/compose.mjs --out=<slot> --cols=N "<file>|x,y,w,h" …`
   combines crops into one image, top-aligned per row, no burned-in labels
-- 19 asset slots filled: 5 single stills, 7 composites, 7 clips
+- 20 asset slots filled: 5 single stills, 7 composites, 8 clips
 
 Build: 5 routes, 0 kB JS, 15 kB HTML on the heaviest page.
 
@@ -31,14 +31,14 @@ figures. The rail variant and the `/compare` route have been removed.
 ## Not built
 
 All four case studies are built, copy verbatim.
-- 16 of 35 asset slots. The rest render as labeled placeholders
+- 15 of 35 asset slots. The rest render as labeled placeholders
 - About page, contact, domain, metadata, sitemap
 - Any motion. GSAP is not installed yet
 - Self-hosted fonts
 
 ## Next
 
-1. The 16 remaining slots. The easy composites are done; what's left needs
+1. The 15 remaining slots. The easy composites are done; what's left needs
    section-level crop coordinates found by slicing the tall captures
    (`pfa-panels`, `pfa-first-output`, `pfa-subnav`, `pfa-gradient`,
    `novus-receipt`, `novus-concept-vs-shipped`, `homepage-four-shapes`), plus
@@ -51,7 +51,10 @@ All four case studies are built, copy verbatim.
 - **Pendo for Agents** has the fewest filled slots. Its "before" states live in
   preview builds (2aq8itt5v, dw3uc9pft, 5sfyvns4j) and an old-version capture;
   those are composites, not crops. The drawer clip needs a new recording.
-- **Mobile captures** for every study need capturing; none exist.
+- **Mobile captures** for every study need capturing; none exist. This is all
+  that is left of the Same craft menu slot, which now runs as a clip.
+- The 10.54.16 recording at the root of `screenshots/` is **Pendomonium 2026**,
+  a project with no case study. Nothing in the four studies uses it.
 - **Figma frames** for Novus chapter 1 are not in the library.
 - The **Same craft prototype** is filled. Ryan supplied eight full-size
   captures of Claude's original output in `Downloads/scnf2/`, so rendering

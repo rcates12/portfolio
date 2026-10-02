@@ -221,6 +221,18 @@
     ],
     "sourceTraced": true
   },
+  "same-craft-menu": {
+    "type": "video",
+    "width": 1280,
+    "height": 680,
+    "duration": 5,
+    "mp4": "/img/same-craft-menu.mp4",
+    "webm": "/img/same-craft-menu.webm",
+    "poster": "/img/same-craft-menu-poster.webp",
+    "source": [
+      "C:/Users/ryanc/Downloads/work evidence for portfolio/screenshots/same craft new floor/Screen Recording 2026-09-30 at 10.30.01ΓÇ»PM.mov"
+    ]
+  },
   "same-craft-pacing": {
     "type": "video",
     "width": 1280,
