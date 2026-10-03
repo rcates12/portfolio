@@ -417,5 +417,35 @@
       "C:/Users/ryanc/Downloads/work evidence for portfolio/screenshots/same craft new floor/Screenshot 2026-09-30 at 10.33.24ΓÇ»PM.png"
     ],
     "sourceTraced": true
+  },
+  "pfa-card": {
+    "type": "image",
+    "width": 1044,
+    "height": 1440,
+    "widths": [348, 696, 1044]
+  },
+  "homepage-card": {
+    "type": "image",
+    "width": 1044,
+    "height": 1440,
+    "widths": [348, 696, 1044]
+  },
+  "novus-card": {
+    "type": "image",
+    "width": 1044,
+    "height": 1440,
+    "widths": [348, 696, 1044]
+  },
+  "same-craft-card": {
+    "type": "image",
+    "width": 1080,
+    "height": 1440,
+    "widths": [360, 720, 1080]
+  },
+  "home-joshua-tree": {
+    "type": "image",
+    "width": 1440,
+    "height": 1920,
+    "widths": [720, 1440]
   }
 }

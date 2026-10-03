@@ -60,10 +60,10 @@
   --weight-semibold: 600;
   --weight-display: 500;
 
-  /* Fraunces axes. Wonk and low optical size are for display sizes only;
-     at body sizes they turn into noise. */
-  --fraunces-display: "opsz" 144, "SOFT" 20, "WONK" 1;
-  --fraunces-heading: "opsz" 72, "SOFT" 20, "WONK" 0;
+  /* Fraunces axes, matching the Figma working file: wonky terminals on,
+     soft corners off, at every display size. */
+  --fraunces-display: "SOFT" 0, "WONK" 1;
+  --fraunces-heading: "SOFT" 0, "WONK" 1;
 
   /* ---- Space --------------------------------------------------------- */
   /* 4px base. */
@@ -87,6 +87,10 @@
      Captions sit under their figure. */
 
   --gutter: clamp(1.25rem, 4vw, 3rem);
+  /* The Figma frame is 1728 wide with a 1440 content block, so the 144px
+     side margin falls out of centring rather than being set. */
+  --content-max: 90rem;
+  --site-inset: clamp(1.25rem, 4vw, 3rem);
   --measure: 65ch;
   --breakout: clamp(0rem, 8vw, 9rem);
 

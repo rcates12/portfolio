@@ -1,4 +1,6 @@
 ---
+import assets from '../data/assets.json';
+
 interface Props {
   href: string;
   mode: string;
@@ -6,75 +8,193 @@ interface Props {
   line: string;
   image: string;
   asset: string;
-  src?: string;
-  alt?: string;
+  cta?: string;
   draft?: boolean;
 }
 
-const { href, mode, title, line, image, asset, src, alt, draft = false } = Astro.props;
+const {
+  href,
+  mode,
+  title,
+  line,
+  image,
+  asset,
+  cta = 'View case study',
+  draft = false,
+} = Astro.props;
+
+type Entry = { type: string; width: number; height: number; widths: number[] };
+const entry = (assets as Record<string, Entry>)[asset];
+const pending = !entry;
+
+const srcset = (ext: string) =>
+  entry.widths.map((w) => `/img/${asset}-${w}.${ext} ${w}w`).join(', ');
+const sizes = '(max-width: 36rem) 100vw, (max-width: 64rem) 50vw, 360px';
 ---
 
 <a class="card" href={href}>
-  <figure class="figure" data-asset={asset}>
-    {src ? (
-      <img src={src} alt={alt} loading="lazy" decoding="async" />
-    ) : (
-      <div class="placeholder">
-        <p class="label">Image slot</p>
-        <p class="caption describe">{image}</p>
-      </div>
-    )}
-  </figure>
+  <div class="media-slot">
+    <figure class="media" data-asset={asset}>
+      {pending ? (
+        <div class="placeholder">
+          <p class="placeholder-label">Image slot</p>
+          <p class="placeholder-note">{image}</p>
+        </div>
+      ) : (
+        <picture>
+          <source type="image/avif" srcset={srcset('avif')} sizes={sizes} />
+          <img
+            src={`/img/${asset}-${entry.widths.at(-1)}.webp`}
+            srcset={srcset('webp')}
+            sizes={sizes}
+            width={entry.width}
+            height={entry.height}
+            alt={image}
+            loading="lazy"
+            decoding="async"
+          />
+        </picture>
+      )}
+    </figure>
+  </div>
 
-  <p class="label mode">{mode}</p>
-  <h3 class="heading">{title}</h3>
-  <p class="line">{line}</p>
-  {draft && <p class="caption draft">Page not built yet</p>}
+  <div class="copy">
+    <p class="mode">{mode}</p>
+    <h2 class="title">{title}</h2>
+    <p class="line">{line}</p>
+    {draft && <p class="draft">Page not built yet</p>}
+    <span class="cta">{cta}</span>
+  </div>
 </a>
 
 <style>
   .card {
-    display: block;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
     text-decoration: none;
     color: inherit;
+    min-width: 0;
   }
 
-  .figure {
-    margin: 0 0 var(--space-4);
-    background: var(--figure-surface);
-    border: var(--hairline) solid var(--figure-border);
-    border-radius: var(--radius-md);
-    padding: var(--space-2);
-    transition: border-color var(--dur-2) var(--ease-out);
+  /* Figma's image frames are 348 x 480. With a 12px gutter between four
+     tiles across 1440, the column lands on 351, so the slot holds that
+     ratio to keep the row 480 tall at full width. */
+  .media-slot {
+    position: relative;
+    aspect-ratio: 351 / 480;
+  }
+
+  /* Pinned so the image's own proportions can't stretch the slot. */
+  .media {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    overflow: hidden;
+    background: var(--paper-sunk);
+  }
+
+  .media picture {
+    display: block;
+    height: 100%;
+  }
+
+  .media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
   }
 
   .placeholder {
-    aspect-ratio: 4 / 3;
+    height: 100%;
     display: grid;
     place-content: center;
     gap: var(--space-2);
     padding: var(--space-4);
     text-align: center;
     background: #1b1d20;
-    border-radius: var(--radius-sm);
   }
 
-  .placeholder .label { color: #8a8f94; }
-  .describe { color: #b6babd; max-width: 32ch; }
+  .placeholder-label {
+    margin: 0;
+    font-size: var(--size-label);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: #8a8f94;
+  }
 
-  img { border-radius: var(--radius-sm); width: 100%; }
+  .placeholder-note {
+    margin: 0;
+    font-size: var(--size-caption);
+    color: #b6babd;
+    max-width: 32ch;
+  }
 
-  .mode { margin-bottom: var(--space-2); }
+  .copy {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 8px;
+    padding: 12px 24px 16px;
+    border: var(--hairline) solid var(--rule);
+  }
 
-  .heading {
-    margin: 0 0 var(--space-2);
+  .mode,
+  .line,
+  .draft,
+  .cta {
+    margin: 0;
+  }
+
+  .mode {
+    display: none;
+  }
+
+  .title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-variation-settings: var(--fraunces-heading);
+    font-size: 28px;
+    font-weight: var(--weight-semibold);
+    line-height: 1.12;
+    letter-spacing: -0.01em;
+    color: var(--ink);
     transition: color var(--dur-2) var(--ease-out);
   }
 
-  .line { margin: 0; color: var(--ink-2); max-width: 42ch; }
+  .line {
+    flex: 1;
+    font-size: 15px;
+    line-height: 1.45;
+    text-wrap: pretty;
+    color: var(--ink);
+  }
 
-  .draft { margin-top: var(--space-2); color: var(--ink-4); }
+  .draft {
+    font-size: var(--size-caption);
+    color: var(--ink-4);
+  }
 
-  .card:hover .figure { border-color: var(--ink-3); }
-  .card:hover .heading { color: var(--accent); }
+  .cta {
+    align-self: flex-start;
+    width: fit-content;
+    margin-top: auto;
+    padding-top: 20px;
+    padding-bottom: 3px;
+    border-bottom: 2px solid currentColor;
+    font-size: 10px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+    transition: color var(--dur-2) var(--ease-out);
+  }
+
+  .card:hover .title,
+  .card:hover .cta {
+    color: var(--ink);
+  }
+
 </style>
