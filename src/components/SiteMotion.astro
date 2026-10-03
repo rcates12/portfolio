@@ -1,0 +1,39 @@
+---
+// Owns both smooth scrolling and the ScrollTrigger clock, because the two have
+// to share one loop. Lenis drives scroll position, so ScrollTrigger has to be
+// told when that position changes or its triggers read stale values.
+---
+
+<script>
+  import Lenis from 'lenis';
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  // Without smooth scrolling the page still scrolls natively, and ScrollTrigger
+  // reads that on its own. Only the Lenis layer is conditional.
+  if (!reduced.matches) {
+    const lenis = new Lenis({ anchors: true });
+
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add((time) => lenis.raf(time * 1000));
+    gsap.ticker.lagSmoothing(0);
+
+    // The lightbox sets this while it is open; a modal dialog does not stop the
+    // page behind it from scrolling, and neither does Lenis on its own.
+    const root = document.documentElement;
+    const syncLock = () => {
+      if (root.classList.contains('is-locked')) lenis.stop();
+      else lenis.start();
+    };
+
+    syncLock();
+    new MutationObserver(syncLock).observe(root, {
+      attributes: true,
+      attributeFilter: ['class'],
+    });
+  }
+</script>
