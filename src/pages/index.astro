@@ -2,7 +2,6 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import HomepageCard from '../components/HomepageCard.astro';
 import Statement from '../components/Statement.astro';
-import '../styles/font-trial-die-grotesk.css';
 import assets from '../data/assets.json';
 import { getCollection } from 'astro:content';
 
@@ -100,22 +99,25 @@ const photoSrcset = (ext: string) =>
 </BaseLayout>
 
 <style>
-  /* Type trial: Die Grotesk A Medium (500) on hero type, Bold (700) on tile titles. */
+  /* Homepage sans: Inter at 500 on the hero and statement, 700 on tile titles
+     and CTAs. Standing in for the Die Grotesk trial at the same weights until
+     that licence is bought, so the two can be swapped in this one block. */
   .home-type-trial .hero-title,
   .home-type-trial .hero-subhead,
   .home-type-trial .serif {
-    font-family: "Die Grotesk", ui-sans-serif, system-ui, sans-serif;
+    font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
     font-weight: 500;
     font-variation-settings: normal;
   }
 
   .home-type-trial :global(.card .title) {
-    font-family: "Die Grotesk", ui-sans-serif, system-ui, sans-serif;
+    font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
     font-weight: 700;
     font-variation-settings: normal;
   }
 
-  /* 25% smaller than the Fraunces scale — same layout, tighter fit for Die Grotesk. */
+  /* 25% smaller than the Fraunces scale, set when the hero headline was
+     colliding with the photo. */
   .home-type-trial .hero-title {
     font-size: clamp(2.0625rem, 0.9rem + 4.95vw, 4.5rem);
     letter-spacing: -0.04em;
@@ -136,14 +138,14 @@ const photoSrcset = (ext: string) =>
   }
 
   .home-type-trial :global(.statement-copy) {
-    font-family: "Die Grotesk", ui-sans-serif, system-ui, sans-serif;
+    font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
     font-weight: 500;
     font-variation-settings: normal;
     letter-spacing: -0.035em;
   }
 
   .home-type-trial :global(.card .cta) {
-    font-family: "Die Grotesk", ui-sans-serif, system-ui, sans-serif;
+    font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
     font-weight: 700;
     letter-spacing: 0.04em;
   }

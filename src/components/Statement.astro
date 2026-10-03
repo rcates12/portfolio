@@ -58,7 +58,7 @@ const { lines, coda } = Astro.props;
       );
     });
 
-    // Fraunces and Die Grotesk both land after first paint and change how many
+        // Webfonts land after first paint and change how many
     // rows the statement occupies, which moves every trigger below it.
     document.fonts?.ready.then(() => ScrollTrigger.refresh());
   }
