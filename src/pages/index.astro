@@ -1,25 +1,88 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import HomepageCard from '../components/HomepageCard.astro';
+import Statement from '../components/Statement.astro';
+import '../styles/font-trial-die-grotesk.css';
+import assets from '../data/assets.json';
 import { getCollection } from 'astro:content';
 
 const work = (await getCollection('work')).sort(
   (a, b) => a.data.order - b.data.order,
 );
+
+// TODO: new copy, written to the brief's positioning but not yet approved.
+// Each entry is one rendered line, so the breaks are deliberate.
+const statementLines = [
+  'I trained as a designer.',
+  'Then spent eight years on the production side.',
+  'For most of that time, those were two different jobs.',
+  'Now I design in the medium I ship in.',
+];
+const statementCoda =
+  'Code, prompts, and lately Figma again, now that it can talk to the build.';
+
+const cardAssets: Record<string, string> = {
+  'pendo-for-agents': 'pfa-card',
+  'pendo-homepage': 'homepage-card',
+  novus: 'novus-card',
+  'same-craft-new-floor': 'same-craft-card',
+};
+
+type Entry = { width: number; height: number; widths: number[] };
+const photo = (assets as Record<string, Entry>)['home-joshua-tree'];
+const photoSizes = '(max-width: 48rem) 100vw, 50vw';
+const photoSrcset = (ext: string) =>
+  photo.widths.map((w) => `/img/home-joshua-tree-${w}.${ext} ${w}w`).join(', ');
 ---
 
 <BaseLayout
-  title="Ryan Cates · I design in the medium"
+  title="Ryan Cates · Creative Engineer"
   description="Portfolio of shipped marketing sites, designed and built in the browser."
+  hideHeader
 >
-  <section class="editorial-grid intro">
-    <p class="label">Portfolio</p>
-    <h1 class="display-1">I design in the medium.</h1>
+  <div class="home-type-trial">
+  <section class="hero">
+    <div class="hero-inner">
+      <a class="hero-wordmark" href="/">Ryan Cates</a>
+
+      <div class="hero-copy">
+        <div class="hero-heading">
+          <h1 class="hero-title">Creative Engineer</h1>
+          <p class="hero-subhead">
+            <span class="serif">Code. Design.</span>
+            <span class="slash" aria-hidden="true">/</span>
+            <span class="serif">Taste. Vision.</span>
+          </p>
+        </div>
+      </div>
+
+      {photo && (
+        <figure class="hero-photo">
+          <picture>
+            <source type="image/avif" srcset={photoSrcset('avif')} sizes={photoSizes} />
+            <img
+              src={`/img/home-joshua-tree-${photo.widths.at(-1)}.webp`}
+              srcset={photoSrcset('webp')}
+              sizes={photoSizes}
+              width={photo.width}
+              height={photo.height}
+              alt="Ryan Cates in a cap and glasses, crouched with a camera in a sunlit rock alcove in Joshua Tree"
+              fetchpriority="high"
+              decoding="async"
+            />
+          </picture>
+          <div class="detect" aria-hidden="true">
+            <span class="detect-label">awaiting inspiration…</span>
+          </div>
+        </figure>
+      )}
+    </div>
   </section>
 
-  <section class="editorial-grid work" id="work">
-    <p class="label">Selected work</p>
-    <div class="cards wide">
+  <Statement lines={statementLines} coda={statementCoda} />
+
+  <section class="work" id="work" aria-label="Selected work">
+    <div class="work-row">
       {work.map((entry) => (
         <HomepageCard
           href={`/work/${entry.id}`}
@@ -27,22 +90,256 @@ const work = (await getCollection('work')).sort(
           title={entry.data.title}
           line={entry.data.card.line}
           image={entry.data.card.image}
-          asset={`${entry.id}-card`}
+          asset={cardAssets[entry.id] ?? `${entry.id}-card`}
           draft={entry.data.draft}
         />
       ))}
     </div>
   </section>
+  </div>
 </BaseLayout>
 
 <style>
-  .intro { padding-top: var(--space-9); row-gap: var(--space-4); }
+  /* Type trial: Die Grotesk A Medium (500) on hero type, Bold (700) on tile titles. */
+  .home-type-trial .hero-title,
+  .home-type-trial .hero-subhead,
+  .home-type-trial .serif {
+    font-family: "Die Grotesk", ui-sans-serif, system-ui, sans-serif;
+    font-weight: 500;
+    font-variation-settings: normal;
+  }
 
-  .work { margin-top: var(--section-gap); row-gap: var(--space-5); }
+  .home-type-trial :global(.card .title) {
+    font-family: "Die Grotesk", ui-sans-serif, system-ui, sans-serif;
+    font-weight: 700;
+    font-variation-settings: normal;
+  }
 
-  .cards {
+  /* 25% smaller than the Fraunces scale — same layout, tighter fit for Die Grotesk. */
+  .home-type-trial .hero-title {
+    font-size: clamp(2.0625rem, 0.9rem + 4.95vw, 4.5rem);
+    letter-spacing: -0.04em;
+  }
+
+  .home-type-trial .hero-subhead {
+    font-size: clamp(0.796875rem, 0.675rem + 0.375vw, 1.03125rem);
+    letter-spacing: -0.025em;
+  }
+
+  .home-type-trial .serif {
+    letter-spacing: -0.025em;
+  }
+
+  .home-type-trial :global(.card .title) {
+    font-size: 21px;
+    letter-spacing: -0.02em;
+  }
+
+  .home-type-trial :global(.statement-copy) {
+    font-family: "Die Grotesk", ui-sans-serif, system-ui, sans-serif;
+    font-weight: 500;
+    font-variation-settings: normal;
+    letter-spacing: -0.035em;
+  }
+
+  .home-type-trial :global(.card .cta) {
+    font-family: "Die Grotesk", ui-sans-serif, system-ui, sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+
+  /* Figma: 1440 content block centred on a 1728 frame, 48px under the hero. */
+  .hero {
+    padding: 0 var(--site-inset) 48px;
+  }
+
+  .hero-inner {
+    position: relative;
     display: grid;
-    gap: var(--space-8) var(--space-6);
-    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+    grid-template-columns: 1fr;
+    max-width: var(--content-max);
+    margin-inline: auto;
+  }
+
+  .hero-wordmark {
+    padding-top: 20px;
+    font-family: var(--font-display);
+    font-variation-settings: var(--fraunces-heading);
+    font-size: 19px;
+    line-height: 1.62;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .hero-copy {
+    grid-row: 2;
+    min-width: 0;
+    padding-block: var(--space-7) 0;
+  }
+
+  /* The subhead hangs off the right edge of the headline, so the block hugs
+     the headline instead of filling the column. */
+  .hero-heading {
+    width: fit-content;
+    max-width: 100%;
+  }
+
+  .hero-title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-variation-settings: var(--fraunces-display);
+    font-size: var(--size-display-1);
+    font-weight: var(--weight-semibold);
+    line-height: 0.97;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    text-wrap: nowrap;
+  }
+
+  .hero-subhead {
+    display: flex;
+    justify-content: flex-end;
+    align-items: baseline;
+    margin: 48px 0 0;
+    font-size: clamp(1.0625rem, 0.9rem + 0.5vw, 1.375rem);
+    line-height: 1.35;
+  }
+
+  .serif {
+    font-family: var(--font-display);
+    font-variation-settings: var(--fraunces-heading);
+    color: var(--ink-2);
+  }
+
+  .slash {
+    color: var(--ink-4);
+    padding-inline: 0.12em;
+  }
+
+  /* Figma: 720 x 960, 3:4, flush to the top of the content block. */
+  .hero-photo {
+    /* Scoped here rather than in tokens.css: it is one decorative flourish,
+       not part of the palette. */
+    --detect-green: #00ff6e;
+    position: relative;
+    grid-row: 1;
+    margin: 0;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+  }
+
+  /* Object-recognition box around the figure in the photo. The source is 3:4
+     and so is the frame, so object-fit: cover never crops and these
+     percentages stay locked to the body at every width. */
+  .detect {
+    position: absolute;
+    top: 30.6%;
+    left: 38.2%;
+    width: 30.4%;
+    height: 43.6%;
+    border: 3px solid var(--detect-green);
+    pointer-events: none;
+  }
+
+  .detect-label {
+    position: absolute;
+    /* Flush into the corner so the label reads as part of the box, not as a
+       chip floating inside it. */
+    top: 0;
+    left: 0;
+    padding: 3px 6px;
+    background: var(--detect-green);
+    color: #06140b;
+    font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    font-size: 10px;
+    line-height: 1;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+  }
+
+  .hero-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .work {
+    padding: 80px var(--site-inset) 64px;
+  }
+
+  /* One 12px gutter between tiles, nothing at the ends, so the row lines up
+     with the hero above it. */
+  .work-row {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    align-items: stretch;
+    gap: 0 12px;
+    max-width: var(--content-max);
+    margin-inline: auto;
+  }
+
+  @media (max-width: 64rem) {
+    .work-row {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-7) var(--space-6);
+    }
+  }
+
+  @media (max-width: 36rem) {
+    .work-row {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (min-width: 48rem) {
+    .hero-inner {
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr;
+    }
+
+    /* Name at the top of the left column, headline on the baseline below it. */
+    .hero-wordmark {
+      position: static;
+      grid-column: 1;
+      grid-row: 1;
+      align-self: start;
+    }
+
+    .hero-copy {
+      grid-column: 1;
+      grid-row: 1;
+      align-self: end;
+      padding-block: 0;
+    }
+
+    .hero-photo {
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    .hero-title {
+      margin-bottom: 0;
+    }
+  }
+
+  @media (max-width: 47.99rem) {
+    .hero-wordmark {
+      position: absolute;
+      inset: 0 auto auto 0;
+      z-index: 1;
+    }
+
+    .hero-title {
+      text-wrap: balance;
+    }
+
+    .hero-subhead {
+      justify-content: flex-start;
+      margin-top: var(--space-4);
+    }
+
+    .hero-heading {
+      width: auto;
+    }
   }
 </style>

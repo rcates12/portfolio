@@ -1,0 +1,36 @@
+/* Klim trial fonts. The files live in public/fonts/ and are gitignored, so
+   they are served as-is rather than bundled: a clone without them still
+   builds, and the type falls back to the system sans. Trial licences do not
+   cover web embedding, so these must be replaced with a licensed webfont
+   before this goes to a real domain. */
+@font-face {
+  font-family: "Die Grotesk";
+  src: url("/fonts/TestDieGrotesk-A-Medium.otf") format("opentype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Die Grotesk";
+  src: url("/fonts/TestDieGrotesk-A-MediumItalic.otf") format("opentype");
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Die Grotesk";
+  src: url("/fonts/TestDieGrotesk-A-Bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Die Grotesk";
+  src: url("/fonts/TestDieGrotesk-A-BoldItalic.otf") format("opentype");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}

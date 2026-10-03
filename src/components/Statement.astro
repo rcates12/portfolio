@@ -1,0 +1,106 @@
+---
+interface Props {
+  /** One array entry per rendered line. Breaks are authored, not wrapped. */
+  lines: string[];
+  coda?: string;
+}
+
+const { lines, coda } = Astro.props;
+---
+
+<section class="statement" aria-label="About">
+  <div class="statement-inner">
+    <p class="statement-copy">
+      {lines.map((line) => (
+        <span class="line">
+          {line.split(' ').map((word, i) => (
+            <span class="word">{i > 0 ? ' ' : ''}{word}</span>
+          ))}
+        </span>
+      ))}
+    </p>
+
+    {coda && <p class="coda">{coda}</p>}
+  </div>
+</section>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  const section = document.querySelector<HTMLElement>('.statement');
+
+  if (section) {
+    const words = section.querySelectorAll('.word');
+
+    // The words carry their finished colour in CSS, so with no JS or with
+    // reduced motion the statement is simply readable.
+    gsap.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
+      gsap.fromTo(
+        words,
+        { opacity: 0.14 },
+        {
+          opacity: 1,
+          ease: 'none',
+          // Fade is long relative to the step, so two or three words are
+          // mid-transition at once and the edge reads soft, not like a wipe.
+          duration: 1,
+          stagger: 0.34,
+          scrollTrigger: {
+            trigger: section,
+            start: 'top 80%',
+            end: 'bottom 65%',
+            scrub: true,
+          },
+        },
+      );
+    });
+
+    // Fraunces and Die Grotesk both land after first paint and change how many
+    // rows the statement occupies, which moves every trigger below it.
+    document.fonts?.ready.then(() => ScrollTrigger.refresh());
+  }
+</script>
+
+<style>
+  .statement {
+    padding: 160px var(--site-inset);
+  }
+
+  .statement-inner {
+    max-width: var(--content-max);
+    margin-inline: auto;
+  }
+
+  .statement-copy {
+    margin: 0;
+    font-family: var(--font-display);
+    font-variation-settings: var(--fraunces-heading);
+    font-size: clamp(1.75rem, 1rem + 2.6vw, 3.25rem);
+    font-weight: var(--weight-display);
+    line-height: 1.18;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    text-wrap: pretty;
+  }
+
+  .line {
+    display: block;
+  }
+
+  .coda {
+    max-width: 38ch;
+    margin: 40px 0 0;
+    font-size: 15px;
+    line-height: 1.62;
+    color: var(--ink-3);
+  }
+
+  @media (max-width: 47.99rem) {
+    .statement {
+      padding-block: 96px;
+    }
+  }
+</style>

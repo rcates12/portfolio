@@ -1,12 +1,14 @@
 ---
 import '../styles/global.css';
+import SiteMotion from '../components/SiteMotion.astro';
 
 interface Props {
   title: string;
   description?: string;
+  hideHeader?: boolean;
 }
 
-const { title, description } = Astro.props;
+const { title, description, hideHeader = false } = Astro.props;
 ---
 
 <!doctype html>
@@ -26,53 +28,199 @@ const { title, description } = Astro.props;
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
 
-    <header class="site-header">
-      <a class="wordmark" href="/">Ryan Cates</a>
-      <nav aria-label="Primary">
-        <a href="/#work">Work</a>
-      </nav>
-    </header>
+    {!hideHeader && (
+      <header class="site-header">
+        <div class="header-inner">
+          <a class="wordmark" href="/">Ryan Cates</a>
+          <nav aria-label="Primary">
+            <a href="/#work">Work</a>
+          </nav>
+        </div>
+      </header>
+    )}
 
     <main id="main">
       <slot />
     </main>
 
     <footer class="site-footer">
-      <p class="caption">Ryan Cates · Durham, NC</p>
+      <div class="footer-inner">
+        <div class="footer-contact">
+          <h2 class="footer-heading">Get in touch</h2>
+          <a class="footer-email" href="mailto:ryancates12@gmail.com">ryancates12@gmail.com</a>
+        </div>
+
+        <nav class="footer-nav" aria-label="Elsewhere">
+          <a href="/#work">Work</a>
+          <a href="https://www.linkedin.com/in/ryancates/" rel="me noopener">LinkedIn</a>
+          <a href="https://github.com/rcates12" rel="me noopener">GitHub</a>
+          <a class="footer-download" href="/ryan-cates-resume.pdf" download>
+            <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+              <path d="M8 2v8m0 0 3.2-3.2M8 10 4.8 6.8M2.75 12.5v.75h10.5v-.75" />
+            </svg>
+            Download résumé
+          </a>
+        </nav>
+      </div>
+
+      <p class="caption footer-colophon">Ryan Cates · Durham, NC</p>
     </footer>
 
+    <SiteMotion />
+
     <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+
+      main {
+        flex: 1;
+      }
+
+      /* Figma: 80 tall, sitting on the same 1440 content block as the page. */
       .site-header {
+        padding: 24px var(--site-inset);
+      }
+
+      .header-inner {
         display: flex;
         justify-content: space-between;
-        align-items: baseline;
+        align-items: center;
         gap: var(--space-4);
-        padding: var(--space-5) var(--gutter);
-        border-bottom: var(--hairline) solid var(--rule);
+        max-width: var(--content-max);
+        margin-inline: auto;
+        min-height: 32px;
       }
 
       .wordmark {
         font-family: var(--font-display);
         font-variation-settings: var(--fraunces-heading);
-        font-size: var(--size-subhead);
+        font-size: 19px;
+        line-height: 1.62;
+        color: var(--ink);
         text-decoration: none;
       }
 
       nav a {
-        font-size: var(--size-small);
+        font-size: 15px;
+        line-height: 1.62;
         color: var(--ink-2);
-        text-decoration-line: underline;
-        text-decoration-color: var(--rule-strong);
-        text-underline-offset: 0.18em;
-        transition: text-decoration-color var(--dur-2) var(--ease-out);
+        text-decoration: none;
+        transition: color var(--dur-2) var(--ease-out);
       }
 
-      nav a:hover { text-decoration-color: var(--ink); }
+      nav a:hover { color: var(--ink); }
 
+      /* Figma: full-bleed rule, 96 above it, 32/48 inside it. */
       .site-footer {
-        margin-top: var(--section-gap);
-        padding: var(--space-6) var(--gutter);
+        margin-top: 96px;
+        padding: 48px var(--site-inset) 32px;
         border-top: var(--hairline) solid var(--rule);
+      }
+
+      .footer-inner {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: var(--space-6);
+        max-width: var(--content-max);
+        margin-inline: auto;
+      }
+
+      .footer-heading {
+        margin: 0 0 var(--space-3);
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: var(--ink-3);
+      }
+
+      .footer-email {
+        font-family: var(--font-display);
+        font-variation-settings: var(--fraunces-heading);
+        font-size: clamp(1.375rem, 1rem + 1.4vw, 2rem);
+        line-height: 1.12;
+        letter-spacing: -0.02em;
+        color: var(--ink);
+        text-decoration: none;
+        border-bottom: 2px solid currentColor;
+      }
+
+      .footer-email:hover { color: var(--ink-2); }
+
+      .footer-nav {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-2);
+        text-align: right;
+      }
+
+      .footer-nav a {
+        font-size: 15px;
+        line-height: 1.62;
+        color: var(--ink-2);
+        text-decoration: none;
+        transition: color var(--dur-2) var(--ease-out);
+      }
+
+      .footer-nav a:hover { color: var(--ink); }
+
+      /* Stays an anchor, because it resolves to a URL and should keep the
+         browser's open-in-new-tab and copy-link behaviour. It only looks
+         like a button. */
+      .footer-nav .footer-download {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        /* A flex child ignores the nav's text-align, so it sets its own edge. */
+        align-self: flex-end;
+        margin-top: var(--space-3);
+        padding: 10px 16px;
+        border: var(--hairline) solid var(--ink-4);
+        border-radius: 2px;
+        font-size: 13px;
+        line-height: 1;
+        color: var(--ink);
+        transition:
+          border-color var(--dur-2) var(--ease-out),
+          background-color var(--dur-2) var(--ease-out);
+      }
+
+      .footer-nav .footer-download:hover {
+        border-color: var(--ink);
+        background: var(--paper-sunk);
+      }
+
+      .footer-download svg {
+        width: 12px;
+        height: 12px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.5;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+
+      .footer-colophon {
+        max-width: var(--content-max);
+        margin: 64px auto 0;
+        font-size: 13px;
+        line-height: 1.35;
+        color: var(--ink-3);
+      }
+
+      @media (max-width: 36rem) {
+        .footer-nav {
+          text-align: left;
+        }
+
+        .footer-download {
+          align-self: flex-start;
+        }
       }
     </style>
   </body>

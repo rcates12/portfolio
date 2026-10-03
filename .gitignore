@@ -5,6 +5,11 @@ dist/
 # Raw captures: up to 36 MB each, never committed. Run scripts/assets.mjs
 # to produce the compressed versions in public/img/.
 assets/incoming/
+
+# Klim trial fonts. Desktop trial licences do not permit web embedding or
+# redistribution, so the files stay local. Without them the Die Grotesk trial
+# falls back to the system sans; the build still succeeds.
+public/fonts/
 .env
 .env.production
 .DS_Store
