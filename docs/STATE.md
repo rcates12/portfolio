@@ -31,17 +31,15 @@ figures. The rail variant and the `/compare` route have been removed.
 ## Not built
 
 All four case studies are built, copy verbatim.
-- 1 of 35 asset slots. The rest render as labeled placeholders
+- Nothing on the asset side. All 35 slots are filled
 - About page, contact, domain, metadata, sitemap
 - Any motion. GSAP is not installed yet
 - Self-hosted fonts
 
 ## Next
 
-1. One slot left: `homepage-quote-tabs`, which needs a live-page recording.
-   See the note below on why the existing recordings do not cover it.
-   `pfa-process` is filled, but with mobile stills and no clip of the drawer
-   opening, so it runs as a Figure rather than a Clip.
+1. All 35 slots are filled. One is weaker than intended: `pfa-process` has
+   mobile stills but no clip of the drawer opening, so it runs as a Figure.
 2. Self-host fonts, add metadata and Open Graph, run an accessibility and Lighthouse pass
 
 ### Section offsets found so far
@@ -121,8 +119,11 @@ holds the quote-tab or modal interactions:
 - **10.47.43** (26s) is entirely the Headless Pendo section, already used for
   `homepage-headless`.
 
-So `homepage-quote-tabs` and `homepage-modal` both need a fresh capture of the
-live page, which is what `asset-manifest.md` said in the first place.
+Both were settled with fresh captures of the live page, which is what
+`asset-manifest.md` said in the first place. `homepage-modal` came from the
+full-page 22_41_34 capture and `homepage-quote-tabs` from the 11s recording
+Ryan made on 2026-10-05, which has no tooltip in it, so that figure's caption
+is now about the type-in pacing and the fixed section height instead.
 
 ### Known gaps in the sources
 
