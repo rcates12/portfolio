@@ -12,13 +12,13 @@ interface Props {
 const {
   title,
   description = 'Portfolio of shipped marketing sites, designed and built in the browser.',
-  ogImage = '/og/default.jpg',
+  ogImage = '/og/default.png',
   ogType = 'website',
 } = Astro.props;
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const ogImageURL = new URL(ogImage, Astro.site);
-const isDefaultOg = ogImage === '/og/default.jpg';
+const isDefaultOg = ogImage === '/og/default.png';
 
 const elsewhereLinks = [
   { href: '/#work', label: 'Work' },
@@ -43,8 +43,10 @@ const elsewhereLinks = [
     <meta property="og:image" content={ogImageURL} />
     {isDefaultOg && (
       <>
+        <meta property="og:image:type" content="image/png" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content={`${title} — ${description}`} />
       </>
     )}
     <meta property="og:locale" content="en_US" />

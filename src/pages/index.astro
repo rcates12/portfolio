@@ -284,9 +284,17 @@ const photoSrcset = (ext: string) =>
      the title running into the image. Below this, the stacked mobile layout
      holds. */
   @media (min-width: 64rem) {
+    /* Fit the hero block in the viewport below the header so the headline
+       stays above the fold on short laptop screens. */
+    .hero {
+      --hero-photo-h: min(960px, calc(100svh - 5.5rem));
+    }
+
     .hero-inner {
       grid-template-columns: 1fr 1fr;
       grid-template-rows: 1fr;
+      max-height: var(--hero-photo-h);
+      align-items: end;
     }
 
     .hero-copy {
@@ -299,10 +307,30 @@ const photoSrcset = (ext: string) =>
     .hero-photo {
       grid-column: 2;
       grid-row: 1;
+      justify-self: end;
+      width: min(100%, calc(var(--hero-photo-h) * 3 / 4));
+      max-height: var(--hero-photo-h);
+      height: auto;
     }
 
     .hero-title {
       margin-bottom: 0;
+    }
+
+    .hero-subhead {
+      margin-top: clamp(1.5rem, 3vh, 3rem);
+    }
+  }
+
+  /* Slightly tighten type on short desktop viewports without changing the
+     wide-screen scale. */
+  @media (min-width: 64rem) and (max-height: 52.5rem) {
+    .home-type-trial .hero-title {
+      font-size: clamp(2rem, 0.4rem + 3.2vw, 3.75rem);
+    }
+
+    .home-type-trial .hero-subhead {
+      font-size: clamp(0.9375rem, 0.8rem + 0.35vw, 1.125rem);
     }
   }
 

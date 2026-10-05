@@ -8,10 +8,10 @@ type AssetEntry = {
 
 /** Best share image for a case study hero slot, or the site default. */
 export function ogImageForAsset(assetKey: string | undefined): string {
-  if (!assetKey) return '/og/default.jpg';
+  if (!assetKey) return '/og/default.png';
 
   const entry = (assets as Record<string, AssetEntry>)[assetKey];
-  if (!entry) return '/og/default.jpg';
+  if (!entry) return '/og/default.png';
 
   if (entry.type === 'video' && entry.poster) return entry.poster;
 
@@ -20,5 +20,5 @@ export function ogImageForAsset(assetKey: string | undefined): string {
     return `/img/${assetKey}-${width}.webp`;
   }
 
-  return '/og/default.jpg';
+  return '/og/default.png';
 }
