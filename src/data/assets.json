@@ -1,4 +1,23 @@
 {
+  "home-joshua-tree": {
+    "type": "image",
+    "width": 1440,
+    "height": 1920,
+    "widths": [
+      720,
+      1440
+    ]
+  },
+  "homepage-card": {
+    "type": "image",
+    "width": 1044,
+    "height": 1440,
+    "widths": [
+      348,
+      696,
+      1044
+    ]
+  },
   "homepage-concept-car": {
     "type": "image",
     "width": 3120,
@@ -61,6 +80,20 @@
     ],
     "sourceTraced": true
   },
+  "homepage-modal": {
+    "type": "image",
+    "width": 2800,
+    "height": 3500,
+    "widths": [
+      640,
+      1024,
+      1536,
+      2048
+    ],
+    "source": [
+      "C:/Users/ryanc/Downloads/work evidence for portfolio/screenshots/homepage/screencapture-pendo-website-next-h5dpw8a34-pendo-vercel-app-sandbox-home-multi-concept-2026-09-30-22_41_34.png"
+    ]
+  },
   "homepage-toolbar": {
     "type": "video",
     "width": 1280,
@@ -87,6 +120,16 @@
     "source": [
       "C:/Users/ryanc/Downloads/work evidence for portfolio/screenshots/homepage/screencapture-pendo-website-next-hhcamw18m-pendo-vercel-app-sandbox-home-multi-concept-2026-09-30-22_43_43.png",
       "C:/Users/ryanc/Downloads/work evidence for portfolio/screenshots/homepage/screencapture-pendo-io-2026-09-30-21_37_18.png"
+    ]
+  },
+  "novus-card": {
+    "type": "image",
+    "width": 1044,
+    "height": 1440,
+    "widths": [
+      348,
+      696,
+      1044
     ]
   },
   "novus-clips": {
@@ -193,6 +236,33 @@
     ],
     "source": [
       "C:/Users/ryanc/Downloads/work evidence for portfolio/screenshots/novus agent docs/screencapture-novus-ai-2026-09-30-21_47_07.png"
+    ]
+  },
+  "pfa-card": {
+    "type": "image",
+    "width": 1044,
+    "height": 1440,
+    "widths": [
+      348,
+      696,
+      1044
+    ]
+  },
+  "pfa-drawer": {
+    "type": "image",
+    "width": 3320,
+    "height": 1952,
+    "widths": [
+      640,
+      1024,
+      1536,
+      2048
+    ],
+    "source": [
+      "C:/Users/ryanc/Downloads/work evidence for portfolio/screenshots/PFA docs/Screenshot 2026-09-30 at 9.44.36 PM.png",
+      "C:/Users/ryanc/Downloads/work evidence for portfolio/screenshots/PFA docs/Screenshot 2026-09-30 at 9.44.54 PM.png",
+      "C:/Users/ryanc/Downloads/work evidence for portfolio/screenshots/PFA docs/Screenshot 2026-09-30 at 9.45.16 PM.png",
+      "C:/Users/ryanc/Downloads/work evidence for portfolio/screenshots/PFA docs/Screenshot 2026-09-30 at 9.45.35 PM.png"
     ]
   },
   "pfa-first-output": {
@@ -316,6 +386,16 @@
       "C:/Users/ryanc/Downloads/work evidence for portfolio/screenshots/same craft new floor/Screenshot 2026-09-30 at 10.35.11ΓÇ»PM.png"
     ]
   },
+  "same-craft-card": {
+    "type": "image",
+    "width": 1080,
+    "height": 1440,
+    "widths": [
+      360,
+      720,
+      1080
+    ]
+  },
   "same-craft-close": {
     "type": "image",
     "width": 3452,
@@ -417,35 +497,5 @@
       "C:/Users/ryanc/Downloads/work evidence for portfolio/screenshots/same craft new floor/Screenshot 2026-09-30 at 10.33.24ΓÇ»PM.png"
     ],
     "sourceTraced": true
-  },
-  "pfa-card": {
-    "type": "image",
-    "width": 1044,
-    "height": 1440,
-    "widths": [348, 696, 1044]
-  },
-  "homepage-card": {
-    "type": "image",
-    "width": 1044,
-    "height": 1440,
-    "widths": [348, 696, 1044]
-  },
-  "novus-card": {
-    "type": "image",
-    "width": 1044,
-    "height": 1440,
-    "widths": [348, 696, 1044]
-  },
-  "same-craft-card": {
-    "type": "image",
-    "width": 1080,
-    "height": 1440,
-    "widths": [360, 720, 1080]
-  },
-  "home-joshua-tree": {
-    "type": "image",
-    "width": 1440,
-    "height": 1920,
-    "widths": [720, 1440]
   }
 }

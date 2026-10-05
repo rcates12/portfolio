@@ -31,24 +31,20 @@ figures. The rail variant and the `/compare` route have been removed.
 ## Not built
 
 All four case studies are built, copy verbatim.
-- 7 of 35 asset slots. The rest render as labeled placeholders
+- 5 of 35 asset slots. The rest render as labeled placeholders
 - About page, contact, domain, metadata, sitemap
 - Any motion. GSAP is not installed yet
 - Self-hosted fonts
 
 ## Next
 
-1. Everything that could be cut from the existing library has been cut. All 7
-   remaining slots need Ryan to capture something new:
+1. All 5 remaining slots need Ryan to capture something new:
    - `novus-mobile`, `pfa-process` — mobile captures. Every capture in the
      library is 3456px desktop
    - `pfa-process` also needs a clip of the drawer opening
-   - `pfa-drawer-borderless` — a drawer from before the borderless pass. All
-     four drawer screenshots are the shipped version, and the drawer is an
-     overlay so it never appears in a full-page capture
    - `novus-fluid-grid`, `novus-last-pixel` — the agency's Figma frames
-   - `homepage-quote-tabs`, `homepage-modal` — live-page recordings. See the
-     note below on why the existing recordings do not cover them
+   - `homepage-quote-tabs` — a live-page recording. See the note below on why
+     the existing recordings do not cover it
 2. Self-host fonts, add metadata and Open Graph, run an accessibility and Lighthouse pass
 
 ### Section offsets found so far
@@ -106,6 +102,16 @@ badge.
 Only the `5sfyvns4j` preview build has the observability gap section. The other
 two PFA previews (`2aq8itt5v`, `dw3uc9pft`) go straight from the hero to the
 pink "See the full agent experience" section, so there is no second "before".
+
+`homepage-modal` is filled. The modal is open at the top of the **22_41_34**
+`h5dpw8a34` capture, which is why that capture's bento looked faded and
+half-loaded: the page behind the modal is dimmed. It runs as a still rather
+than a clip, so the caption no longer claims the loading behaviour.
+
+`pfa-drawer` replaced `pfa-drawer-borderless`. No "before the borderless pass"
+capture exists, so instead of a before/after the figure is a 2×2 of the four
+shipped drawer views. The company and the person named in the Proof view are
+blurred in six places.
 
 The two homepage recordings have now been watched frame by frame, and neither
 holds the quote-tab or modal interactions:
