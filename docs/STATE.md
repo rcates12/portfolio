@@ -31,15 +31,17 @@ figures. The rail variant and the `/compare` route have been removed.
 ## Not built
 
 All four case studies are built, copy verbatim.
-- Nothing on the asset side. All 35 slots are filled
+- Nothing on the asset side. All 36 slots are filled
 - About page, contact, domain, metadata, sitemap
 - Any motion. GSAP is not installed yet
 - Self-hosted fonts
 
 ## Next
 
-1. All 35 slots are filled. One is weaker than intended: `pfa-process` has
-   mobile stills but no clip of the drawer opening, so it runs as a Figure.
+1. All 36 slots are filled. The drawer clip the manifest asked for became its
+   own slot, `pfa-drawer-open`, next to the drawer paragraph rather than in
+   Process, since that paragraph is about the drawer and Process is about the
+   working method. `pfa-process` keeps the three mobile stills.
 2. Self-host fonts, add metadata and Open Graph, run an accessibility and Lighthouse pass
 
 ### Section offsets found so far
@@ -124,6 +126,13 @@ Both were settled with fresh captures of the live page, which is what
 full-page 22_41_34 capture and `homepage-quote-tabs` from the 11s recording
 Ryan made on 2026-10-05, which has no tooltip in it, so that figure's caption
 is now about the type-in pacing and the fixed section height instead.
+
+The 2026-10-05 desktop drawer recording (13s) has two stretches that cannot
+ship: Proof runs roughly 6.2–9.2s and names a customer and a person on screen,
+and the browser chrome slides back in at about 11.4s. `pfa-drawer-open` is two
+segments concatenated, 1.2–6.0s and 9.3–11.2s, which skips both. The mobile
+recording beside it (16s) is unused; it reaches Proof within three seconds, so
+any cut from it needs the same care.
 
 ### Known gaps in the sources
 
