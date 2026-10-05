@@ -56,9 +56,11 @@ Thirteen sections at once would have come back roughly right and taken time I di
 
 <Figure
   asset="novus-fluid-grid"
-  describe="The Figma frame and the build overlaid at 1440px, then the build at a wider and a narrower width."
-  caption="Left: the Figma frame overlaid on the build at 1440px. Right: the same build wider and narrower."
-  credit="Figma frame by the agency that designed the site."
+  describe="The agency's responsiveness guide: the same hero drawn at three desktop widths and once for mobile."
+  caption="The responsiveness guide I built against. The same hero at 1440px, 1920px and 1200px, mobile below 800px, and the grid set at 10 units on desktop and 4 on mobile."
+  alt="A Figma page headed 'Desktop - Fluid Responsiveness'. Three dark hero frames sit in a row, labeled 1440px, 1920px and 1200px, each showing the headline 'What happened to your users after your last deploy?' centered over scattered squares, scaled so every frame holds the same proportions. Below them a strip labeled 'Desktop Grid Background - 10 Units'. Underneath, a section headed 'Mobile - less than 800px' with one narrow phone frame of the same hero and a strip labeled 'Mobile Grid Background - 4 Units'."
+  credit="Figma by the agency that designed the site."
+  ratio="3 / 2"
 />
 
 The agency drew everything on a 144px grid at 1440px wide. I set 144px equal to 10% of the viewport, so the whole page scales like a drawing. The dissolving rows of squares between sections are built from blocks sized in viewport units, so they stay square at every width instead of stretching like the SVG export would have.
@@ -67,9 +69,11 @@ The agency drew everything on a 144px grid at 1440px wide. I set 144px equal to 
 
 <Figure
   asset="novus-last-pixel"
-  describe="A close crop of a grid junction and the signup form, Figma next to build."
-  caption="Left: the agency's Figma. Right: the build."
-  credit="Figma frame by the agency that designed the site."
+  describe="The agency's footer comp with the grid showing: the signup form sitting on the junctions I had to match."
+  caption="The agency's footer comp with the grid left visible. This is the kind of detail I measured against: the cell borders, the junctions, and the diagonal under the headline."
+  alt="A dark Figma frame with a faint grid of cells ruled across it. 'Request for' sits top left and 'Early Access' below it to the right, with a thin diagonal joining the two cells between them. A signup form runs down the middle with First Name and Last Name side by side, then Company, then an email field, then a Request Early Access button. A small footer panel sits below it, and the word novus runs oversized and barely lighter than the background across the bottom."
+  credit="Figma by the agency that designed the site."
+  ratio="5 / 4"
 />
 
 Pixel-perfect mostly comes down to catching small things the agent called finished. A 65px gap came back at 44px, the squares at each grid intersection came back as quarter circles, and bordered cells doubled into 2px lines. I measured each one and sent it back. Then the open beta update in May was the same work again, on a live site this time.

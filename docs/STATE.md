@@ -31,27 +31,17 @@ figures. The rail variant and the `/compare` route have been removed.
 ## Not built
 
 All four case studies are built, copy verbatim.
-- 3 of 35 asset slots. The rest render as labeled placeholders
+- 1 of 35 asset slots. The rest render as labeled placeholders
 - About page, contact, domain, metadata, sitemap
 - Any motion. GSAP is not installed yet
 - Self-hosted fonts
 
 ## Next
 
-1. Three slots left:
-   - `homepage-quote-tabs` — a live-page recording. See the note below on why
-     the existing recordings do not cover it
-   - `novus-fluid-grid`, `novus-last-pixel` — blocked on a question, not on
-     files. `novus figma screens/` holds the agency's handoff file, but every
-     shot is a canvas overview at 22% zoom, and the frames in it do not match
-     the launch site: they include blocks such as "Cortex: The Product Context
-     Graph" that the launch site never had. The one live capture in that folder
-     is `novus.ai/customer-beta`, which is the open beta, a later generation
-     than the Figma. Pairing them under "Chase the last pixel" would show a
-     comp and a build that genuinely differ, which reads as the opposite of
-     the claim. Ryan needs to say which frames go with which build.
-   - `pfa-process` is filled with mobile captures but has no clip of the drawer
-     opening, so it runs as a Figure
+1. One slot left: `homepage-quote-tabs`, which needs a live-page recording.
+   See the note below on why the existing recordings do not cover it.
+   `pfa-process` is filled, but with mobile stills and no clip of the drawer
+   opening, so it runs as a Figure rather than a Clip.
 2. Self-host fonts, add metadata and Open Graph, run an accessibility and Lighthouse pass
 
 ### Section offsets found so far
@@ -143,7 +133,12 @@ live page, which is what `asset-manifest.md` said in the first place.
   that is left of the Same craft menu slot, which now runs as a clip.
 - The 10.54.16 recording at the root of `screenshots/` is **Pendomonium 2026**,
   a project with no case study. Nothing in the four studies uses it.
-- **Figma frames** for Novus chapter 1 are not in the library.
+- **Novus chapter 1 Figma** has two folders and only one of them is usable.
+  `novus figma screens/` is seven screenshots of the Figma canvas at 12–28%
+  zoom, so no single frame in them crops above about 900px. Use
+  `novus sf handoff/` instead: those are real Figma exports, up to
+  10116×7062. Ignore `novus figma screens/Grid.png` either way, since the
+  grids are toggled off in it and the frame is empty.
 - The **Same craft prototype** is filled. Ryan supplied eight full-size
   captures of Claude's original output in `Downloads/scnf2/`, so rendering
   `the-new-way.html` from `claude-files.zip` is no longer needed. A 34s

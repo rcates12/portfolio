@@ -179,6 +179,20 @@
       "C:/Users/ryanc/Downloads/work evidence for portfolio/screenshots/novus agent docs/screencapture-novus-ai-2026-09-30-21_47_07.png"
     ]
   },
+  "novus-fluid-grid": {
+    "type": "image",
+    "width": 9600,
+    "height": 6880,
+    "widths": [
+      640,
+      1024,
+      1536,
+      2048
+    ],
+    "source": [
+      "C:/Users/ryanc/Downloads/work evidence for portfolio/screenshots/novus sf handoff/Responsiveness Guide.png"
+    ]
+  },
   "novus-frame": {
     "type": "image",
     "width": 3610,
@@ -223,6 +237,20 @@
       "C:/Users/ryanc/Downloads/work evidence for portfolio/screenshots/novus agent docs/Screen Recording 2026-09-30 at 10.03.34ΓÇ»PM.mov"
     ],
     "sourceTraced": true
+  },
+  "novus-last-pixel": {
+    "type": "image",
+    "width": 2890,
+    "height": 2360,
+    "widths": [
+      640,
+      1024,
+      1536,
+      2048
+    ],
+    "source": [
+      "C:/Users/ryanc/Downloads/work evidence for portfolio/screenshots/novus sf handoff/Closed Beta Product Page Blocks.jpg"
+    ]
   },
   "novus-mobile": {
     "type": "image",
