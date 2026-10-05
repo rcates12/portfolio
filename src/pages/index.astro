@@ -37,13 +37,10 @@ const photoSrcset = (ext: string) =>
 <BaseLayout
   title="Ryan Cates · Creative Engineer"
   description="Portfolio of shipped marketing sites, designed and built in the browser."
-  hideHeader
 >
   <div class="home-type-trial">
   <section class="hero">
     <div class="hero-inner">
-      <a class="hero-wordmark" href="/">Ryan Cates</a>
-
       <div class="hero-copy">
         <div class="hero-heading">
           <h1 class="hero-title">Creative Engineer</h1>
@@ -161,16 +158,6 @@ const photoSrcset = (ext: string) =>
     grid-template-columns: 1fr;
     max-width: var(--content-max);
     margin-inline: auto;
-  }
-
-  .hero-wordmark {
-    padding-top: 20px;
-    font-family: var(--font-display);
-    font-variation-settings: var(--fraunces-heading);
-    font-size: 19px;
-    line-height: 1.62;
-    color: var(--ink);
-    text-decoration: none;
   }
 
   .hero-copy {
@@ -293,18 +280,13 @@ const photoSrcset = (ext: string) =>
     }
   }
 
-  @media (min-width: 48rem) {
+  /* Two columns only once the headline and photo can sit side by side without
+     the title running into the image. Below this, the stacked mobile layout
+     holds. */
+  @media (min-width: 64rem) {
     .hero-inner {
       grid-template-columns: 1fr 1fr;
       grid-template-rows: 1fr;
-    }
-
-    /* Name at the top of the left column, headline on the baseline below it. */
-    .hero-wordmark {
-      position: static;
-      grid-column: 1;
-      grid-row: 1;
-      align-self: start;
     }
 
     .hero-copy {
@@ -324,11 +306,23 @@ const photoSrcset = (ext: string) =>
     }
   }
 
-  @media (max-width: 47.99rem) {
-    .hero-wordmark {
-      position: absolute;
-      inset: 0 auto auto 0;
-      z-index: 1;
+  @media (max-width: 63.99rem) {
+    /* Title, then photo — the header above carries the name and Work link. */
+    .hero-inner {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .hero-copy {
+      order: 1;
+      grid-row: auto;
+      padding-block: var(--space-5) 0;
+    }
+
+    .hero-photo {
+      order: 2;
+      grid-row: auto;
+      margin-top: var(--space-6);
     }
 
     .hero-title {

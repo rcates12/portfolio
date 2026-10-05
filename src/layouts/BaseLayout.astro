@@ -5,10 +5,26 @@ import SiteMotion from '../components/SiteMotion.astro';
 interface Props {
   title: string;
   description?: string;
-  hideHeader?: boolean;
+  ogImage?: string;
+  ogType?: 'website' | 'article';
 }
 
-const { title, description, hideHeader = false } = Astro.props;
+const {
+  title,
+  description = 'Portfolio of shipped marketing sites, designed and built in the browser.',
+  ogImage = '/og/default.jpg',
+  ogType = 'website',
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const ogImageURL = new URL(ogImage, Astro.site);
+const isDefaultOg = ogImage === '/og/default.jpg';
+
+const elsewhereLinks = [
+  { href: '/#work', label: 'Work' },
+  { href: 'https://www.linkedin.com/in/ryancates/', label: 'LinkedIn', rel: 'me noopener' },
+  { href: 'https://github.com/rcates12', label: 'GitHub', rel: 'me noopener' },
+] as const;
 ---
 
 <!doctype html>
@@ -17,7 +33,31 @@ const { title, description, hideHeader = false } = Astro.props;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
-    {description && <meta name="description" content={description} />}
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImageURL} />
+    {isDefaultOg && (
+      <>
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+      </>
+    )}
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:site_name" content="Ryan Cates" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageURL} />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -28,16 +68,22 @@ const { title, description, hideHeader = false } = Astro.props;
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
 
-    {!hideHeader && (
-      <header class="site-header">
-        <div class="header-inner">
-          <a class="wordmark" href="/">Ryan Cates</a>
-          <nav aria-label="Primary">
-            <a href="/#work">Work</a>
-          </nav>
-        </div>
-      </header>
-    )}
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="wordmark" href="/">Ryan Cates</a>
+        <nav class="site-nav" aria-label="Primary">
+          {elsewhereLinks.map((link) => (
+            <a href={link.href} rel={'rel' in link ? link.rel : undefined}>{link.label}</a>
+          ))}
+          <a class="nav-download" href="/ryan-cates-resume.pdf" download>
+            <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+              <path d="M8 2v8m0 0 3.2-3.2M8 10 4.8 6.8M2.75 12.5v.75h10.5v-.75" />
+            </svg>
+            Download résumé
+          </a>
+        </nav>
+      </div>
+    </header>
 
     <main id="main">
       <slot />
@@ -50,11 +96,11 @@ const { title, description, hideHeader = false } = Astro.props;
           <a class="footer-email" href="mailto:ryancates12@gmail.com">ryancates12@gmail.com</a>
         </div>
 
-        <nav class="footer-nav" aria-label="Elsewhere">
-          <a href="/#work">Work</a>
-          <a href="https://www.linkedin.com/in/ryancates/" rel="me noopener">LinkedIn</a>
-          <a href="https://github.com/rcates12" rel="me noopener">GitHub</a>
-          <a class="footer-download" href="/ryan-cates-resume.pdf" download>
+        <nav class="footer-nav site-nav" aria-label="Elsewhere">
+          {elsewhereLinks.map((link) => (
+            <a href={link.href} rel={'rel' in link ? link.rel : undefined}>{link.label}</a>
+          ))}
+          <a class="nav-download" href="/ryan-cates-resume.pdf" download>
             <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false">
               <path d="M8 2v8m0 0 3.2-3.2M8 10 4.8 6.8M2.75 12.5v.75h10.5v-.75" />
             </svg>
@@ -95,15 +141,24 @@ const { title, description, hideHeader = false } = Astro.props;
       }
 
       .wordmark {
-        font-family: var(--font-display);
-        font-variation-settings: var(--fraunces-heading);
+        font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+        font-weight: 500;
         font-size: 19px;
         line-height: 1.62;
+        letter-spacing: -0.02em;
         color: var(--ink);
         text-decoration: none;
       }
 
-      nav a {
+      .site-nav {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: flex-end;
+        gap: var(--space-2) var(--space-5);
+      }
+
+      .site-nav a:not(.nav-download) {
         font-size: 15px;
         line-height: 1.62;
         color: var(--ink-2);
@@ -111,7 +166,41 @@ const { title, description, hideHeader = false } = Astro.props;
         transition: color var(--dur-2) var(--ease-out);
       }
 
-      nav a:hover { color: var(--ink); }
+      .site-nav a:not(.nav-download):hover { color: var(--ink); }
+
+      /* Stays an anchor, because it resolves to a URL and should keep the
+         browser's open-in-new-tab and copy-link behaviour. It only looks
+         like a button. */
+      .nav-download {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+        padding: 10px 16px;
+        border: var(--hairline) solid var(--ink-4);
+        border-radius: 2px;
+        font-size: 13px;
+        line-height: 1;
+        color: var(--ink);
+        text-decoration: none;
+        transition:
+          border-color var(--dur-2) var(--ease-out),
+          background-color var(--dur-2) var(--ease-out);
+      }
+
+      .nav-download:hover {
+        border-color: var(--ink);
+        background: var(--paper-sunk);
+      }
+
+      .nav-download svg {
+        width: 12px;
+        height: 12px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.5;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
 
       /* Figma: full-bleed rule, 96 above it, 32/48 inside it. */
       .site-footer {
@@ -153,56 +242,13 @@ const { title, description, hideHeader = false } = Astro.props;
       .footer-email:hover { color: var(--ink-2); }
 
       .footer-nav {
-        display: flex;
         flex-direction: column;
+        align-items: flex-end;
         gap: var(--space-2);
-        text-align: right;
       }
 
-      .footer-nav a {
-        font-size: 15px;
-        line-height: 1.62;
-        color: var(--ink-2);
-        text-decoration: none;
-        transition: color var(--dur-2) var(--ease-out);
-      }
-
-      .footer-nav a:hover { color: var(--ink); }
-
-      /* Stays an anchor, because it resolves to a URL and should keep the
-         browser's open-in-new-tab and copy-link behaviour. It only looks
-         like a button. */
-      .footer-nav .footer-download {
-        display: inline-flex;
-        align-items: center;
-        gap: 7px;
-        /* A flex child ignores the nav's text-align, so it sets its own edge. */
-        align-self: flex-end;
+      .footer-nav .nav-download {
         margin-top: var(--space-3);
-        padding: 10px 16px;
-        border: var(--hairline) solid var(--ink-4);
-        border-radius: 2px;
-        font-size: 13px;
-        line-height: 1;
-        color: var(--ink);
-        transition:
-          border-color var(--dur-2) var(--ease-out),
-          background-color var(--dur-2) var(--ease-out);
-      }
-
-      .footer-nav .footer-download:hover {
-        border-color: var(--ink);
-        background: var(--paper-sunk);
-      }
-
-      .footer-download svg {
-        width: 12px;
-        height: 12px;
-        fill: none;
-        stroke: currentColor;
-        stroke-width: 1.5;
-        stroke-linecap: round;
-        stroke-linejoin: round;
       }
 
       .footer-colophon {
@@ -214,12 +260,18 @@ const { title, description, hideHeader = false } = Astro.props;
       }
 
       @media (max-width: 36rem) {
-        .footer-nav {
-          text-align: left;
+        .header-inner {
+          flex-wrap: wrap;
+          align-items: flex-start;
         }
 
-        .footer-download {
-          align-self: flex-start;
+        .site-nav {
+          width: 100%;
+          justify-content: flex-start;
+        }
+
+        .footer-nav {
+          align-items: flex-start;
         }
       }
     </style>

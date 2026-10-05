@@ -5,6 +5,7 @@ import Figure from '../components/Figure.astro';
 import Clip from '../components/Clip.astro';
 import Lightbox from '../components/Lightbox.astro';
 import assets from '../data/assets.json';
+import { ogImageForAsset } from '../lib/og-image';
 
 interface Props {
   title: string;
@@ -33,7 +34,12 @@ const entry = (assets as Record<string, { type: string }>)[hero.asset];
 const HeroMedia = entry?.type === 'video' ? Clip : Figure;
 ---
 
-<BaseLayout title={`${title} · Ryan Cates`} description={subtitle}>
+<BaseLayout
+  title={`${title} · Ryan Cates`}
+  description={subtitle}
+  ogImage={ogImageForAsset(hero.asset)}
+  ogType="article"
+>
   <article class="case-study">
     <header class="editorial-grid case-header">
       <p class="label">{mode}</p>
