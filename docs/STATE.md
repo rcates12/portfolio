@@ -31,20 +31,27 @@ figures. The rail variant and the `/compare` route have been removed.
 ## Not built
 
 All four case studies are built, copy verbatim.
-- 5 of 35 asset slots. The rest render as labeled placeholders
+- 3 of 35 asset slots. The rest render as labeled placeholders
 - About page, contact, domain, metadata, sitemap
 - Any motion. GSAP is not installed yet
 - Self-hosted fonts
 
 ## Next
 
-1. All 5 remaining slots need Ryan to capture something new:
-   - `novus-mobile`, `pfa-process` — mobile captures. Every capture in the
-     library is 3456px desktop
-   - `pfa-process` also needs a clip of the drawer opening
-   - `novus-fluid-grid`, `novus-last-pixel` — the agency's Figma frames
+1. Three slots left:
    - `homepage-quote-tabs` — a live-page recording. See the note below on why
      the existing recordings do not cover it
+   - `novus-fluid-grid`, `novus-last-pixel` — blocked on a question, not on
+     files. `novus figma screens/` holds the agency's handoff file, but every
+     shot is a canvas overview at 22% zoom, and the frames in it do not match
+     the launch site: they include blocks such as "Cortex: The Product Context
+     Graph" that the launch site never had. The one live capture in that folder
+     is `novus.ai/customer-beta`, which is the open beta, a later generation
+     than the Figma. Pairing them under "Chase the last pixel" would show a
+     comp and a build that genuinely differ, which reads as the opposite of
+     the claim. Ryan needs to say which frames go with which build.
+   - `pfa-process` is filled with mobile captures but has no clip of the drawer
+     opening, so it runs as a Figure
 2. Self-host fonts, add metadata and Open Graph, run an accessibility and Lighthouse pass
 
 ### Section offsets found so far

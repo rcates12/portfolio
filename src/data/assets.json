@@ -224,6 +224,22 @@
     ],
     "sourceTraced": true
   },
+  "novus-mobile": {
+    "type": "image",
+    "width": 2456,
+    "height": 1730,
+    "widths": [
+      640,
+      1024,
+      1536,
+      2048
+    ],
+    "source": [
+      "C:/Users/ryanc/Downloads/work evidence for portfolio/screenshots/novus figma screens/mobile/Screenshot 2026-10-05 at 11.41.37 AM.png",
+      "C:/Users/ryanc/Downloads/work evidence for portfolio/screenshots/novus figma screens/mobile/Screenshot 2026-10-05 at 11.42.14 AM.png",
+      "C:/Users/ryanc/Downloads/work evidence for portfolio/screenshots/novus figma screens/mobile/Screenshot 2026-10-05 at 11.42.33 AM.png"
+    ]
+  },
   "novus-receipt": {
     "type": "image",
     "width": 3456,
@@ -351,6 +367,22 @@
     "source": [
       "C:/Users/ryanc/Downloads/screencapture-localhost-3000-product-agent-analytics-2026-10-02-11_03_44.png(1)/screencapture-localhost-3000-product-agent-analytics-2026-10-02-11_03_44_old-version.png",
       "C:/Users/ryanc/Downloads/work evidence for portfolio/screenshots/PFA docs/screencapture-pendo-io-product-agent-analytics-2026-09-30-21_42_09.png"
+    ]
+  },
+  "pfa-process": {
+    "type": "image",
+    "width": 2456,
+    "height": 1735,
+    "widths": [
+      640,
+      1024,
+      1536,
+      2048
+    ],
+    "source": [
+      "C:/Users/ryanc/Downloads/work evidence for portfolio/screenshots/mobile pfa/pfa/Screenshot 2026-10-05 at 11.29.15 AM.png",
+      "C:/Users/ryanc/Downloads/work evidence for portfolio/screenshots/mobile pfa/atk/Screenshot 2026-10-05 at 11.31.32 AM.png",
+      "C:/Users/ryanc/Downloads/work evidence for portfolio/screenshots/mobile pfa/aa/Screenshot 2026-10-05 at 11.34.05 AM.png"
     ]
   },
   "pfa-subnav": {

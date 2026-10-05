@@ -34,7 +34,7 @@ const HeroMedia = entry?.type === 'video' ? Clip : Figure;
 ---
 
 <BaseLayout title={`${title} · Ryan Cates`} description={subtitle}>
-  <article>
+  <article class="case-study">
     <header class="editorial-grid case-header">
       <p class="label">{mode}</p>
       <h1 class="display-1">{title}</h1>
@@ -63,7 +63,45 @@ const HeroMedia = entry?.type === 'video' ? Clip : Figure;
 </BaseLayout>
 
 <style>
+  /* Inter on every heading in a case study, including the ones that arrive
+     through the slot. font-variation-settings has to be cleared: the display
+     classes carry Fraunces axis values, and leaving them set on a font that
+     has no such axes is just dead weight in the cascade. */
+  .case-study :global(.display-1),
+  .case-study :global(.display-2),
+  .case-study :global(.display-3),
+  .case-study :global(.heading),
+  .case-study :global(.prose h2),
+  .case-study :global(.prose h3) {
+    font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+    font-variation-settings: normal;
+    letter-spacing: -0.025em;
+  }
+
+  /* Body copy is Hanken Grotesk, so the headings no longer get their contrast
+     from a serif. Weight carries it instead. */
+  .case-study :global(.display-2),
+  .case-study :global(.display-3),
+  .case-study :global(.heading),
+  .case-study :global(.prose h2),
+  .case-study :global(.prose h3) {
+    font-weight: 600;
+  }
+
+  /* Down from a 96px cap. Inter sets wider than Fraunces at the same size,
+     and the old h1 ran to three lines on the longer titles. */
+  .case-study :global(.display-1) {
+    font-size: clamp(2.25rem, 1.15rem + 4.5vw, 4.25rem);
+    letter-spacing: -0.035em;
+  }
+
   .case-header { padding-top: var(--space-9); row-gap: var(--space-4); }
+
+  /* The deck sits under the title, so it has to be lighter than it, not
+     heavier. It shares .display-3 with the First output heading, which does
+     want the weight. */
+  .case-study :global(.subtitle) { font-weight: 400; }
+
   .subtitle { color: var(--ink-2); }
   .lead { margin-top: var(--space-2); }
 
