@@ -13,7 +13,7 @@ Nobody briefed this one. I had an idea for how Pendo could talk about its AI pro
 | Role | Self-initiator: concept, campaign, design, and build (Lead Marketing Engineer, Pendo) |
 | What Claude did | Wrote the campaign copy and drafted the seven-beat flow from my concept, made a first HTML prototype, and drafted a build plan. Cursor agents wrote the code from my direction |
 | Timeline | One evening in June 2026, a Friday from 5pm to midnight |
-| Tools | Claude, Cursor coding agents, Next.js, GSAP with ScrollTrigger and SplitText, WebGL |
+| Tools | Claude, Cursor coding agents, Next.js, GSAP with ScrollTrigger and SplitText, WebGL, Vercel |
 | Status | Never launched publicly. Shared across Slack and presented at a corporate marketing team meeting, June 2026 |
 
 ## Key decisions

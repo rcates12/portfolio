@@ -13,7 +13,7 @@ Pendo's new homepage launched in August 2026. Content and PMM wrote the story an
 | Role | Designer and builder, as design partner to Content and PMM (Lead Marketing Engineer, Pendo) |
 | Others | Page structure, story, and copy: Content and PMM. Headless Pendo scripts: PMM. Feedback: brand designers and several exec stakeholders |
 | Timeline | Rebuild from July 8, 2026. Launched August 4, 2026, in six languages |
-| Tools | Cursor coding agents, Next.js, GSAP, WebGL, Marketo |
+| Tools | Cursor coding agents, Next.js, GSAP, WebGL, Marketo, Vercel |
 | Live | [pendo.io](https://www.pendo.io/) |
 
 ## Key decisions

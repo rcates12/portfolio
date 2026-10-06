@@ -13,7 +13,7 @@ I was the only designer on Pendo for Agents, a hub page plus product pages for A
 | Role | Sole designer and builder (Lead Marketing Engineer, Pendo) |
 | Others | Narrative, copy, and page structure: Content and PMM. No designer was involved |
 | Timeline | Aug 18 to Sep 17, 2026 (all three pages launched together) |
-| Tools | Cursor coding agents, Next.js, GSAP, WebGL |
+| Tools | Cursor coding agents, Next.js, GSAP, WebGL, Vercel |
 | Live | [Pendo for Agents](https://www.pendo.io/pendo-for-agents/) · [Agent Toolkit](https://www.pendo.io/product/agent-toolkit/) · [Agent Analytics](https://www.pendo.io/product/agent-analytics/) |
 
 ## The page I was replacing was mine
