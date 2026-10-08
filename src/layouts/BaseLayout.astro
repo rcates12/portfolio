@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import SiteMotion from '../components/SiteMotion.astro';
+import Analytics from '@vercel/analytics/astro';
 
 interface Props {
   title: string;
@@ -115,6 +116,7 @@ const elsewhereLinks = [
     </footer>
 
     <SiteMotion />
+    <Analytics />
 
     <style>
       body {
