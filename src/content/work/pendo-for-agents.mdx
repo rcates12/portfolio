@@ -154,4 +154,4 @@ I worked in short loops with AI coding agents in Cursor and wrote about 180 prom
 
 ## Reflection
 
-Performance is the first thing I'd push on. At launch these were the heaviest routes on the site, at 950 to 984 kB of first-load JavaScript against a 215 kB site median. I'd also design the demo form I actually wanted instead of fixing Marketo's markup, and turn the patterns I kept correcting into written rules the agent reads first.
+Performance is the first thing I'd push on. When I ran the bundle analyzer after launch, the three pages loaded 509 to 542 kB of JavaScript (gzipped), but only 17 to 40 kB of that was page code. About 165 kB on every page was the Builder runtime drawing the nav and footer, so the biggest fix is site-wide, not page by page. I'd also design the demo form I actually wanted instead of fixing Marketo's markup, and turn the patterns I kept correcting into written rules the agent reads first.
