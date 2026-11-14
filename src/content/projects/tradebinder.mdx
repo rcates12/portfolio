@@ -1,0 +1,70 @@
+---
+title: TradeBinder
+pitch: >-
+  A trading card app for collectors and players. Trades facilitated by the app
+  in partnership with a game shop in your area.
+order: 2
+card:
+  line: >-
+    A trading card app for collectors and players. Trades facilitated by the
+    app in partnership with a game shop in your area.
+  alt: >-
+    Three phone screens of TradeBinder side by side: the card marketplace, a
+    trade cost summary, and the account wallet, on a pale lavender field.
+  asset: tradebinder-thumb
+links:
+  - label: GitHub
+    href: https://github.com/rcates12/TradeBinder
+    display: github.com/rcates12/TradeBinder
+stack:
+  - name: React Native
+    icon: react
+  - name: TypeScript
+    icon: typescript
+primary:
+  label: GitHub
+  href: https://github.com/rcates12/TradeBinder
+---
+
+import Clip from '../../components/Clip.astro';
+import Figure from '../../components/Figure.astro';
+import ProjectBeat from '../../components/ProjectBeat.astro';
+import ScreenCarousel from '../../components/ScreenCarousel.astro';
+
+{/* DRAFT copy, written for Ryan to review. It is not approved content yet: see
+    docs/portfolio/content/06-tradebinder-project.md and .cursor/rules/portfolio.mdc. */}
+
+<ProjectBeat>
+  Trading cards with someone you've never met means one person ships first and hopes. In TradeBinder, each card goes to the game shop its new owner picks, and the shop releases both only once both have arrived.
+
+  <Clip
+    asset="tradebinder-swipe"
+    crop="2048 / 1524"
+    describe="A 10-second loop of the marketplace: two featured cards passed, then a third swiped right to open its card page."
+    alt="The TradeBinder marketplace on a phone. A Mew ex card is swiped away, then Lugia V, then Pikachu VMAX is swiped right and opens its card page with a live market value of $169.36. The clip ends back on the stack."
+    caption="The daily stack of featured cards. Swipe left to pass, right to open one."
+    ratio="16 / 9"
+    priority
+  />
+</ProjectBeat>
+
+<ProjectBeat>
+  Before a proposal goes out, the app shows the value gap and asks the sender to accept it. Fees are itemized up front. There's no subscription: you pay from a trade balance, or once per trade.
+
+  <Figure
+    asset="tradebinder-trade"
+    describe="Three phone screens: the value check, the itemized fee summary, and an incoming trade to review."
+    alt="Three phone screens of TradeBinder. Left, 'You offer $56' against 'You want $53', with a $3.08 value difference to accept above a list of pickup shops. Middle, the trade cost summary: a platform fee of $4.24, a shop handling fee of $2.25, a total of $6.49, and a choice between paying from the trade balance or paying now for $7.01, above a Send Proposal button. Right, a trade with another trader: Cavern of Souls for Umbreon V, a $5 value difference to confirm, and a pickup shop to choose."
+    caption="A trade: the value gap to accept, the itemized fees, and an incoming trade to review."
+    ratio="4 / 3"
+  />
+</ProjectBeat>
+
+<ProjectBeat>
+  It's a working prototype on seeded data. Card art and prices come live from the Pokémon TCG API, Scryfall and YGOProDeck. I built it with Expo and React Native in Cursor, with a coding agent, and tested it on my iPhone.
+
+  <ScreenCarousel
+    set="tradebinder"
+    caption="More screens from the prototype."
+  />
+</ProjectBeat>

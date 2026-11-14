@@ -6,6 +6,17 @@
 
 <dialog class="lightbox" aria-label="Enlarged image">
   <figure class="stage" data-stage></figure>
+  <p class="visually-hidden" data-position aria-live="polite"></p>
+  <button type="button" class="step prev" data-step="-1" aria-label="Previous screen" hidden>
+    <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+      <path d="M10 3 5 8l5 5" />
+    </svg>
+  </button>
+  <button type="button" class="step next" data-step="1" aria-label="Next screen" hidden>
+    <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+      <path d="m6 3 5 5-5 5" />
+    </svg>
+  </button>
   <button type="button" class="close" data-close aria-label="Close enlarged image">
     <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false">
       <path d="M3 3 13 13M13 3 3 13" />
@@ -19,7 +30,15 @@
   const triggers = document.querySelectorAll<HTMLButtonElement>('[data-zoom]');
 
   if (dialog && stage && triggers.length) {
-    const open = (trigger: HTMLButtonElement) => {
+    const prev = dialog.querySelector<HTMLButtonElement>('[data-step="-1"]');
+    const next = dialog.querySelector<HTMLButtonElement>('[data-step="1"]');
+    const position = dialog.querySelector<HTMLElement>('[data-position]');
+
+    // Triggers that share a carousel can be stepped through without closing.
+    let group: HTMLButtonElement[] = [];
+    let index = 0;
+
+    const show = (trigger: HTMLButtonElement) => {
       const picture = trigger.querySelector('picture');
       if (!picture) return;
 
@@ -43,19 +62,51 @@
       const caption = trigger.closest('figure')?.querySelector('figcaption');
       if (caption) stage.append(caption.cloneNode(true));
 
+      // Fitting a tall image to the viewport can leave it barely bigger than
+      // it was on the page. Those get the full width and scroll instead.
+      // Triggers marked data-zoom-fit (phone screens) always fit whole.
+      const natural = Number(img?.getAttribute('width')) / Number(img?.getAttribute('height'));
+      const box = stage.getBoundingClientRect();
+      const fit = trigger.hasAttribute('data-zoom-fit');
+      dialog.classList.toggle('is-tall', !fit && natural < box.width / box.height);
+
+      const stepping = group.length > 1;
+      if (prev && next) {
+        prev.hidden = next.hidden = !stepping;
+        prev.disabled = index === 0;
+        next.disabled = index === group.length - 1;
+      }
+      if (position) position.textContent = stepping ? `Screen ${index + 1} of ${group.length}` : '';
+    };
+
+    const open = (trigger: HTMLButtonElement) => {
+      const carousel = trigger.closest('[data-carousel]');
+      group = carousel ? [...carousel.querySelectorAll<HTMLButtonElement>('[data-zoom]')] : [trigger];
+      index = Math.max(0, group.indexOf(trigger));
+
       dialog.showModal();
       // showModal does not stop the page behind it from scrolling.
       document.documentElement.classList.add('is-locked');
+      show(trigger);
+    };
 
-      // Fitting a tall image to the viewport can leave it barely bigger than
-      // it was on the page. Those get the full width and scroll instead.
-      const natural = Number(img?.getAttribute('width')) / Number(img?.getAttribute('height'));
-      const box = stage.getBoundingClientRect();
-      dialog.classList.toggle('is-tall', natural < box.width / box.height);
+    const step = (by: number) => {
+      const to = index + by;
+      if (to < 0 || to >= group.length) return;
+      index = to;
+      show(group[index]);
+      // A disabled button drops focus; hand it to the other arrow.
+      if (document.activeElement === prev && prev?.disabled) next?.focus();
+      if (document.activeElement === next && next?.disabled) prev?.focus();
     };
 
     triggers.forEach((trigger) => {
       trigger.addEventListener('click', () => open(trigger));
+    });
+
+    dialog.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowRight') step(1);
+      if (event.key === 'ArrowLeft') step(-1);
     });
 
     dialog.addEventListener('click', (event) => {
@@ -63,6 +114,8 @@
       if (!(target instanceof Element)) return;
       // Anything that is not the image itself dismisses: the backdrop area of
       // the dialog box, or the close button.
+      const stepper = target.closest<HTMLElement>('[data-step]');
+      if (stepper) return step(Number(stepper.dataset.step));
       if (target === dialog || target.closest('[data-close]')) dialog.close();
     });
 
@@ -147,6 +200,11 @@
     color: #c9ccce;
   }
 
+  /* Carousel page counter: meaningless once a single screen is enlarged. */
+  .lightbox :global(figcaption [data-status]) {
+    display: none;
+  }
+
   .lightbox :global(figcaption p + p) {
     margin-top: var(--space-2);
     color: #8a8f94;
@@ -171,6 +229,49 @@
   .close:hover {
     color: var(--paper);
     border-color: rgb(201 204 206 / 0.6);
+  }
+
+  .step {
+    position: fixed;
+    inset-block-start: 50%;
+    translate: 0 -50%;
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    padding: 0;
+    color: #c9ccce;
+    background: rgb(23 25 27 / 0.6);
+    border: var(--hairline) solid rgb(201 204 206 / 0.3);
+    border-radius: 50%;
+    cursor: pointer;
+  }
+
+  .step[hidden] { display: none; }
+  .step.prev { inset-inline-start: var(--space-3); }
+  .step.next { inset-inline-end: var(--space-3); }
+
+  .step:hover:not(:disabled) {
+    color: var(--paper);
+    border-color: rgb(201 204 206 / 0.6);
+  }
+
+  .step:disabled {
+    opacity: 0.3;
+    cursor: default;
+  }
+
+  .step:focus-visible {
+    outline: var(--focus-ring);
+    outline-offset: 2px;
+  }
+
+  .step svg {
+    width: 1rem;
+    height: 1rem;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    fill: none;
   }
 
   .close svg {

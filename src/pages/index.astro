@@ -1,11 +1,16 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import HomepageCard from '../components/HomepageCard.astro';
+import SideProjectRow from '../components/SideProjectRow.astro';
 import Statement from '../components/Statement.astro';
 import assets from '../data/assets.json';
 import { getCollection } from 'astro:content';
 
 const work = (await getCollection('work')).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+
+const projects = (await getCollection('projects')).sort(
   (a, b) => a.data.order - b.data.order,
 );
 
@@ -92,6 +97,35 @@ const photoSrcset = (ext: string) =>
       ))}
     </div>
   </section>
+
+  {projects.length > 0 && (
+    <section class="side-projects" id="extras" aria-labelledby="extras-label">
+      <div class="side-projects-inner">
+        <p class="label" id="extras-label">Extras</p>
+        <ul class="side-projects-list">
+          {projects.map((entry) => {
+            const primary = entry.data.links[0];
+            return (
+              <li>
+                <SideProjectRow
+                  href={`/projects/${entry.id}`}
+                  title={entry.data.title}
+                  line={entry.data.card.line}
+                  asset={entry.data.card.asset}
+                  alt={entry.data.card.alt}
+                  external={
+                    primary
+                      ? { href: primary.href, label: primary.label }
+                      : undefined
+                  }
+                />
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </section>
+  )}
   </div>
 </BaseLayout>
 
@@ -253,7 +287,45 @@ const photoSrcset = (ext: string) =>
   }
 
   .work {
-    padding: 80px var(--site-inset) 64px;
+    padding: 80px var(--site-inset) 48px;
+  }
+
+  .side-projects {
+    padding: 48px var(--site-inset);
+    border-top: var(--hairline) solid var(--rule);
+  }
+
+  .side-projects-inner {
+    max-width: var(--content-max);
+    margin-inline: auto;
+  }
+
+  .side-projects .label {
+    margin-bottom: var(--space-5);
+  }
+
+  .side-projects-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+  }
+
+  /* Stacked rows: more air between items than inside one, so each image
+     reads as belonging to the text above it. */
+  @media (max-width: 36rem) {
+    .side-projects-list {
+      gap: var(--space-7);
+    }
+  }
+
+  .home-type-trial .side-projects .label {
+    font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+    font-weight: 600;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
   }
 
   /* One 12px gutter between tiles, nothing at the ends, so the row lines up

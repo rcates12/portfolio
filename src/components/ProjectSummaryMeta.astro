@@ -1,0 +1,152 @@
+---
+import TechIcon, { type TechIconId } from './TechIcon.astro';
+
+interface Link {
+  label: string;
+  href: string;
+  display?: string;
+}
+
+interface StackItem {
+  name: string;
+  icon: TechIconId;
+}
+
+interface Props {
+  links: Link[];
+  stack: StackItem[];
+}
+
+const { links, stack } = Astro.props;
+
+function displayUrl(link: Link): string {
+  if (link.display) return link.display;
+  return link.href.replace(/^https?:\/\//, '').replace(/\/$/, '');
+}
+
+const githubLink = links.find((l) => l.href.includes('github.com'));
+const siteLink = links.find((l) => !l.href.includes('github.com'));
+
+function siteIconSrc(href: string): string {
+  if (href.includes('lintel.design')) return '/icons/lintel-icon.png';
+  return '/favicon.svg';
+}
+---
+
+<dl class="meta">
+  {siteLink && (
+    <div class="meta-row">
+      <dt>
+        <img class="meta-icon" src={siteIconSrc(siteLink.href)} width="16" height="16" alt="" />
+        {siteLink.label}
+      </dt>
+      <dd>
+        <a href={siteLink.href} rel="noopener">{displayUrl(siteLink)}</a>
+      </dd>
+    </div>
+  )}
+
+  {githubLink && (
+    <div class="meta-row">
+      <dt>
+        <svg class="meta-icon svg" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+          <path
+            fill="currentColor"
+            d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.18.82a7.49 7.49 0 0 1 2-.27 7.5 7.5 0 0 1 2 .27c1.51-1.04 2.18-.82 2.18-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"
+          />
+        </svg>
+        GitHub
+      </dt>
+      <dd>
+        <a href={githubLink.href} rel="noopener">{displayUrl(githubLink)}</a>
+      </dd>
+    </div>
+  )}
+
+  <div class="meta-row">
+    <dt>Stack</dt>
+    <dd class="stack">
+      <ul class="stack-icons">
+        {stack.map((item) => (
+          <li>
+            <TechIcon id={item.icon} />
+          </li>
+        ))}
+      </ul>
+    </dd>
+  </div>
+</dl>
+
+<style>
+  .meta {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    font-size: var(--size-small);
+    line-height: var(--leading-tight);
+  }
+
+  .meta-row {
+    display: grid;
+    grid-template-columns: 7.5rem minmax(0, 1fr);
+    gap: var(--space-4);
+    align-items: center;
+  }
+
+  .meta dt {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    color: var(--ink-3);
+    font-weight: var(--weight-medium);
+  }
+
+  .meta-icon {
+    flex-shrink: 0;
+    border-radius: 2px;
+    object-fit: contain;
+  }
+
+  .meta-icon.svg {
+    color: var(--ink);
+  }
+
+  .meta dd {
+    margin: 0;
+    color: var(--ink-2);
+  }
+
+  .meta a {
+    color: var(--ink);
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+  }
+
+  .meta a:hover {
+    color: var(--ink-2);
+  }
+
+  .stack,
+  .stack-icons {
+    overflow: visible;
+  }
+
+  .stack-icons {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (max-width: 28rem) {
+    .meta-row {
+      grid-template-columns: 1fr;
+      gap: var(--space-1);
+    }
+  }
+</style>

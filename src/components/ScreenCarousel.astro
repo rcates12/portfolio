@@ -1,0 +1,325 @@
+---
+import assets from '../data/assets.json';
+import { tradebinderScreens } from '../data/tradebinder-screens';
+
+interface Slide {
+  asset: string;
+  alt: string;
+}
+
+interface Props {
+  /** Built-in screen sets when MDX should not pass a large array. */
+  set?: 'tradebinder';
+  slides?: readonly Slide[];
+  caption?: string;
+  /** How many phone screens fit in the field at once. */
+  visible?: number;
+}
+
+const { set, caption, visible = 3 } = Astro.props;
+const slides =
+  Astro.props.slides ??
+  (set === 'tradebinder' ? tradebinderScreens : []);
+
+type Entry = { type: string; width: number; height: number; widths: number[] };
+
+const srcset = (asset: string, ext: string, entry: Entry | undefined) =>
+  entry?.widths?.map((w) => `/img/${asset}-${w}.${ext} ${w}w`).join(', ') ?? '';
+
+// A phone is ~30% of the field, and the field is capped by the 40rem column.
+const sizes = '(max-width: 36rem) 60vw, 14rem';
+---
+
+<div class="carousel" data-carousel data-visible={visible} data-total={slides.length}>
+<figure class="figure-block screen-carousel">
+  <div class="stage">
+    <div class="field" data-viewport tabindex="0" role="group" aria-roledescription="carousel" aria-label="TradeBinder screens">
+      <div class="track" data-track>
+        {slides.map((slide) => {
+          const entry = (assets as Record<string, Entry>)[slide.asset];
+          return (
+            <div class="cell">
+              {entry ? (
+                <button type="button" class="zoom" data-zoom data-zoom-fit>
+                  <picture>
+                    <source type="image/avif" srcset={srcset(slide.asset, 'avif', entry)} sizes={sizes} />
+                    <img
+                      src={`/img/${slide.asset}-${entry.widths.at(-1)}.webp`}
+                      srcset={srcset(slide.asset, 'webp', entry)}
+                      sizes={sizes}
+                      width={entry.width}
+                      height={entry.height}
+                      alt={slide.alt}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </picture>
+                  <span class="visually-hidden">Enlarge image</span>
+                </button>
+              ) : (
+                <div class="placeholder"><p class="caption">{slide.asset}</p></div>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  </div>
+
+  {caption && (
+    <figcaption>
+      <p class="caption">{caption}</p>
+    </figcaption>
+  )}
+</figure>
+
+<div class="controls">
+  <p class="caption status" data-status aria-live="polite"></p>
+  <button type="button" class="nav" data-prev disabled aria-label="Previous screens">
+    <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+      <path d="M10 3 5 8l5 5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+  </button>
+  <button type="button" class="nav" data-next aria-label="Next screens">
+    <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+      <path d="M6 3l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+  </button>
+</div>
+</div>
+
+<script>
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  document.querySelectorAll<HTMLElement>('[data-carousel]').forEach((root) => {
+    const field = root.querySelector<HTMLElement>('[data-viewport]');
+    const track = root.querySelector<HTMLElement>('[data-track]');
+    const prev = root.querySelector<HTMLButtonElement>('[data-prev]');
+    const next = root.querySelector<HTMLButtonElement>('[data-next]');
+    const status = root.querySelector<HTMLElement>('[data-status]');
+    const total = Number(root.dataset.total ?? 0);
+    if (!field || !track || !prev || !next || !status || total === 0) return;
+
+    const cells = () => [...track.querySelectorAll<HTMLElement>('.cell')];
+    const mobile = window.matchMedia('(max-width: 36rem)');
+    const perPage = () => (mobile.matches ? 1 : Number(root.dataset.visible ?? 3));
+
+    // Distance from one phone's left edge to the next, gap included.
+    const step = () => {
+      const [a, b] = cells();
+      return a && b ? b.offsetLeft - a.offsetLeft : a?.offsetWidth ?? 0;
+    };
+
+    const update = () => {
+      const s = step();
+      if (!s) return;
+      const count = perPage();
+      const index = Math.round(field.scrollLeft / s);
+      const start = Math.min(index + 1, total);
+      const end = Math.min(index + count, total);
+      status.textContent = start === end ? `${start} of ${total}` : `${start}–${end} of ${total}`;
+
+      prev.disabled = field.scrollLeft <= 1;
+      next.disabled = field.scrollLeft + field.clientWidth >= field.scrollWidth - 1;
+    };
+
+    const page = (dir: number) => {
+      field.scrollBy({
+        left: dir * step() * perPage(),
+        behavior: prefersReducedMotion ? 'auto' : 'smooth',
+      });
+    };
+
+    prev.addEventListener('click', () => page(-1));
+    next.addEventListener('click', () => page(1));
+    field.addEventListener('scroll', update, { passive: true });
+    field.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowRight') { event.preventDefault(); page(1); }
+      if (event.key === 'ArrowLeft') { event.preventDefault(); page(-1); }
+    });
+    window.addEventListener('resize', update);
+
+    update();
+  });
+</script>
+
+<style>
+  /*
+    Same artwork as tradebinder-trade.png (2048 x 1524): lavender field, three
+    620px phones, 47px gaps, 90px above and below. Every length below is that
+    number over 2048, in container-width units, so it scales with the field.
+  */
+  .screen-carousel {
+    --tb-field: #ebe8f7;
+    --phone-w: 30.27cqw;
+    --gap: 2.29cqw;
+    --radius: 3.18cqw;
+
+    /* Same frame as Figure.astro: sunk plate, hairline, 12px inset. Scoped
+       styles do not cross components, so it is repeated here. */
+    margin: 0;
+    background: var(--figure-surface);
+    border: var(--hairline) solid var(--figure-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-3);
+  }
+
+  figcaption {
+    padding: var(--space-3) var(--space-1) var(--space-1);
+    max-width: var(--measure);
+  }
+
+  /* The container is the wrapper, not the scroller: cqw on an element's own
+     properties (scroll-padding) resolves against an ancestor container. */
+  .stage {
+    position: relative;
+    container-type: inline-size;
+  }
+
+  .field {
+    aspect-ratio: 2048 / 1524;
+    overflow-x: auto;
+    overflow-y: hidden;
+    background: var(--tb-field);
+    border-radius: var(--radius-sm);
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 2.29cqw;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+  }
+
+  .field::-webkit-scrollbar {
+    display: none;
+  }
+
+  .field:focus-visible {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 3px;
+  }
+
+  .track {
+    display: flex;
+    align-items: center;
+    gap: var(--gap);
+    height: 100%;
+    width: max-content;
+    padding-inline: var(--gap);
+  }
+
+  .cell {
+    flex: 0 0 var(--phone-w);
+    width: var(--phone-w);
+    scroll-snap-align: start;
+  }
+
+  .zoom {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: zoom-in;
+    border-radius: var(--radius);
+    /* The composite's shadow: 14px down, 34px blur, rgba(40, 30, 110, .15). */
+    filter: drop-shadow(0 0.68cqw 1.66cqw rgb(40 30 110 / 15%));
+  }
+
+  .zoom:focus-visible {
+    outline: var(--focus-ring);
+    outline-offset: 4px;
+  }
+
+  .zoom picture,
+  .zoom img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .zoom img {
+    border-radius: var(--radius);
+  }
+
+  .placeholder {
+    aspect-ratio: 1179 / 2556;
+    display: grid;
+    place-items: center;
+    background: var(--paper-sunk);
+    border-radius: var(--radius);
+  }
+
+  /* Below the frame, flush right. */
+  .controls {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: var(--space-2);
+    margin-top: var(--space-3);
+  }
+
+  .nav {
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    padding: 0;
+    color: var(--ink);
+    background: var(--paper);
+    border: var(--hairline) solid var(--rule-strong);
+    border-radius: 50%;
+    cursor: pointer;
+    transition:
+      opacity var(--dur-2) var(--ease-out),
+      border-color var(--dur-2) var(--ease-out),
+      background-color var(--dur-2) var(--ease-out);
+  }
+
+  .nav:hover:not(:disabled) {
+    border-color: var(--ink-3);
+    background: var(--paper-sunk);
+  }
+
+  .nav:focus-visible {
+    outline: var(--focus-ring);
+    outline-offset: 2px;
+  }
+
+  .nav:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+
+  .nav svg {
+    width: 0.9rem;
+    height: 0.9rem;
+  }
+
+  .status {
+    margin: 0 var(--space-2) 0 0;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink-3);
+  }
+
+  @media (max-width: 36rem) {
+    /* One phone at a time, so the field is as tall as the phone needs. */
+    .screen-carousel {
+      --phone-w: 62cqw;
+      --gap: 6cqw;
+      --radius: 6.5cqw;
+    }
+
+    .field {
+      aspect-ratio: auto;
+      scroll-padding-inline: 19cqw;
+    }
+
+    .track {
+      padding-block: 9cqw;
+      padding-inline: 19cqw;
+    }
+
+    .zoom {
+      filter: drop-shadow(0 2cqw 5cqw rgb(40 30 110 / 15%));
+    }
+  }
+</style>

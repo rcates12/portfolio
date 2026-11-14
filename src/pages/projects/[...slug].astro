@@ -1,0 +1,31 @@
+---
+import { getCollection, render } from 'astro:content';
+import Clip from '../../components/Clip.astro';
+import Figure from '../../components/Figure.astro';
+import ProjectBeat from '../../components/ProjectBeat.astro';
+import ScreenCarousel from '../../components/ScreenCarousel.astro';
+import ProjectSummaryLayout from '../../layouts/ProjectSummaryLayout.astro';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('projects');
+  return entries.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const data = entry.data;
+---
+
+<ProjectSummaryLayout
+  title={data.title}
+  pitch={data.pitch}
+  links={data.links}
+  stack={data.stack}
+  primary={data.primary}
+  thumbAsset={data.card.asset}
+>
+  <Content components={{ Figure, Clip, ProjectBeat, ScreenCarousel }} />
+</ProjectSummaryLayout>

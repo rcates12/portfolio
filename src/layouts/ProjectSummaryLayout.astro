@@ -1,0 +1,165 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Lightbox from '../components/Lightbox.astro';
+import ProjectSummaryMeta from '../components/ProjectSummaryMeta.astro';
+import type { TechIconId } from '../components/TechIcon.astro';
+import { ogImageForAsset } from '../lib/og-image';
+
+interface Props {
+  title: string;
+  pitch: string;
+  links: { label: string; href: string; display?: string }[];
+  stack: { name: string; icon: TechIconId }[];
+  primary: { label: string; href: string };
+  thumbAsset: string;
+}
+
+const { title, pitch, links, stack, primary, thumbAsset } = Astro.props;
+---
+
+<BaseLayout
+  title={`${title} · Ryan Cates`}
+  description={pitch}
+  ogImage={ogImageForAsset(thumbAsset)}
+  ogType="article"
+>
+  <article class="project-summary">
+    <div class="project-inner">
+      <header class="project-header">
+        <p class="label">Extra</p>
+        <h1 class="project-title">{title}</h1>
+        <p class="pitch">{pitch}</p>
+        <ProjectSummaryMeta links={links} stack={stack} />
+      </header>
+
+      <div class="prose project-body">
+        <slot />
+      </div>
+
+      <p class="project-cta">
+        <a class="primary-link" href={primary.href} rel="noopener noreferrer" target="_blank">
+          Open {primary.label}
+          <svg class="primary-link-icon" width="12" height="12" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+            <path
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.75"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M4.5 11.5 11.5 4.5m0 0H6.25m5.25 0V9.75"
+            />
+          </svg>
+        </a>
+      </p>
+    </div>
+  </article>
+
+  <Lightbox />
+</BaseLayout>
+
+<style>
+  .project-summary {
+    padding: var(--space-7) var(--site-inset) var(--space-8);
+  }
+
+  .project-inner {
+    max-width: var(--content-max);
+    margin-inline: auto;
+  }
+
+  .project-header {
+    margin-bottom: var(--space-8);
+  }
+
+  .project-title {
+    margin: var(--space-3) 0 var(--space-4);
+    font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+    font-size: clamp(1.75rem, 1.2rem + 1.8vw, 2.25rem);
+    font-weight: 600;
+    line-height: 1.12;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+  }
+
+  .pitch {
+    margin: 0 0 var(--space-6);
+    max-width: 40rem;
+    font-size: var(--size-subhead);
+    line-height: var(--leading-tight);
+    color: var(--ink-2);
+  }
+
+  .project-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    max-width: 40rem;
+  }
+
+  .project-body > :global(*) {
+    margin-block: 0;
+  }
+
+  .project-body > :global(p) {
+    line-height: var(--leading-body);
+  }
+
+  .project-body > :global(p + p) {
+    margin-top: var(--space-4);
+  }
+
+  /* Orphan paragraphs (no ProjectBeat) still space like a single beat. */
+  .project-body > :global(p:not(:first-child)) {
+    margin-top: var(--space-8);
+    padding-top: var(--space-8);
+    border-top: var(--hairline) solid var(--rule);
+  }
+
+  .project-body > :global(.project-beat + .project-beat),
+  .project-body > :global(.project-beat + p),
+  .project-body > :global(p + .project-beat) {
+    margin-top: var(--space-8);
+    padding-top: var(--space-8);
+    border-top: var(--hairline) solid var(--rule);
+  }
+
+  .project-body > :global(.project-beat > p) {
+    line-height: var(--leading-body);
+    color: var(--ink);
+  }
+
+  .project-body > :global(.project-beat > .figure-block),
+  .project-body > :global(.project-beat > .carousel) {
+    margin-top: var(--space-1);
+    width: 100%;
+    max-width: 100%;
+  }
+  .project-cta {
+    margin: var(--space-8) 0 0;
+    padding-top: var(--space-6);
+    max-width: 40rem;
+    border-top: var(--hairline) solid var(--rule);
+  }
+
+  .primary-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+    font-size: var(--size-small);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .primary-link-icon {
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .primary-link:hover {
+    color: var(--ink-2);
+  }
+</style>

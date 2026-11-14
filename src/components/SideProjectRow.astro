@@ -1,0 +1,176 @@
+---
+import assets from '../data/assets.json';
+
+interface Props {
+  href: string;
+  title: string;
+  line: string;
+  asset: string;
+  alt: string;
+  external?: { href: string; label: string };
+}
+
+const { href, title, line, asset, alt, external } = Astro.props;
+
+type Entry = { type: string; width: number; height: number; widths: number[] };
+const entry = (assets as Record<string, Entry>)[asset];
+const pending = !entry;
+
+const srcset = (ext: string) =>
+  entry?.widths.map((w) => `/img/${asset}-${w}.${ext} ${w}w`).join(', ') ?? '';
+const sizes = '(max-width: 36rem) 100vw, 200px';
+---
+
+<article class="side-project">
+  <a class="thumb" href={href} tabindex="-1" aria-hidden="true">
+    {pending ? (
+      <div class="thumb-placeholder" />
+    ) : (
+      <picture>
+        <source type="image/avif" srcset={srcset('avif')} sizes={sizes} />
+        <img
+          src={`/img/${asset}-${entry.widths.at(-1)}.webp`}
+          srcset={srcset('webp')}
+          sizes={sizes}
+          width={entry.width}
+          height={entry.height}
+          alt={alt}
+          loading="lazy"
+          decoding="async"
+        />
+      </picture>
+    )}
+  </a>
+
+  <div class="copy">
+    <h3 class="title">
+      <a href={href}>{title}</a>
+    </h3>
+    <p class="line">
+      <a class="summary" href={href}>{line}</a>
+    </p>
+    {external && (
+      <a class="external" href={external.href} rel="noopener">
+        {external.label}
+        <svg class="external-icon" width="12" height="12" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+          <path
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.75"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M4.5 11.5 11.5 4.5m0 0H6.25m5.25 0V9.75"
+          />
+        </svg>
+      </a>
+    )}
+  </div>
+</article>
+
+<style>
+  .side-project {
+    display: grid;
+    grid-template-columns: 200px minmax(0, 1fr);
+    align-items: start;
+    gap: 0 var(--space-5);
+    max-width: 40rem;
+  }
+
+  .thumb {
+    display: block;
+    width: 200px;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    background: var(--paper-sunk);
+    border: var(--hairline) solid var(--rule);
+    text-decoration: none;
+  }
+
+  .thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+  }
+
+  .thumb-placeholder {
+    width: 100%;
+    height: 100%;
+    background: var(--paper-sunk);
+  }
+
+  .copy {
+    min-width: 0;
+    padding-top: 2px;
+  }
+
+  .title {
+    margin: 0 0 6px;
+    font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+    font-size: 1.0625rem;
+    font-weight: 500;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+  }
+
+  .title a {
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .title a:hover {
+    color: var(--ink-2);
+  }
+
+  .line {
+    margin: 0 0 6px;
+    font-size: 0.875rem;
+    line-height: 1.45;
+    color: var(--ink-2);
+  }
+
+  .summary {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .summary:hover {
+    color: var(--ink);
+  }
+
+  .external {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.875rem;
+    line-height: 1.45;
+    color: var(--ink);
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+  }
+
+  .external-icon {
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  .external:hover {
+    color: var(--ink-2);
+  }
+
+  @media (max-width: 36rem) {
+    /* Text first, image below it at the full column width. */
+    .side-project {
+      grid-template-columns: minmax(0, 1fr);
+      gap: var(--space-4) 0;
+    }
+
+    .copy { order: 1; }
+
+    .thumb {
+      order: 2;
+      width: 100%;
+    }
+  }
+</style>

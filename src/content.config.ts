@@ -33,4 +33,35 @@ const work = defineCollection({
   }),
 });
 
-export const collections = { work };
+const projects = defineCollection({
+  loader: glob({ pattern: '**/*.mdx', base: './src/content/projects' }),
+  schema: z.object({
+    title: z.string(),
+    pitch: z.string(),
+    order: z.number(),
+    card: z.object({
+      line: z.string(),
+      alt: z.string(),
+      asset: z.string(),
+    }),
+    links: z.array(
+      z.object({
+        label: z.string(),
+        href: z.string().url(),
+        display: z.string().optional(),
+      }),
+    ),
+    stack: z.array(
+      z.object({
+        name: z.string(),
+        icon: z.enum(['nextjs', 'react', 'typescript', 'tailwind']),
+      }),
+    ),
+    primary: z.object({
+      label: z.string(),
+      href: z.string().url(),
+    }),
+  }),
+});
+
+export const collections = { work, projects };

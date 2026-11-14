@@ -1,0 +1,27 @@
+---
+/**
+ * One idea on an extra summary page: copy plus the clip or figure it
+ * explains. Spacing inside the beat is tight; beats are separated in
+ * ProjectSummaryLayout.
+ */
+---
+<section class="project-beat">
+  <slot />
+</section>
+
+<style>
+  .project-beat {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    max-width: 40rem;
+  }
+
+  .project-beat > :global(*:first-child) {
+    margin-top: 0;
+  }
+
+  .project-beat > :global(*:last-child) {
+    margin-bottom: 0;
+  }
+</style>

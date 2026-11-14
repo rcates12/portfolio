@@ -134,6 +134,17 @@
       "C:/Users/ryanc/Downloads/work evidence for portfolio/screenshots/homepage/screencapture-pendo-io-2026-09-30-21_37_18.png"
     ]
   },
+  "lintel-thumb": {
+    "type": "image",
+    "width": 1200,
+    "height": 630,
+    "widths": [
+      640
+    ],
+    "source": [
+      "C:/Users/ryanc/projects/portfolio/assets/incoming/lintel-og.png"
+    ]
+  },
   "novus-card": {
     "type": "image",
     "width": 1044,
@@ -581,5 +592,203 @@
       "C:/Users/ryanc/Downloads/work evidence for portfolio/screenshots/same craft new floor/Screenshot 2026-09-30 at 10.33.24ΓÇ»PM.png"
     ],
     "sourceTraced": true
+  },
+  "tradebinder-app": {
+    "type": "image",
+    "width": 2048,
+    "height": 1524,
+    "widths": [
+      640,
+      1024,
+      1536,
+      2048
+    ],
+    "source": [
+      "C:/Users/ryanc/projects/portfolio/assets/incoming/tradebinder-app.png"
+    ]
+  },
+  "tradebinder-s01": {
+    "type": "image",
+    "width": 1179,
+    "height": 2556,
+    "widths": [
+      640,
+      1024
+    ],
+    "source": [
+      "C:/Users/ryanc/projects/portfolio/assets/incoming/tradebinder-s01.png"
+    ]
+  },
+  "tradebinder-s02": {
+    "type": "image",
+    "width": 1179,
+    "height": 2556,
+    "widths": [
+      640,
+      1024
+    ],
+    "source": [
+      "C:/Users/ryanc/projects/portfolio/assets/incoming/tradebinder-s02.png"
+    ]
+  },
+  "tradebinder-s03": {
+    "type": "image",
+    "width": 1179,
+    "height": 2556,
+    "widths": [
+      640,
+      1024
+    ],
+    "source": [
+      "C:/Users/ryanc/projects/portfolio/assets/incoming/tradebinder-s03.png"
+    ]
+  },
+  "tradebinder-s04": {
+    "type": "image",
+    "width": 1179,
+    "height": 2556,
+    "widths": [
+      640,
+      1024
+    ],
+    "source": [
+      "C:/Users/ryanc/projects/portfolio/assets/incoming/tradebinder-s04.png"
+    ]
+  },
+  "tradebinder-s05": {
+    "type": "image",
+    "width": 1179,
+    "height": 2556,
+    "widths": [
+      640,
+      1024
+    ],
+    "source": [
+      "C:/Users/ryanc/projects/portfolio/assets/incoming/tradebinder-s05.png"
+    ]
+  },
+  "tradebinder-s06": {
+    "type": "image",
+    "width": 1179,
+    "height": 2556,
+    "widths": [
+      640,
+      1024
+    ],
+    "source": [
+      "C:/Users/ryanc/projects/portfolio/assets/incoming/tradebinder-s06.png"
+    ]
+  },
+  "tradebinder-s07": {
+    "type": "image",
+    "width": 1179,
+    "height": 2556,
+    "widths": [
+      640,
+      1024
+    ],
+    "source": [
+      "C:/Users/ryanc/projects/portfolio/assets/incoming/tradebinder-s07.png"
+    ]
+  },
+  "tradebinder-s09": {
+    "type": "image",
+    "width": 1179,
+    "height": 2556,
+    "widths": [
+      640,
+      1024
+    ],
+    "source": [
+      "C:/Users/ryanc/projects/portfolio/assets/incoming/tradebinder-s09.png"
+    ]
+  },
+  "tradebinder-s10": {
+    "type": "image",
+    "width": 1179,
+    "height": 2556,
+    "widths": [
+      640,
+      1024
+    ],
+    "source": [
+      "C:/Users/ryanc/projects/portfolio/assets/incoming/tradebinder-s10.png"
+    ]
+  },
+  "tradebinder-s11": {
+    "type": "image",
+    "width": 1179,
+    "height": 2556,
+    "widths": [
+      640,
+      1024
+    ],
+    "source": [
+      "C:/Users/ryanc/projects/portfolio/assets/incoming/tradebinder-s11.png"
+    ]
+  },
+  "tradebinder-s12": {
+    "type": "image",
+    "width": 1179,
+    "height": 2556,
+    "widths": [
+      640,
+      1024
+    ],
+    "source": [
+      "C:/Users/ryanc/projects/portfolio/assets/incoming/tradebinder-s12.png"
+    ]
+  },
+  "tradebinder-s13": {
+    "type": "image",
+    "width": 1179,
+    "height": 2556,
+    "widths": [
+      640,
+      1024
+    ],
+    "source": [
+      "C:/Users/ryanc/projects/portfolio/assets/incoming/tradebinder-s13.png"
+    ]
+  },
+  "tradebinder-swipe": {
+    "type": "video",
+    "width": 1280,
+    "height": 720,
+    "duration": 9.73,
+    "mp4": "/img/tradebinder-swipe.mp4",
+    "webm": "/img/tradebinder-swipe.webm",
+    "poster": "/img/tradebinder-swipe-poster.webp",
+    "source": [
+      "C:/Users/ryanc/projects/portfolio/assets/incoming/tradebinder-swipe.mp4"
+    ]
+  },
+  "tradebinder-thumb": {
+    "type": "image",
+    "width": 2048,
+    "height": 1152,
+    "widths": [
+      640,
+      1024,
+      1536,
+      2048
+    ],
+    "source": [
+      "C:/Users/ryanc/projects/portfolio/assets/incoming/tradebinder-thumb.png"
+    ]
+  },
+  "tradebinder-trade": {
+    "type": "image",
+    "width": 2048,
+    "height": 1524,
+    "widths": [
+      640,
+      1024,
+      1536,
+      2048
+    ],
+    "source": [
+      "C:/Users/ryanc/projects/portfolio/assets/incoming/tradebinder-trade.png"
+    ]
   }
 }

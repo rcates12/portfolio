@@ -14,7 +14,9 @@ Status: draft, 2026-10-02. Tokens are settled; stack and scope are not. See Open
 | `/work/novus` | `content/03` | Two chapters |
 | `/work/same-craft-new-floor` | `content/04` | Must state plainly that it never launched |
 | `/about` | Not written | Open question |
-| `/work/lintel` | Not written | Slot reserved, do not invent content |
+| `/projects/lintel` | `content/05-lintel-project.md` | Extra summary, not a case study |
+| `/projects/tradebinder` | `content/06-tradebinder-project.md` | Extra summary, not a case study |
+| `/work/lintel` | — | Do not use; Lintel lives under `/projects/` |
 
 Case study order is fixed and encoded as an `order` field, not by filename sort alone.
 

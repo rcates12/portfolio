@@ -9,6 +9,11 @@ interface Props {
   /** Describes what the clip shows. Required before ship, like image alt. */
   alt?: string;
   ratio?: string;
+  /**
+   * Crops the video to this ratio (cover, centered) so a subject that sits
+   * in the middle of a wider frame fills more of the same-width box.
+   */
+  crop?: string;
   /** Hero clips fetch their poster eagerly; the rest wait. */
   priority?: boolean;
 }
@@ -20,6 +25,7 @@ const {
   credit,
   alt,
   ratio = '16 / 9',
+  crop,
   priority = false,
 } = Astro.props;
 
@@ -45,7 +51,11 @@ const pending = !entry;
       <p class="caption key">{asset}</p>
     </div>
   ) : (
-    <div class="player" data-player>
+    <div
+      class:list={['player', crop && 'cropped']}
+      style={crop ? `aspect-ratio: ${crop}` : undefined}
+      data-player
+    >
       <video
         data-clip
         poster={entry.poster}
@@ -161,6 +171,11 @@ const pending = !entry;
     width: 100%;
     height: auto;
     display: block;
+  }
+
+  .cropped video {
+    height: 100%;
+    object-fit: cover;
   }
 
   button {
