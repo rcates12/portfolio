@@ -103,25 +103,17 @@ const photoSrcset = (ext: string) =>
       <div class="side-projects-inner">
         <p class="label" id="extras-label">Extras</p>
         <ul class="side-projects-list">
-          {projects.map((entry) => {
-            const primary = entry.data.links[0];
-            return (
-              <li>
-                <SideProjectRow
-                  href={`/projects/${entry.id}`}
-                  title={entry.data.title}
-                  line={entry.data.card.line}
-                  asset={entry.data.card.asset}
-                  alt={entry.data.card.alt}
-                  external={
-                    primary
-                      ? { href: primary.href, label: primary.label }
-                      : undefined
-                  }
-                />
-              </li>
-            );
-          })}
+          {projects.map((entry) => (
+            <li>
+              <SideProjectRow
+                href={`/projects/${entry.id}`}
+                title={entry.data.title}
+                line={entry.data.card.line}
+                asset={entry.data.card.asset}
+                alt={entry.data.card.alt}
+              />
+            </li>
+          ))}
         </ul>
       </div>
     </section>
